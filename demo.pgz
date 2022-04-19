@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<PiGIS minimal_version="1.0">
+    <layers>
+        <layer prj="espg:4326" type="MultiPoint">
+            <path>c:/1.py</path>
+        </layer>
+        <layer prj="espg:4326" type="MultiPolygon">
+            <path>c:/2.py</path>
+        </layer>
+        <layer prj="espg:4326" type="Polyline">
+            <path>c:/3.py</path>
+        </layer>
+        <layer prj="espg:3857" type="Polygon">
+            <path>c:/4.py</path>
+        </layer>
+    </layers>
+</PiGIS>
