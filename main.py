@@ -4,6 +4,8 @@ import sys
 from PySide6 import QtCore
 from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog, QWidget
 from PySide6.QtGui import QAction, QIcon
+
+import slots
 from ui.mainwindow import Ui_MainWindow
 from project import PiGISProject
 
@@ -15,29 +17,26 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.project = None
 
-    @QtCore.Slot()
-    def on_actionProjectOpen_triggered(self):
-        file_type = ['PiGIS Project File (*.pgz)', 'All Files (*.*)']
+    def open_project(self):
+        self.project = slots.project.open_project()
 
+    def new_project(self):
+        self.project = slots.project.new_project()
+
+    def save_project(self):
+        slots.project.save_project(self.project)
+
+    def save_project_to(self):
+        slots.project.save_project_to(self.project)
+
+    def add_data(self):
+        all_types = ['shapefile (*.shp)', 'GPS eXchange Format (*.GPX)']
         file_path, file_type = QFileDialog.getOpenFileName(
             QWidget(),
             'Select PiGIS Project File',
-            filter=';;'.join(file_type)
+            filter=';;'.join(all_types)
         )
-
-        self.project = PiGISProject(file_path)
-
-    @QtCore.Slot()
-    def on_actionProjectNew_triggered(self):
-        ...
-
-    @QtCore.Slot()
-    def on_actionProjectSave_triggered(self):
-        ...
-
-    def add_data(self):
-        file_type = ['shapefile (*.shp)', 'GPS eXchange Format (*.GPX)']
-        print(file_type)
+        print(file_path, file_type)
 
     def login(self):
         self.ui.label.setText('你点击了登录')

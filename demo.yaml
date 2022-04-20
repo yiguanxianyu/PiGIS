@@ -1,6 +1,6 @@
 Application:
   app_name: PiGIS
-  minimal_version: 1.0.0
+  minimal_version: 0.0.1
 layers:
 - metadata:
     path: c:/Personal/test1.shp
