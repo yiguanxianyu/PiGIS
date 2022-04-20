@@ -1,10 +1,15 @@
 from GISType import GISType, class_type
 
-# PiLayer should be a factory class
-class PiLayer:
+
+# Maybe we should use factory pattern?
+class PointLayer:
     def __init__(self, path):
-        self.type = 1
-        self.projection = 'espg:4326'
+        self.name = None
+        self.projection = None
         self.type = GISType.Point
         self.type_as_str = class_type[self.type]
         ...
+
+
+def create_layer(path):
+    return PointLayer(path)

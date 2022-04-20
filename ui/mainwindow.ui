@@ -25,34 +25,7 @@
   <property name="animated">
    <bool>true</bool>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>140</y>
-      <width>161</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>你好</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>250</y>
-      <width>75</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
-  </widget>
+  <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -149,7 +122,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionAdd_Data"/>
+   <addaction name="actionAddData"/>
   </widget>
   <action name="actionNew">
    <property name="text">
@@ -231,7 +204,7 @@
     <string>Show Tool Bar</string>
    </property>
   </action>
-  <action name="actionAdd_Data">
+  <action name="actionAddData">
    <property name="icon">
     <iconset>
      <normaloff>../../../../Users/yiguanxianyu/.designer/backup/3666010.png</normaloff>../../../../Users/yiguanxianyu/.designer/backup/3666010.png</iconset>
@@ -317,11 +290,62 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>exit_app()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>323</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAddData</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>add_data()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>323</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAbout</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>show_about_page()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>323</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>open_project()</slot>
   <slot>new_project()</slot>
   <slot>save_project()</slot>
   <slot>save_project_to()</slot>
+  <slot>exit_app()</slot>
+  <slot>add_data()</slot>
+  <slot>show_about_page()</slot>
  </slots>
 </ui>

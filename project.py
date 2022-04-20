@@ -1,11 +1,12 @@
 import yaml
-from layer import PiLayer
+from layer import create_layer
 from GISType import class_type
 
 
 class PiGISProject:
     def __init__(self):
         self.path = None
+        # v0.1.0
         self.major_version = 0
         self.minor_version = 1
         self.fix_version = 0
@@ -14,8 +15,8 @@ class PiGISProject:
 
     def parse(self, path: str):
         """
-        Read project from a file
-        :param: path: project file path
+        Read project from a project file
+        :param path: project file path
         :return: None
         """
         try:
@@ -42,9 +43,9 @@ class PiGISProject:
                 path = metadata['path']
 
                 # Create a new layer
-                #
-                new_layer = PiLayer(path)
+                new_layer = create_layer(path)
                 new_layer.projection = metadata['prj']
+                new_layer.name = layer['name']
 
                 # Check if layer type is correspond to the original file
                 assert layer.type == class_type[metadata['type']]
@@ -74,6 +75,7 @@ class PiGISProject:
         layer_config = []
         for curr_layer in self.layer:
             layer = {
+                'layer_name': layer.name,
                 'metadata': {
                     'path': curr_layer.path,
                     'prj': curr_layer.projection,
@@ -88,13 +90,13 @@ class PiGISProject:
         with open(self.path, 'w') as f:
             f.write(yaml.safe_dump(config))
 
-    def add_layer(self, path: str):
+    def add_layer(self, layer):
         """
         Add a new layer to the project
-        :param path: path for layer source file
+        :param layer: feature layer
         :return: None
         """
-        ...
+        self.layer.append(layer)
 
     def remove_layer(self, index: int):
         """

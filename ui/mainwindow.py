@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'mainwindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.2.4
+## Created by: Qt User Interface Compiler version 6.3.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -16,9 +16,8 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QMenu,
-    QMenuBar, QPushButton, QSizePolicy, QStatusBar,
-    QToolBar, QWidget)
+from PySide6.QtWidgets import (QApplication, QMainWindow, QMenu, QMenuBar,
+    QSizePolicy, QStatusBar, QToolBar, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -60,23 +59,17 @@ class Ui_MainWindow(object):
         self.actionToggleEditing.setObjectName(u"actionToggleEditing")
         self.actionShow_Tool_Bar = QAction(MainWindow)
         self.actionShow_Tool_Bar.setObjectName(u"actionShow_Tool_Bar")
-        self.actionAdd_Data = QAction(MainWindow)
-        self.actionAdd_Data.setObjectName(u"actionAdd_Data")
+        self.actionAddData = QAction(MainWindow)
+        self.actionAddData.setObjectName(u"actionAddData")
         icon = QIcon()
         icon.addFile(u"../../../../Users/yiguanxianyu/.designer/backup/3666010.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.actionAdd_Data.setIcon(icon)
+        self.actionAddData.setIcon(icon)
         self.actionSaveImage = QAction(MainWindow)
         self.actionSaveImage.setObjectName(u"actionSaveImage")
         self.actionProjectSaveTo = QAction(MainWindow)
         self.actionProjectSaveTo.setObjectName(u"actionProjectSaveTo")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.label = QLabel(self.centralwidget)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(210, 140, 161, 16))
-        self.pushButton = QPushButton(self.centralwidget)
-        self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setGeometry(QRect(190, 250, 75, 24))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -137,13 +130,16 @@ class Ui_MainWindow(object):
         self.menuProject.addAction(self.actionExit)
         self.menuProject.addSeparator()
         self.menuProject.addAction(self.actionSaveImage)
-        self.toolBar.addAction(self.actionAdd_Data)
+        self.toolBar.addAction(self.actionAddData)
 
         self.retranslateUi(MainWindow)
         self.actionProjectNew.triggered.connect(MainWindow.new_project)
         self.actionProjectOpen.triggered.connect(MainWindow.open_project)
         self.actionProjectSave.triggered.connect(MainWindow.save_project)
         self.actionProjectSaveTo.triggered.connect(MainWindow.save_project_to)
+        self.actionExit.triggered.connect(MainWindow.exit_app)
+        self.actionAddData.triggered.connect(MainWindow.add_data)
+        self.actionAbout.triggered.connect(MainWindow.show_about_page)
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
@@ -166,11 +162,9 @@ class Ui_MainWindow(object):
         self.actionCopyLayer.setText(QCoreApplication.translate("MainWindow", u"Copy Layer", None))
         self.actionToggleEditing.setText(QCoreApplication.translate("MainWindow", u"Toggle Editing", None))
         self.actionShow_Tool_Bar.setText(QCoreApplication.translate("MainWindow", u"Show Tool Bar", None))
-        self.actionAdd_Data.setText(QCoreApplication.translate("MainWindow", u"Add Data", None))
+        self.actionAddData.setText(QCoreApplication.translate("MainWindow", u"Add Data", None))
         self.actionSaveImage.setText(QCoreApplication.translate("MainWindow", u"Save As Image", None))
         self.actionProjectSaveTo.setText(QCoreApplication.translate("MainWindow", u"Save To", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"\u4f60\u597d", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
         self.menuLayer.setTitle(QCoreApplication.translate("MainWindow", u"Layer", None))
         self.menuAdd_layer.setTitle(QCoreApplication.translate("MainWindow", u"Add Layer", None))
         self.menuSettings.setTitle(QCoreApplication.translate("MainWindow", u"Settings", None))

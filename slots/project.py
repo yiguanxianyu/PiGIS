@@ -30,3 +30,18 @@ def save_project_to(project: PiGISProject):
     project.path = fp
     project.save()
 
+
+def add_data(project: PiGISProject):
+    """
+    Read data from a vector file, create a layer and append it to the project
+    :param project: PiGISProject
+    :return: None
+    """
+    all_types = ['shapefile (*.shp)', 'GPS eXchange Format (*.GPX)']
+    file_path, file_type = QFileDialog.getOpenFileName(
+        QWidget(),
+        'Select Vector File',
+        filter=';;'.join(all_types)
+    )
+
+    project.add_layer(file_path)
