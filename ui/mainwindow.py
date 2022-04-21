@@ -1,179 +1,56 @@
-# -*- coding: utf-8 -*-
+from PySide6.QtWidgets import QMainWindow, QApplication
 
-################################################################################
-## Form generated from reading UI file 'mainwindow.ui'
-##
-## Created by: Qt User Interface Compiler version 6.3.0
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
+from ui.AboutPage import AboutPage
+from ui.OptionPage import OptionPage
+from ui._mainwindow import Ui_MainWindow
+from project import PiGISProjectController
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
-    QCursor, QFont, QFontDatabase, QGradient,
-    QIcon, QImage, QKeySequence, QLinearGradient,
-    QPainter, QPalette, QPixmap, QRadialGradient,
-    QTransform)
-from PySide6.QtWidgets import (QApplication, QMainWindow, QMenu, QMenuBar,
-    QSizePolicy, QStatusBar, QToolBar, QWidget)
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        if not MainWindow.objectName():
-            MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(762, 647)
-        MainWindow.setMinimumSize(QSize(708, 618))
-        MainWindow.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
-        MainWindow.setAnimated(True)
-        self.actionNew = QAction(MainWindow)
-        self.actionNew.setObjectName(u"actionNew")
-        self.actionProjectNew = QAction(MainWindow)
-        self.actionProjectNew.setObjectName(u"actionProjectNew")
-        self.actionProjectOpen = QAction(MainWindow)
-        self.actionProjectOpen.setObjectName(u"actionProjectOpen")
-        self.actionProjectSave = QAction(MainWindow)
-        self.actionProjectSave.setObjectName(u"actionProjectSave")
-        self.actionExit = QAction(MainWindow)
-        self.actionExit.setObjectName(u"actionExit")
-        self.actionAbout = QAction(MainWindow)
-        self.actionAbout.setObjectName(u"actionAbout")
-        self.actionCut = QAction(MainWindow)
-        self.actionCut.setObjectName(u"actionCut")
-        self.actionCopy = QAction(MainWindow)
-        self.actionCopy.setObjectName(u"actionCopy")
-        self.actionPaste = QAction(MainWindow)
-        self.actionPaste.setObjectName(u"actionPaste")
-        self.actionPasteAs = QAction(MainWindow)
-        self.actionPasteAs.setObjectName(u"actionPasteAs")
-        self.actionAddVectorLayer = QAction(MainWindow)
-        self.actionAddVectorLayer.setObjectName(u"actionAddVectorLayer")
-        self.actionAddRasterLayer = QAction(MainWindow)
-        self.actionAddRasterLayer.setObjectName(u"actionAddRasterLayer")
-        self.actionAddGPXLayer = QAction(MainWindow)
-        self.actionAddGPXLayer.setObjectName(u"actionAddGPXLayer")
-        self.actionCopyLayer = QAction(MainWindow)
-        self.actionCopyLayer.setObjectName(u"actionCopyLayer")
-        self.actionToggleEditing = QAction(MainWindow)
-        self.actionToggleEditing.setObjectName(u"actionToggleEditing")
-        self.actionShow_Tool_Bar = QAction(MainWindow)
-        self.actionShow_Tool_Bar.setObjectName(u"actionShow_Tool_Bar")
-        self.actionAddData = QAction(MainWindow)
-        self.actionAddData.setObjectName(u"actionAddData")
-        icon = QIcon()
-        icon.addFile(u"../../../../Users/yiguanxianyu/.designer/backup/3666010.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.actionAddData.setIcon(icon)
-        self.actionSaveImage = QAction(MainWindow)
-        self.actionSaveImage.setObjectName(u"actionSaveImage")
-        self.actionProjectSaveTo = QAction(MainWindow)
-        self.actionProjectSaveTo.setObjectName(u"actionProjectSaveTo")
-        self.centralwidget = QWidget(MainWindow)
-        self.centralwidget.setObjectName(u"centralwidget")
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QMenuBar(MainWindow)
-        self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 762, 22))
-        self.menuLayer = QMenu(self.menubar)
-        self.menuLayer.setObjectName(u"menuLayer")
-        self.menuAdd_layer = QMenu(self.menuLayer)
-        self.menuAdd_layer.setObjectName(u"menuAdd_layer")
-        self.menuSettings = QMenu(self.menubar)
-        self.menuSettings.setObjectName(u"menuSettings")
-        self.menuVector = QMenu(self.menubar)
-        self.menuVector.setObjectName(u"menuVector")
-        self.menuRaster = QMenu(self.menubar)
-        self.menuRaster.setObjectName(u"menuRaster")
-        self.menuHelp = QMenu(self.menubar)
-        self.menuHelp.setObjectName(u"menuHelp")
-        self.menuView = QMenu(self.menubar)
-        self.menuView.setObjectName(u"menuView")
-        self.menuEdit = QMenu(self.menubar)
-        self.menuEdit.setObjectName(u"menuEdit")
-        self.menuProject = QMenu(self.menubar)
-        self.menuProject.setObjectName(u"menuProject")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusBar = QStatusBar(MainWindow)
-        self.statusBar.setObjectName(u"statusBar")
-        MainWindow.setStatusBar(self.statusBar)
-        self.toolBar = QToolBar(MainWindow)
-        self.toolBar.setObjectName(u"toolBar")
-        MainWindow.addToolBar(Qt.TopToolBarArea, self.toolBar)
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
 
-        self.menubar.addAction(self.menuProject.menuAction())
-        self.menubar.addAction(self.menuEdit.menuAction())
-        self.menubar.addAction(self.menuView.menuAction())
-        self.menubar.addAction(self.menuLayer.menuAction())
-        self.menubar.addAction(self.menuSettings.menuAction())
-        self.menubar.addAction(self.menuVector.menuAction())
-        self.menubar.addAction(self.menuRaster.menuAction())
-        self.menubar.addAction(self.menuHelp.menuAction())
-        self.menuLayer.addAction(self.menuAdd_layer.menuAction())
-        self.menuLayer.addAction(self.actionCopyLayer)
-        self.menuLayer.addSeparator()
-        self.menuLayer.addAction(self.actionToggleEditing)
-        self.menuAdd_layer.addAction(self.actionAddVectorLayer)
-        self.menuAdd_layer.addAction(self.actionAddRasterLayer)
-        self.menuAdd_layer.addAction(self.actionAddGPXLayer)
-        self.menuHelp.addAction(self.actionAbout)
-        self.menuView.addAction(self.actionShow_Tool_Bar)
-        self.menuEdit.addAction(self.actionCut)
-        self.menuEdit.addAction(self.actionCopy)
-        self.menuEdit.addSeparator()
-        self.menuEdit.addAction(self.actionPaste)
-        self.menuEdit.addAction(self.actionPasteAs)
-        self.menuEdit.addSeparator()
-        self.menuProject.addAction(self.actionProjectNew)
-        self.menuProject.addAction(self.actionProjectOpen)
-        self.menuProject.addAction(self.actionProjectSave)
-        self.menuProject.addAction(self.actionProjectSaveTo)
-        self.menuProject.addAction(self.actionExit)
-        self.menuProject.addSeparator()
-        self.menuProject.addAction(self.actionSaveImage)
-        self.toolBar.addAction(self.actionAddData)
+        self.aboutPage = AboutPage()
+        self.optionPage = OptionPage()
 
-        self.retranslateUi(MainWindow)
-        self.actionProjectNew.triggered.connect(MainWindow.new_project)
-        self.actionProjectOpen.triggered.connect(MainWindow.open_project)
-        self.actionProjectSave.triggered.connect(MainWindow.save_project)
-        self.actionProjectSaveTo.triggered.connect(MainWindow.save_project_to)
-        self.actionExit.triggered.connect(MainWindow.exit_app)
-        self.actionAddData.triggered.connect(MainWindow.add_data)
-        self.actionAbout.triggered.connect(MainWindow.show_about_page)
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
 
-        QMetaObject.connectSlotsByName(MainWindow)
-    # setupUi
+        self.project = PiGISProjectController()
 
-    def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"PiGIS", None))
-        self.actionNew.setText(QCoreApplication.translate("MainWindow", u"New", None))
-        self.actionProjectNew.setText(QCoreApplication.translate("MainWindow", u"New", None))
-        self.actionProjectOpen.setText(QCoreApplication.translate("MainWindow", u"Open", None))
-        self.actionProjectSave.setText(QCoreApplication.translate("MainWindow", u"Save", None))
-        self.actionExit.setText(QCoreApplication.translate("MainWindow", u"Exit", None))
-        self.actionAbout.setText(QCoreApplication.translate("MainWindow", u"About", None))
-        self.actionCut.setText(QCoreApplication.translate("MainWindow", u"Cut Features", None))
-        self.actionCopy.setText(QCoreApplication.translate("MainWindow", u"Copy Features", None))
-        self.actionPaste.setText(QCoreApplication.translate("MainWindow", u"Paste Features", None))
-        self.actionPasteAs.setText(QCoreApplication.translate("MainWindow", u"Paste As", None))
-        self.actionAddVectorLayer.setText(QCoreApplication.translate("MainWindow", u"Add Vector Layer", None))
-        self.actionAddRasterLayer.setText(QCoreApplication.translate("MainWindow", u"Add Raster Layer", None))
-        self.actionAddGPXLayer.setText(QCoreApplication.translate("MainWindow", u"Add GPX Layer", None))
-        self.actionCopyLayer.setText(QCoreApplication.translate("MainWindow", u"Copy Layer", None))
-        self.actionToggleEditing.setText(QCoreApplication.translate("MainWindow", u"Toggle Editing", None))
-        self.actionShow_Tool_Bar.setText(QCoreApplication.translate("MainWindow", u"Show Tool Bar", None))
-        self.actionAddData.setText(QCoreApplication.translate("MainWindow", u"Add Data", None))
-        self.actionSaveImage.setText(QCoreApplication.translate("MainWindow", u"Save As Image", None))
-        self.actionProjectSaveTo.setText(QCoreApplication.translate("MainWindow", u"Save To", None))
-        self.menuLayer.setTitle(QCoreApplication.translate("MainWindow", u"Layer", None))
-        self.menuAdd_layer.setTitle(QCoreApplication.translate("MainWindow", u"Add Layer", None))
-        self.menuSettings.setTitle(QCoreApplication.translate("MainWindow", u"Settings", None))
-        self.menuVector.setTitle(QCoreApplication.translate("MainWindow", u"Vector", None))
-        self.menuRaster.setTitle(QCoreApplication.translate("MainWindow", u"Raster", None))
-        self.menuHelp.setTitle(QCoreApplication.translate("MainWindow", u"Help", None))
-        self.menuView.setTitle(QCoreApplication.translate("MainWindow", u"View", None))
-        self.menuEdit.setTitle(QCoreApplication.translate("MainWindow", u"Edit", None))
-        self.menuProject.setTitle(QCoreApplication.translate("MainWindow", u"Project", None))
-        self.toolBar.setWindowTitle(QCoreApplication.translate("MainWindow", u"toolBar", None))
-    # retranslateUi
+    def open_project(self):
+        self.project.open_project()
 
+    def new_project(self):
+        self.project.new_project()
+
+    def save_project(self):
+        self.project.save_project()
+
+    def save_project_as(self):
+        self.project.save_project_as()
+
+    def add_layer(self):
+        self.project.add_layer()
+
+    def copy_layer(self):
+        self.project.copy_current_layer()
+
+    def switch_tool_bar(self, mode):
+        if mode:
+            self.ui.toolBar.show()
+        else:
+            self.ui.toolBar.hide()
+
+    def switch_editing(self, mode):
+        self.project.currentLayer.editable = mode
+
+    def show_options_page(self):
+        self.aboutPage.show()
+
+    def show_about_page(self):
+        self.aboutPage.show()
+
+    @staticmethod
+    def exit_app():
+        QApplication.instance().quit()

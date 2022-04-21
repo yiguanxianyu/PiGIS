@@ -1,17 +1,17 @@
+from copy import deepcopy
+import layer
 import yaml
-from layer import create_layer
+from PySide6.QtWidgets import QFileDialog, QWidget
+
+from constants import *
 from GISType import class_type
 
 
 class PiGISProject:
     def __init__(self):
         self.path = None
-        # v0.1.0
-        self.major_version = 0
-        self.minor_version = 1
-        self.fix_version = 0
         self.layer = []
-        self.layer_bin = []
+        self.layerBin = []
 
     def parse(self, path: str):
         """
@@ -25,30 +25,33 @@ class PiGISProject:
 
             assert y['Application']['app_name'] == 'PiGIS'
             ver = y['Application']['minimal_version'].split('.')
-            major_version, minor_version, fix_version = int(ver[0]), int(ver[1]), int(ver[2])
+            major, minor, fix = int(ver[0]), int(ver[1]), int(ver[2])
 
-            if self.major_version < major_version:
-                raise Exception("PiGIS version not satisfied")
-            elif self.major_version == major_version:
-                if self.minor_version < minor_version:
-                    raise Exception("PiGIS version not satisfied")
-                elif self.minor_version == minor_version:
-                    if self.fix_version < fix_version:
-                        raise Exception("PiGIS version not satisfied")
+            # Check πGIS version
+            version_error = False
+            if MAJOR_VERSION < major:
+                version_error = True
+            elif MAJOR_VERSION == major:
+                if MINOR_VERSION < minor:
+                    version_error = True
+                elif MINOR_VERSION == minor:
+                    if FIX_VERSION < fix:
+                        version_error = True
 
-            layers = y['layers']
+            if version_error:
+                raise Exception("πGIS version not satisfied")
 
-            for layer in layers:
-                metadata = layer['metadata']
+            for curr_layer in y['layers']:
+                metadata = curr_layer['metadata']
                 path = metadata['path']
 
                 # Create a new layer
-                new_layer = create_layer(path)
+                new_layer = layer.create_layer(path)
                 new_layer.projection = metadata['prj']
-                new_layer.name = layer['name']
+                new_layer.name = curr_layer['name']
 
-                # Check if layer type is correspond to the original file
-                assert layer.type == class_type[metadata['type']]
+                # Check if the layer type is correspond to the source file
+                assert curr_layer.type == class_type[metadata['type']]
 
                 self.layer.append(new_layer)
                 print(path)
@@ -68,14 +71,14 @@ class PiGISProject:
         config = {
             'Application': {
                 'app_name': 'PiGIS',
-                'minimal_version': f'{self.major_version}.{self.minor_version}.{self.fix_version}',
+                'minimal_version': f'{MAJOR_VERSION}.{MINOR_VERSION}.{FIX_VERSION}',
             }
         }
 
         layer_config = []
         for curr_layer in self.layer:
-            layer = {
-                'layer_name': layer.name,
+            layer_info = {
+                'layer_name': curr_layer.name,
                 'metadata': {
                     'path': curr_layer.path,
                     'prj': curr_layer.projection,
@@ -84,37 +87,100 @@ class PiGISProject:
                 'style': curr_layer.style
             }
 
-            layer_config.append(layer)
+            layer_config.append(layer_info)
 
         config['layer'] = layer_config
         with open(self.path, 'w') as f:
             f.write(yaml.safe_dump(config))
 
-    def add_layer(self, layer):
+    def add_layer(self, _layer):
         """
         Add a new layer to the project
-        :param layer: feature layer
+        :param _layer: feature layer
         :return: None
         """
-        self.layer.append(layer)
+        self.layer.append(_layer)
 
     def remove_layer(self, index: int):
         """
-        Remove the selected layer and append it to self.layer_bin
+        Remove a layer and append it to layer_bin
         :param index: index of layer in layers
         :return: None
         """
-        self.layer_bin.append(self.layer.pop(index))
+        self.layerBin.append(self.layer.pop(index))
 
     def recover_layer(self, index: int):
         """
-        Recover a layer from layer_bin and append to layer
+        Recover a layer from layer_bin and append it to layer
         :param index: ddd
         :return:
         """
-        self.layer.append(self.layer_bin.pop(index))
+        self.layer.append(self.layerBin.pop(index))
+
+
+class PiGISProjectController:
+    def __init__(self):
+        self.currentLayer = None
+        self.__project = PiGISProject()
+
+    def new_project(self):
+        self.__project = PiGISProject()
+
+    def save_project(self):
+        """
+        Save project to current path
+        """
+        self.__project.save()
+
+    def save_project_as(self):
+        """
+        Save project to given path
+        """
+        all_types = ['PiGIS Project File (*.pgz)', "YAML Ain't Markable Language (*.yaml)"]
+        fp, ft = QFileDialog.getSaveFileName(QWidget(), "Save As...", filter=';;'.join(all_types))
+        self.__project.path = fp
+        self.__project.save()
+
+    def open_project(self):
+        """
+        Open a project from file
+        """
+        all_types = ['PiGIS Project File (*.pgz; *.yaml)', 'All Files (*.*)']
+
+        file_path, file_type = QFileDialog.getOpenFileName(
+            QWidget(),
+            'Select PiGIS Project File',
+            filter=';;'.join(all_types)
+        )
+
+        self.__project = PiGISProject()
+        self.__project.parse(file_path)
+
+    def add_layer(self):
+        """
+        Create a layer from a vector file and append it to the project
+        """
+        all_types = ['shapefile (*.shp)', 'GPS eXchange Format (*.GPX)']
+
+        file_path, file_type = QFileDialog.getOpenFileName(
+            QWidget(),
+            'Select File',
+            filter=';;'.join(all_types)
+        )
+
+        # TODO: parse selected file
+        self.__project.add_layer(None)
+        raise NotImplementedError()
+
+    def copy_current_layer(self):
+        """
+        Append a deepcopy of the selected layer to the project
+        """
+        self.__project.layer.append(
+            deepcopy(self.__project.layer[self.currentLayer])
+        )
 
 
 if __name__ == '__main__':
-    new_prj = PiGISProject()
-    new_prj.parse('./demo.yaml')
+    new_prj_ = PiGISProject()
+    new_prj_.parse('./demo.yaml')

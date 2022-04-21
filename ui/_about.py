@@ -66,7 +66,7 @@ class Ui_AboutPage(object):
 "Haoliang Chen\n"
 "\n"
 "Powered by open-source software:\n"
-"PiSide6\n"
+"PySide6\n"
 "pyinstaller\n"
 "PyYAML", None))
     # retranslateUi
