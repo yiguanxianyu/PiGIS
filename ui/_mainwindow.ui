@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>762</width>
-    <height>647</height>
+    <width>820</width>
+    <height>597</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -25,13 +25,37 @@
   <property name="animated">
    <bool>true</bool>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <layout class="QHBoxLayout" name="mainLayout"/>
+    </item>
+   </layout>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>762</width>
+     <width>820</width>
      <height>22</height>
     </rect>
    </property>
@@ -95,20 +119,22 @@
      <string>Project</string>
     </property>
     <addaction name="actionProjectNew"/>
+    <addaction name="separator"/>
     <addaction name="actionProjectOpen"/>
+    <addaction name="separator"/>
     <addaction name="actionProjectSave"/>
     <addaction name="actionProjectSaveAs"/>
-    <addaction name="actionExit"/>
-    <addaction name="separator"/>
     <addaction name="actionSaveImage"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <addaction name="menuProject"/>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
    <addaction name="menuLayer"/>
-   <addaction name="menuSettings"/>
    <addaction name="menuVector"/>
    <addaction name="menuRaster"/>
+   <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -133,15 +159,21 @@
    <property name="text">
     <string>Open</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="actionProjectSave">
    <property name="text">
     <string>Save</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string>Exit πGIS</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -200,7 +232,10 @@
   </action>
   <action name="actionProjectSaveAs">
    <property name="text">
-    <string>Save To</string>
+    <string>Save As</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="actionNewShapefileLayer">

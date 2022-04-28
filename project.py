@@ -17,7 +17,6 @@ class PiGISProject:
         """
         Read project from a project file
         :param path: project file path
-        :return: None
         """
         try:
             with open(path, 'r', encoding='utf-8') as f:
