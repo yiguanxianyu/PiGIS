@@ -3,6 +3,7 @@ Application:
   minimal_version: 0.0.1
 layers:
 - metadata:
+    layer_name: nishuoshenme
     path: c:/Personal/test1.shp
     prj: espg:4326
     type: MultiPoint
@@ -10,6 +11,7 @@ layers:
     color: '#455662'
     radius: 2
 - metadata:
+    layer_name: wotingbujian
     path: c:/Personal/test2.shp
     prj: espg:4321
     type: Polyline
@@ -17,6 +19,7 @@ layers:
     color: '#45F662'
     width: 1
 - metadata:
+    layer_name: ohhhhhhh
     path: c:/Personal/test3.shp
     prj: espg:3857
     type: Polygon

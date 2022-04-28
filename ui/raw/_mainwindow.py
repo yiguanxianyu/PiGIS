@@ -153,7 +153,7 @@ class Ui_MainWindow(object):
         self.actionAbout.triggered.connect(MainWindow.show_about_page)
         self.actionAddLayer.triggered.connect(MainWindow.add_layer)
         self.actionOptions.triggered.connect(MainWindow.show_options_page)
-        self.actionShowToolBar.toggled.connect(MainWindow.switch_tool_bar)
+        self.actionShowToolBar.toggled.connect(self.toolBar.setVisible)
         self.actionEnableEditing.toggled.connect(MainWindow.switch_editing)
         self.actionCopyLayer.triggered.connect(MainWindow.copy_layer)
 
