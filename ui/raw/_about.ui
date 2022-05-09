@@ -10,13 +10,13 @@
     <x>0</x>
     <y>0</y>
     <width>320</width>
-    <height>240</height>
+    <height>270</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>320</width>
-    <height>240</height>
+    <height>270</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -62,20 +62,10 @@
       </font>
      </property>
      <property name="text">
-      <string>πGIS  v0.1.0
-
-Made By:
-Chi Zhang
-Kaihao Zheng
-Haoliang Chen
-
-Powered by open-source software:
-PySide6
-pyinstaller
-PyYAML</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;πGIS v0.1.0 &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Made By: &lt;/span&gt;&lt;br/&gt;Chi Zhang &lt;br/&gt;Kaihao Zheng &lt;br/&gt;Haoliang Chen &lt;br/&gt;❤️ &lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Powered by open-source software: &lt;/span&gt;&lt;br/&gt;PySide6 &lt;br/&gt;pyinstaller &lt;br/&gt;PyYAML &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+     <property name="textFormat">
+      <enum>Qt::RichText</enum>
      </property>
     </widget>
    </item>

@@ -22,6 +22,9 @@
     <height>0</height>
    </size>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::CustomContextMenu</enum>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -30,13 +33,13 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
     <number>0</number>
@@ -70,10 +73,50 @@
      <property name="alternatingRowColors">
       <bool>true</bool>
      </property>
+     <attribute name="headerVisible">
+      <bool>true</bool>
+     </attribute>
     </widget>
    </item>
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>LayerTree</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>LayerTree</receiver>
+   <slot>show_context_menu()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>99</x>
+     <y>149</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>99</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeView</sender>
+   <signal>pressed(QModelIndex)</signal>
+   <receiver>LayerTree</receiver>
+   <slot>clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>99</x>
+     <y>150</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>99</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>show_context_menu()</slot>
+  <slot>clicked()</slot>
+ </slots>
 </ui>

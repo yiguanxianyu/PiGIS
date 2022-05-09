@@ -24,17 +24,17 @@ class PiGISProject:
 
             assert y['Application']['app_name'] == 'PiGIS'
             ver = y['Application']['minimal_version'].split('.')
-            major, minor, fix = int(ver[0]), int(ver[1]), int(ver[2])
+            major, minor, patch = int(ver[0]), int(ver[1]), int(ver[2])
 
             # Check πGIS version
             version_error = False
-            if MAJOR_VERSION < major:
+            if PiGIS_MAJOR_VERSION < major:
                 version_error = True
-            elif MAJOR_VERSION == major:
-                if MINOR_VERSION < minor:
+            elif PiGIS_MAJOR_VERSION == major:
+                if PiGIS_MINOR_VERSION < minor:
                     version_error = True
-                elif MINOR_VERSION == minor:
-                    if FIX_VERSION < fix:
+                elif PiGIS_MINOR_VERSION == minor:
+                    if PiGIS_PATCH_VERSION < patch:
                         version_error = True
 
             if version_error:
@@ -58,19 +58,18 @@ class PiGISProject:
             self.path = path
 
         except Exception as ep:
-            print('Project file error:')
+            print('An error occurred while parsing project file:')
             print(str(ep))
 
     def save(self):
         """
         Save current project to file
-        :return: None
         """
 
         config = {
             'Application': {
                 'app_name': 'PiGIS',
-                'minimal_version': f'{MAJOR_VERSION}.{MINOR_VERSION}.{FIX_VERSION}',
+                'minimal_version': f'{PiGIS_MAJOR_VERSION}.{PiGIS_MINOR_VERSION}.{PiGIS_PATCH_VERSION}',
             }
         }
 

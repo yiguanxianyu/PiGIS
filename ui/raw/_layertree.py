@@ -29,11 +29,12 @@ class Ui_LayerTree(object):
         sizePolicy.setHeightForWidth(LayerTree.sizePolicy().hasHeightForWidth())
         LayerTree.setSizePolicy(sizePolicy)
         LayerTree.setMinimumSize(QSize(100, 0))
+        LayerTree.setContextMenuPolicy(Qt.CustomContextMenu)
         LayerTree.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
         self.verticalLayout = QVBoxLayout(LayerTree)
-        self.verticalLayout.setSpacing(1)
+        self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, 1, 0, 0)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.treeView = QTreeView(LayerTree)
         self.treeView.setObjectName(u"treeView")
         self.treeView.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
@@ -44,11 +45,14 @@ class Ui_LayerTree(object):
         self.treeView.setDragDropMode(QAbstractItemView.InternalMove)
         self.treeView.setDefaultDropAction(Qt.MoveAction)
         self.treeView.setAlternatingRowColors(True)
+        self.treeView.header().setVisible(True)
 
         self.verticalLayout.addWidget(self.treeView)
 
 
         self.retranslateUi(LayerTree)
+        LayerTree.customContextMenuRequested.connect(LayerTree.show_context_menu)
+        self.treeView.pressed.connect(LayerTree.clicked)
 
         QMetaObject.connectSlotsByName(LayerTree)
     # setupUi

@@ -23,8 +23,8 @@ class Ui_AboutPage(object):
         if not AboutPage.objectName():
             AboutPage.setObjectName(u"AboutPage")
         AboutPage.setWindowModality(Qt.NonModal)
-        AboutPage.resize(320, 240)
-        AboutPage.setMinimumSize(QSize(320, 240))
+        AboutPage.resize(320, 270)
+        AboutPage.setMinimumSize(QSize(320, 270))
         AboutPage.setMaximumSize(QSize(320, 240))
         AboutPage.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
         self.verticalLayout = QVBoxLayout(AboutPage)
@@ -45,7 +45,7 @@ class Ui_AboutPage(object):
         font1.setFamilies([u"Arial"])
         font1.setPointSize(10)
         self.label_2.setFont(font1)
-        self.label_2.setAlignment(Qt.AlignCenter)
+        self.label_2.setTextFormat(Qt.RichText)
 
         self.verticalLayout.addWidget(self.label_2)
 
@@ -58,16 +58,6 @@ class Ui_AboutPage(object):
     def retranslateUi(self, AboutPage):
         AboutPage.setWindowTitle(QCoreApplication.translate("AboutPage", u"About", None))
         self.label.setText(QCoreApplication.translate("AboutPage", u"About", None))
-        self.label_2.setText(QCoreApplication.translate("AboutPage", u"\u03c0GIS  v0.1.0\n"
-"\n"
-"Made By:\n"
-"Chi Zhang\n"
-"Kaihao Zheng\n"
-"Haoliang Chen\n"
-"\n"
-"Powered by open-source software:\n"
-"PySide6\n"
-"pyinstaller\n"
-"PyYAML", None))
+        self.label_2.setText(QCoreApplication.translate("AboutPage", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">\u03c0GIS v0.1.0 </span></p><p align=\"center\"><span style=\" font-size:11pt;\">Made By: </span><br/>Chi Zhang <br/>Kaihao Zheng <br/>Haoliang Chen <br/>\u2764\ufe0f </p><p align=\"center\"><span style=\" font-size:11pt;\">Powered by open-source software: </span><br/>PySide6 <br/>pyinstaller <br/>PyYAML </p></body></html>", None))
     # retranslateUi
 
