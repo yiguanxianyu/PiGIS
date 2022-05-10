@@ -22,7 +22,7 @@ class MainWindow(QMainWindow):
         # self.ui.graphView.addWidget(self.plot)
         # self.curve = self.plot.plot()
 
-        layer_tree_widget = LayerTree()
+        layer_tree_widget = LayerTree(self)
         self.layerTree = layer_tree_widget.ui.treeView
         graph_widget = Graph()
         self.graphWidget = graph_widget.ui.graphicsView
