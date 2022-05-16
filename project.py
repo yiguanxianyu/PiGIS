@@ -4,7 +4,7 @@ import yaml
 from PySide6.QtWidgets import QFileDialog, QWidget
 
 from constants import *
-from GISType import class_type
+from constants import class_type
 
 
 class PiGISProject:
@@ -166,7 +166,7 @@ class PiGISProjectController:
             filter=';;'.join(all_types)
         )
 
-        # TODO: parse selected file
+        # TODO: parse selected layer file
         self.__project.add_layer(None)
         raise NotImplementedError()
 

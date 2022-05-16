@@ -18,10 +18,6 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.project = PiGISProjectController()
 
-        # self.plot = pg.PlotWidget(enableAutoRange=True)
-        # self.ui.graphView.addWidget(self.plot)
-        # self.curve = self.plot.plot()
-
         layer_tree_widget = LayerTree(self)
         self.layerTree = layer_tree_widget.ui.treeView
         graph_widget = Graph()

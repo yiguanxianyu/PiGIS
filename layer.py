@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from GISType import GISType, class_type
+from constants import class_type, GISType
 
 
 # Maybe we should use factory pattern?
@@ -18,9 +18,12 @@ class BaseLayer(ABC):
         pass
 
 
-class PointLayer(BaseLayer, ABC):
+class PointLayer(BaseLayer):
     def __init__(self):
         super(PointLayer, self).__init__(1)
+
+    def read_from_file(self, path):
+        pass
 
 
 def create_layer(path):
