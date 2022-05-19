@@ -1,8 +1,9 @@
 from PySide6.QtCore import QModelIndex
 from PySide6.QtGui import QStandardItemModel, QStandardItem, QCursor, QAction
-from PySide6.QtWidgets import QWidget, QMenu
+from PySide6.QtWidgets import QWidget, QMenu, QColorDialog
 
 from constants import QItemType
+from ui.AttributesTable import AttributesTable
 from ui.LayerItem import LayerItem
 from ui.raw import Ui_LayerTree
 
@@ -35,23 +36,22 @@ class LayerItemModel(QStandardItemModel):
         curr_row = current_index.row()
         is_not_root = current_index.parent().isValid()
         item_parent = item.parent() if is_not_root else self
+        item_parent.removeRow(curr_row)
 
-        match item.type():
-            case QItemType.Layer:
-                item_parent.removeRow(curr_row)
+    def remove_layer_group(self):
+        item = self.itemFromIndex(current_index)
+        curr_row = current_index.row()
+        is_not_root = current_index.parent().isValid()
+        item_parent = item.parent() if is_not_root else self
 
-            case QItemType.LayerGroup:
-                item_to_del = item_parent.takeRow(curr_row)[0]
-                layers = item_to_del.layers
+        item_to_del = item_parent.takeRow(curr_row)[0]
+        layers = item_to_del.layers
 
-                if is_not_root:
-                    item_parent.insertRows(curr_row, len(layers))
-                    [item_parent.setChild(curr_row + i, copy_layer(layers[i])) for i in range(len(layers))]
-                else:
-                    [self.insertRow(curr_row + i, copy_layer(layers[i])) for i in range(len(layers))]
-
-            case _:
-                print('fuck')
+        if is_not_root:
+            item_parent.insertRows(curr_row, len(layers))
+            [item_parent.setChild(curr_row + i, copy_layer(layers[i])) for i in range(len(layers))]
+        else:
+            [self.insertRow(curr_row + i, copy_layer(layers[i])) for i in range(len(layers))]
 
 
 selected_item: LayerItem = LayerItem(QItemType.Default)
@@ -83,18 +83,48 @@ class LayerTree(QWidget):
         self.create_menu()
         self.add_layer_test()
 
+    def create_layer_menu(self):
+        def show_color_dialog():
+            s = QColorDialog()
+            print(s.getColor())
+
+        choose_color_act = QAction(self)
+        choose_color_act.setText('Choose color')
+        choose_color_act.triggered.connect(show_color_dialog)
+
+        def show_attributes_table():
+            self.ab = AttributesTable()
+            self.ab.show()
+
+        show_attributes_table_act = QAction(self)
+        show_attributes_table_act.setText('Show Attribute Table')
+        show_attributes_table_act.triggered.connect(show_attributes_table)
+
+        # 删除 Action
+        delete_layer_act = QAction(self)
+        delete_layer_act.setText(u'Delete Layer')
+        delete_layer_act.triggered.connect(self.sim.remove_layer)
+
+        self.layerContextMenu.addAction(u'This is Layer')
+        self.layerContextMenu.addAction(delete_layer_act)
+        self.layerContextMenu.addAction(choose_color_act)
+        self.layerContextMenu.addAction(show_attributes_table_act)
+
+    def create_layer_group_menu(self):
+        # 删除 Action
+        delete_layer_group_act = QAction(self)
+        delete_layer_group_act.setText(u'Delete Layer Group')
+        delete_layer_group_act.triggered.connect(self.sim.remove_layer_group)
+
+        self.layerGroupContextMenu.addAction(u'This is Layer Group')
+        self.layerGroupContextMenu.addAction(delete_layer_group_act)
+
     def create_menu(self):
-        delete_action = QAction(self)
-        delete_action.setText(u'删除')
-        delete_action.triggered.connect(self.sim.remove_layer)
-
-        self.layerContextMenu.addAction(u'添加')
-        self.layerContextMenu.addAction(delete_action)
-        self.layerContextMenu.addAction(u'这是一个图层')
-
-        self.layerGroupContextMenu.addAction(u'添加')
-        self.layerGroupContextMenu.addAction(delete_action)
-        self.layerGroupContextMenu.addAction(u'这是一个图层组')
+        """
+        这里还同时生成了空白区域的菜单
+        """
+        self.create_layer_menu()
+        self.create_layer_group_menu()
 
         self.emptyContextMenu.addAction(self.ui.action_add_layer_group)
         self.emptyContextMenu.addAction(self.ui.action_expand_all)
@@ -145,7 +175,7 @@ class LayerTree(QWidget):
     def clicked(self, index):
         assert index == self.treeView.currentIndex()
         item = self.sim.itemFromIndex(index)
-        print(item.visible)
+        print('visible:', item.visible)
         global selected_item, current_index
         selected_item = item
         current_index = index

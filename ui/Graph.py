@@ -10,7 +10,7 @@ class Graph(QWidget):
         # TODO: Options Page
         self.ui = Ui_Graph()
         self.ui.setupUi(self)
-        rect = QRectF(-200, -100, 400, 200)
+        rect = QRectF(0, 0, 100, 100)
         self.scene = QGraphicsScene(rect)  # 创建场景
         self.ui.graphicsView.setScene(self.scene)
 

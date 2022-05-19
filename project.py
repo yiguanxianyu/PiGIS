@@ -1,8 +1,9 @@
 from copy import deepcopy
-import layer
+
 import yaml
 from PySide6.QtWidgets import QFileDialog, QWidget
 
+import layer
 from constants import *
 from constants import class_type
 
@@ -124,19 +125,24 @@ class PiGISProjectController:
     def new_project(self):
         self.__project = PiGISProject()
 
+    def set_save_config(self):
+        all_types = ['PiGIS Project File (*.pgz)', "YAML Ain't Markable Language (*.yaml)"]
+        fp, ft = QFileDialog.getSaveFileName(QWidget(), "Save As...", filter=';;'.join(all_types))
+        self.__project.path = fp
+
     def save_project(self):
         """
         Save project to current path
         """
+        if not self.__project.path:
+            self.set_save_config()
         self.__project.save()
 
     def save_project_as(self):
         """
         Save project to given path
         """
-        all_types = ['PiGIS Project File (*.pgz)', "YAML Ain't Markable Language (*.yaml)"]
-        fp, ft = QFileDialog.getSaveFileName(QWidget(), "Save As...", filter=';;'.join(all_types))
-        self.__project.path = fp
+        self.set_save_config()
         self.__project.save()
 
     def open_project(self):
@@ -168,12 +174,13 @@ class PiGISProjectController:
 
         # TODO: parse selected layer file
         self.__project.add_layer(None)
-        raise NotImplementedError()
 
     def copy_current_layer(self):
         """
         Append a deepcopy of the selected layer to the project
+        Not done yet
         """
+        pass
         self.__project.layer.append(
             deepcopy(self.__project.layer[self.currentLayer])
         )

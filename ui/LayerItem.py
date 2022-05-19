@@ -64,8 +64,6 @@ class LayerItem(QStandardItem):
     #     assert self.type() is ItemType.LayerGroup
     #     self.layer.append(layer)
 
-    # TODO: 删除图层和图层组
-
     @property
     def self_visible(self):
         return self.checkState()
@@ -131,7 +129,6 @@ class LayerItem(QStandardItem):
                 update_layer()
             case QItemType.LayerGroup:
                 update_layer_group()
-
             case QItemType.Default:
                 print('怎么是default')
             case _:

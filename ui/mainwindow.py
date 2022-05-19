@@ -22,13 +22,11 @@ class MainWindow(QMainWindow):
         self.layerTree = layer_tree_widget.ui.treeView
         graph_widget = Graph()
         self.graphWidget = graph_widget.ui.graphicsView
-        layer_setting_widget = QTabWidget()
 
         # 分离器添加控件
         main_horizontal_splitter = QSplitter(Qt.Horizontal)
         main_horizontal_splitter.addWidget(layer_tree_widget)
         main_horizontal_splitter.addWidget(graph_widget)
-        main_horizontal_splitter.addWidget(layer_setting_widget)
         # 把这个 splitter 放在一个布局里才能显示出来
         self.ui.mainLayout.addWidget(main_horizontal_splitter)
 
