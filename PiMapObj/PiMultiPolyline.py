@@ -1,5 +1,5 @@
-from PiGeometryCollection import PiGeometryCollection
-from PiPolyline import PiPolyline
+from PiMapObj.PiGeometryCollection import PiGeometryCollection
+from PiMapObj.PiPolyline import PiPolyline
 
 class PiMultiPolyline(PiGeometryCollection):
     def __init__(self):

@@ -102,7 +102,7 @@ class Ui_FieldTable(object):
     # setupUi
 
     def retranslateUi(self, FieldTable):
-        FieldTable.setWindowTitle(QCoreApplication.translate("FieldTable", u"Form", None))
+        FieldTable.setWindowTitle(QCoreApplication.translate("FieldTable", u"Field Table", None))
         self.addFieldButton.setText(QCoreApplication.translate("FieldTable", u"Add Field", None))
         self.deleteFieldButton.setText(QCoreApplication.translate("FieldTable", u"Delete Field", None))
         self.saveButton.setText(QCoreApplication.translate("FieldTable", u"Save", None))

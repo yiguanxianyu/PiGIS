@@ -89,7 +89,7 @@ class PiGISProject:
             layer_config.append(layer_info)
 
         config['layer'] = layer_config
-        with open(self.path, 'w') as f:
+        with open(self.path, 'w', encoding='utf-8') as f:
             f.write(yaml.safe_dump(config))
 
     def add_layer(self, _layer):

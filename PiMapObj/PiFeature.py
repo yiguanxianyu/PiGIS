@@ -1,9 +1,10 @@
-from PiGeometry import PiGeometry
-from PiPoint import PiPoint
-from PiMultiPoint import PiMultiPoint
-from PiMultiPolyline import PiMultiPolyline
-from PiMultiPolygon import PiMultiPolygon
-from PiAttribute import PiAttribute,PiAttributes
+from PiMapObj.PiGeometry import PiGeometry
+from PiMapObj.PiPoint import PiPoint
+from PiMapObj.PiMultiPoint import PiMultiPoint
+from PiMapObj.PiMultiPolyline import PiMultiPolyline
+from PiMapObj.PiMultiPolygon import PiMultiPolygon
+from PiMapObj.PiAttribute import PiAttribute,PiAttributes
+
 
 class PiFeature():
     def __init__(self,geometry_type,fields):

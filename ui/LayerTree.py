@@ -5,6 +5,7 @@ from PySide6.QtWidgets import QWidget, QMenu, QColorDialog
 from constants import QItemType
 from ui.AttributesTable import AttributesTable
 from ui.LayerItem import LayerItem
+from ui.Symbology import SymbologyPage
 from ui.raw import Ui_LayerTree
 
 
@@ -93,31 +94,48 @@ class LayerTree(QWidget):
         choose_color_act.triggered.connect(show_color_dialog)
 
         def show_attributes_table():
-            self.ab = AttributesTable()
+            self.ab = AttributesTable(None)
             self.ab.show()
 
         show_attributes_table_act = QAction(self)
         show_attributes_table_act.setText('Show Attribute Table')
         show_attributes_table_act.triggered.connect(show_attributes_table)
 
+        def show_symbology_page():
+            self.sp = SymbologyPage(None)
+            self.sp.show()
+
+        show_symbology_page_act = QAction(self)
+        show_symbology_page_act.setText('Symbology')
+        show_symbology_page_act.triggered.connect(show_symbology_page)
+
+        def show_label():
+            pass
+
+        show_label_act = QAction(self)
+        show_label_act.setText('Show Label')
+        show_label_act.triggered.connect(show_label)
+
         # 删除 Action
-        delete_layer_act = QAction(self)
-        delete_layer_act.setText(u'Delete Layer')
-        delete_layer_act.triggered.connect(self.sim.remove_layer)
+        remove_layer_act = QAction(self)
+        remove_layer_act.setText(u'Remove Layer')
+        remove_layer_act.triggered.connect(self.sim.remove_layer)
 
         self.layerContextMenu.addAction(u'This is Layer')
-        self.layerContextMenu.addAction(delete_layer_act)
+        self.layerContextMenu.addAction(show_label_act)
+        self.layerContextMenu.addAction(remove_layer_act)
         self.layerContextMenu.addAction(choose_color_act)
         self.layerContextMenu.addAction(show_attributes_table_act)
+        self.layerContextMenu.addAction(show_symbology_page_act)
 
     def create_layer_group_menu(self):
         # 删除 Action
-        delete_layer_group_act = QAction(self)
-        delete_layer_group_act.setText(u'Delete Layer Group')
-        delete_layer_group_act.triggered.connect(self.sim.remove_layer_group)
+        remove_layer_group_act = QAction(self)
+        remove_layer_group_act.setText(u'Remove Layer Group')
+        remove_layer_group_act.triggered.connect(self.sim.remove_layer_group)
 
         self.layerGroupContextMenu.addAction(u'This is Layer Group')
-        self.layerGroupContextMenu.addAction(delete_layer_group_act)
+        self.layerGroupContextMenu.addAction(remove_layer_group_act)
 
     def create_menu(self):
         """

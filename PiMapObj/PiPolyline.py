@@ -1,5 +1,4 @@
-
-import PiGlobal,PiGeometry
+from PiMapObj import PiGlobal,PiGeometry
 class PiPolyline:
     pass
 

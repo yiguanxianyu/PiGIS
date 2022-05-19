@@ -5,7 +5,7 @@ from ui.raw import Ui_AttributesTable
 
 
 class AttributesTable(QWidget):
-    def __init__(self, layer=None):
+    def __init__(self, layer):
         super().__init__()
         self.fieldTable = None
         self.editState = False

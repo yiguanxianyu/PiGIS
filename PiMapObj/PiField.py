@@ -1,4 +1,4 @@
-from PiConstant import PiValueTypeConstant
+from PiMapObj.PiConstant import PiValueTypeConstant
 cons = PiValueTypeConstant()
 class PiField():
     def __init__(self):

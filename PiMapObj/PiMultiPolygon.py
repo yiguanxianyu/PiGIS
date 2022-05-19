@@ -1,5 +1,5 @@
-from PiGeometryCollection import PiGeometryCollection
-from PiPolygon import PiPolygon
+from PiMapObj.PiGeometryCollection import PiGeometryCollection
+from PiMapObj.PiPolygon import PiPolygon
 class PiMultiPolygon(PiGeometryCollection):
     def __init__(self):
         super().__init__(2)
@@ -13,6 +13,9 @@ class PiMultiPolygon(PiGeometryCollection):
             new_polygon.load(reader)
             polygon_list.append(new_polygon)
         super().load(polygon_list)
+
+    def get_mbr(self):
+        return super().get_mbr()
         
     def update_object(self,index,object):
         self._collection[index] = object

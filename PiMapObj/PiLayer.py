@@ -1,10 +1,8 @@
 import numpy
-import chardet
-import struct
-from BinaryReader import BinaryReader
-from PiFeature import PiFeature,PiFeatures
-from PiField import PiField,PiFields
-from PiConstant import PiGeometryTypeConstant
+from PiMapObj.BinaryReader import BinaryReader
+from PiMapObj.PiFeature import PiFeature,PiFeatures
+from PiMapObj.PiField import PiField,PiFields
+from PiMapObj.PiConstant import PiGeometryTypeConstant
 cons = PiGeometryTypeConstant()
 
 class PiLayer():

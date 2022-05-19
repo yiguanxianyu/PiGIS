@@ -1,4 +1,4 @@
-import PiGlobal,PiGeometry
+from PiMapObj import PiGlobal,PiGeometry
 import copy
 class PiPoint():
     pass

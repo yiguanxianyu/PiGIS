@@ -1,5 +1,5 @@
 import math
-import PiGlobal,PiGeometry
+from PiMapObj import PiGlobal,PiGeometry
 class PiPolygon:
     pass
 
@@ -25,8 +25,6 @@ class PiPolygon(PiGeometry.PiGeometry):
         if len(self._x) > 2:
             self._length  = PiGlobal.calculate_perimeter(self._x,self._y)
             self._area = PiGlobal.calculate_area(self._x,self._y)
-            for i in range(len(self._innerx)):
-                self._area -= PiGlobal.calculate_area(self._innerx[i],self._innery[i])
         if len(self._x) > 0:
             self._mbr = PiGlobal.PiMbr(min(self._x),min(self._y),max(self._x),max(self._y))
 

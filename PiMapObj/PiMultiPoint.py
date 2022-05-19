@@ -1,5 +1,5 @@
-from PiGeometryCollection import PiGeometryCollection
-from PiPoint import PiPoint
+from PiMapObj.PiGeometryCollection import PiGeometryCollection
+from PiMapObj.PiPoint import PiPoint
 
 class PiMultiPoint(PiGeometryCollection):
     def __init__(self):
@@ -15,6 +15,8 @@ class PiMultiPoint(PiGeometryCollection):
             point_list.append(new_point)
         super().load(point_list)
 
+    def get_mbr(self):
+        return super().get_mbr()
 
     def update_object(self,index,object):
         self._collection[index] = object
