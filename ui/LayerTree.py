@@ -2,7 +2,7 @@ from PySide6.QtCore import QModelIndex
 from PySide6.QtGui import QStandardItemModel, QStandardItem, QCursor, QAction
 from PySide6.QtWidgets import QWidget, QMenu
 
-from constants import ItemType
+from constants import QItemType
 from ui.LayerItem import LayerItem
 from ui.raw import Ui_LayerTree
 
@@ -12,7 +12,7 @@ from ui.raw import Ui_LayerTree
 def copy_layer(layer):
     new_item = LayerItem(layer.type(), layer.text())
 
-    if layer.type() is ItemType.LayerGroup:
+    if layer.type() is QItemType.LayerGroup:
         lrs = layer.layers
         new_item.insertRows(0, len(lrs))
         for i in range(len(lrs)):
@@ -28,7 +28,7 @@ class LayerItemModel(QStandardItemModel):
     def __init__(self, layer_tree, *args):
         super(LayerItemModel, self).__init__(*args)
         self.layerTree = layer_tree
-        self.setItemPrototype(LayerItem(ItemType.Default))
+        self.setItemPrototype(LayerItem(QItemType.Default))
 
     def remove_layer(self):
         item = self.itemFromIndex(current_index)
@@ -37,10 +37,10 @@ class LayerItemModel(QStandardItemModel):
         item_parent = item.parent() if is_not_root else self
 
         match item.type():
-            case ItemType.Layer:
+            case QItemType.Layer:
                 item_parent.removeRow(curr_row)
 
-            case ItemType.LayerGroup:
+            case QItemType.LayerGroup:
                 item_to_del = item_parent.takeRow(curr_row)[0]
                 layers = item_to_del.layers
 
@@ -54,7 +54,7 @@ class LayerItemModel(QStandardItemModel):
                 print('fuck')
 
 
-selected_item: LayerItem = LayerItem(ItemType.Default)
+selected_item: LayerItem = LayerItem(QItemType.Default)
 current_index: QModelIndex = None
 
 
@@ -102,11 +102,11 @@ class LayerTree(QWidget):
 
     def add_layer_test(self):
 
-        item1 = LayerItem(ItemType.LayerGroup, '图层组1')
-        item2 = LayerItem(ItemType.LayerGroup, '图层组2')
+        item1 = LayerItem(QItemType.LayerGroup, '图层组1')
+        item2 = LayerItem(QItemType.LayerGroup, '图层组2')
 
         for i in range(5):
-            temp = LayerItem(ItemType.Layer, f'图层{i}')
+            temp = LayerItem(QItemType.Layer, f'图层{i}')
             item1.appendRow(temp)
 
         self.sim.insertRow(0, item1)
@@ -120,11 +120,11 @@ class LayerTree(QWidget):
 
         if s:
             match s.type():
-                case ItemType.Layer:
+                case QItemType.Layer:
                     # 选中图层
                     self.layerContextMenu.move(QCursor().pos())
                     self.layerContextMenu.show()
-                case ItemType.LayerGroup:
+                case QItemType.LayerGroup:
                     # 选中图层组
                     self.layerGroupContextMenu.move(QCursor().pos())
                     self.layerGroupContextMenu.show()
@@ -151,12 +151,12 @@ class LayerTree(QWidget):
         current_index = index
 
     def add_layer(self, layer):
-        item = LayerItem(ItemType.Layer, 'New Layer')
+        item = LayerItem(QItemType.Layer, 'New Layer')
         item.set_layer(layer)
         self.sim.appendRow(item)
 
     def add_layer_group(self):
-        item = LayerItem(ItemType.LayerGroup, 'New Layer Group')
+        item = LayerItem(QItemType.LayerGroup, 'New Layer Group')
         self.sim.appendRow(item)
 
     # TODO: get_render_list, 获取需要被渲染的图层

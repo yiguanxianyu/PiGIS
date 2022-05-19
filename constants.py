@@ -7,13 +7,13 @@ PiGIS_MINOR_VERSION = 1
 PiGIS_PATCH_VERSION = 0
 
 
-class ItemType(Enum):
+class QItemType(Enum):
     Layer = 1
     LayerGroup = 2
     Default = 3
 
 
-class UserRole:
+class QUserRole:
     min_value = QStandardItem.UserType
     ItemType = 1000 + min_value
     Layer = 1010 + min_value

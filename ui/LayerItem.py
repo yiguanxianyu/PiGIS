@@ -1,7 +1,7 @@
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QStandardItem
 
-from constants import ItemType, UserRole
+from constants import QItemType, QUserRole
 
 
 class LayerItem(QStandardItem):
@@ -12,10 +12,10 @@ class LayerItem(QStandardItem):
         self.__type = None
         self.layer = None
 
-        if _type is ItemType.Layer:
+        if _type is QItemType.Layer:
             self.setDropEnabled(False)
 
-        self.setData(_type, UserRole.ItemType)
+        self.setData(_type, QUserRole.ItemType)
 
     def clone(self):
         """
@@ -27,7 +27,7 @@ class LayerItem(QStandardItem):
 
     def type(self):
         if not self.__type:
-            self.__type = self.data(UserRole.ItemType)
+            self.__type = self.data(QUserRole.ItemType)
         return self.__type
 
     @property
@@ -53,7 +53,7 @@ class LayerItem(QStandardItem):
         """
         为图层项设置图层，仅对 Layer 生效
         """
-        assert self.type() is ItemType.Layer
+        assert self.type() is QItemType.Layer
         self.layer = layer
 
     # def add_layer(self, layer):
@@ -92,14 +92,14 @@ class LayerItem(QStandardItem):
         递归地设置每个图层的可见性
         """
         match self.type():
-            case ItemType.Layer:
+            case QItemType.Layer:
                 # TODO: 这个 Layer 对象还没有眉目呢
                 # self.layer.set_visible(self.visible)
                 pass
-            case ItemType.LayerGroup:
+            case QItemType.LayerGroup:
                 for item in self.layers:
                     item.update_visible()
-            case ItemType.Default:
+            case QItemType.Default:
                 print('怎么是default')
             case _:
                 raise Exception('Some error occurred')
@@ -127,12 +127,12 @@ class LayerItem(QStandardItem):
         self.update_visible()
 
         match self.type():
-            case ItemType.Layer:
+            case QItemType.Layer:
                 update_layer()
-            case ItemType.LayerGroup:
+            case QItemType.LayerGroup:
                 update_layer_group()
 
-            case ItemType.Default:
+            case QItemType.Default:
                 print('怎么是default')
             case _:
                 raise Exception('Some error occurred')
