@@ -50,9 +50,11 @@ class LayerItemModel(QStandardItemModel):
 
         if is_not_root:
             item_parent.insertRows(curr_row, len(layers))
-            [item_parent.setChild(curr_row + i, copy_layer(layers[i])) for i in range(len(layers))]
+            [item_parent.setChild(curr_row + i, copy_layer(layers[i]))
+             for i in range(len(layers))]
         else:
-            [self.insertRow(curr_row + i, copy_layer(layers[i])) for i in range(len(layers))]
+            [self.insertRow(curr_row + i, copy_layer(layers[i]))
+             for i in range(len(layers))]
 
 
 selected_item: LayerItem = LayerItem(QItemType.Default)

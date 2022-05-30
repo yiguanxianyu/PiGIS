@@ -5,10 +5,25 @@ from PySide6.QtWidgets import QApplication
 
 from ui.MainWindow import MainWindow
 
+from PiMapObj.PiLayer import PiLayer
+from PiMapObj.PiProjection import PiProjection
+
 if __name__ == '__main__':
+    '''小陈添加语句'''
+    layer1 = PiLayer()
+    layer2 = PiLayer()
+    proj = PiProjection()
+    layer1.load("PiMapObj/图层文件/省级行政区.lay")
+    layer2.load("PiMapObj/图层文件/国界线.lay")
+    proj.load("PiMapObj/图层文件/图层文件坐标系统说明.txt")
+    ''''''
+
     app = QApplication(sys.argv)
 
     window = MainWindow()
+    '''小陈添加语句'''
+    window.load_layers([layer1,layer2],proj)
+    ''''''
     window.show()
 
     sys.exit(app.exec())

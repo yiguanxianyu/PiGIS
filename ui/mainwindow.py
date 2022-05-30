@@ -1,10 +1,15 @@
 from PySide6.QtCore import Qt, QStringListModel
 from PySide6.QtGui import QFont, QStandardItemModel, QStandardItem
-from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter, QWidget, QTabWidget, QListWidgetItem
+from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter, QWidget, QTabWidget, QListWidgetItem,QGraphicsScene
+from PiMapObj.PiLayer import PiLayer
 # import pyqtgraph as pg
 from ui import LayerTree, Graph, OptionsPage, AboutPage
 from ui.raw import Ui_MainWindow
 from project import PiGISProjectController
+
+'''小陈添加'''
+from PiMapObj.PiShow import PiShow
+''''''
 
 
 class MainWindow(QMainWindow):
@@ -21,6 +26,10 @@ class MainWindow(QMainWindow):
         layer_tree_widget = LayerTree(self)
         self.layerTree = layer_tree_widget.ui.treeView
         graph_widget = Graph()
+        '''小陈添加语句'''
+        self.layer_tree = layer_tree_widget
+        self.graph_widget = graph_widget
+        ''''''
         self.graphWidget = graph_widget.ui.graphicsView
 
         # 分离器添加控件
@@ -29,6 +38,19 @@ class MainWindow(QMainWindow):
         main_horizontal_splitter.addWidget(graph_widget)
         # 把这个 splitter 放在一个布局里才能显示出来
         self.ui.mainLayout.addWidget(main_horizontal_splitter)
+
+    """小陈添加方法"""
+    def load_layers(self,layers,proj):
+        scene = QGraphicsScene()
+        self.graphWidget.setScene(scene)
+        figure = PiShow()
+        for layer in layers:
+            figure.add_layer(layer,proj)
+        scene.addWidget(figure)
+
+
+    def draw_layers(self):
+        pass
 
     def open_project(self):
         self.project.open_project()

@@ -1,37 +1,39 @@
-import numpy
 from PiMapObj.BinaryReader import BinaryReader
-from PiMapObj.PiFeature import PiFeature,PiFeatures
-from PiMapObj.PiField import PiField,PiFields
 from PiMapObj.PiConstant import PiGeometryTypeConstant
+from PiMapObj.PiFeature import PiFeatures
+from PiMapObj.PiField import PiFields
+
 cons = PiGeometryTypeConstant()
 
-class PiLayer():
+
+class PiLayer:
     def __init__(self):
         self.fields = PiFields()
         self.features = PiFeatures()
         self.geometry_type = 0
         self.useless = 0
-    
-    def load(self,file_path):
-        with open(file_path,"rb") as file:
+
+    def load(self, file_path):
+        with open(file_path, "rb") as file:
             reader = BinaryReader(file.read())
-        self.useless = reader.read_int32() # 版本号
-        self.geometry_type = reader.read_int32() # 图层元素类型
-        self.fields.load(reader) # 加载字段
-        self.features.load(reader,self.geometry_type,self.fields) # 加载元素
-    
+        self.useless = reader.read_int32()  # 版本号
+        self.geometry_type = reader.read_int32()  # 图层元素类型
+        self.fields.load(reader)  # 加载字段
+        self.features.load(reader, self.geometry_type, self.fields)  # 加载元素
+
     def get_geometry_type(self):
         return cons.get_str(self.geometry_type)
 
     def get_fields(self):
         return self.fields
-    
+
     def get_features(self):
         return self.features
 
+
 if __name__ == "__main__":
-    #reader = LayerReader("图层文件/国界线.lay")
-    #reader = LayerReader("图层文件/省级行政区.lay")
+    # reader = LayerReader("图层文件/国界线.lay")
+    # reader = LayerReader("图层文件/省级行政区.lay")
     layer = PiLayer()
     layer.load("图层文件/省会城市.lay")
     print(layer.get_geometry_type())
@@ -39,4 +41,3 @@ if __name__ == "__main__":
     fe = layer.features.features[0]
     fea = fe.attributes
     print(fea)
-    

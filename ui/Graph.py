@@ -1,5 +1,4 @@
-from PySide6.QtCore import QRectF
-from PySide6.QtWidgets import QWidget, QGraphicsScene, QGraphicsRectItem, QGraphicsItem
+from PySide6.QtWidgets import QWidget, QGraphicsScene
 
 from ui.raw import Ui_Graph
 
@@ -10,10 +9,11 @@ class Graph(QWidget):
         # TODO: Options Page
         self.ui = Ui_Graph()
         self.ui.setupUi(self)
-        rect = QRectF(0, 0, 100, 100)
-        self.scene = QGraphicsScene(rect)  # 创建场景
-        self.ui.graphicsView.setScene(self.scene)
 
+        # rect = QRectF(0, 0, 200, 100)
+        self.scene = QGraphicsScene()  # 创建场景
+        self.ui.graphicsView.setScene(self.scene)
+        '''
         item1 = QGraphicsRectItem(rect)  # 创建矩形---以场景为坐标
         item1.setFlags(
             QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemIsMovable)  # 给图元设置标志
@@ -22,3 +22,6 @@ class Graph(QWidget):
         # QGraphicsItem.ItemIsMovable---可移动
         # QGraphicsItem.ItemIsPanel---
         self.scene.addItem(item1)  # 给场景添加图元
+        self.figure = PiShow()
+        self.scene.addWidget(self.figure)
+        '''

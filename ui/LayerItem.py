@@ -70,10 +70,7 @@ class LayerItem(QStandardItem):
 
     @property
     def parent_visible(self):
-        if self.parent():
-            return self.parent().checkState()
-        else:
-            return True
+        return self.parent().checkState() if self.parent() else True
 
     @property
     def visible(self):
