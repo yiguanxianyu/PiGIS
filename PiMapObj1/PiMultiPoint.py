@@ -1,25 +1,20 @@
-from PiMapObj.PiGeometryCollection import PiGeometryCollection
-from PiMapObj.PiPoint import PiPoint
+from PiGeometryCollection import PiGeometryCollection
+from PiPoint import PiPoint
 
 class PiMultiPoint(PiGeometryCollection):
     def __init__(self):
         super().__init__(0)
         self.count = 0 # 点个数
     
-    def load(self,reader,load_type):
+    def load(self,reader):
         point_list = []
-        if load_type == 'lay':
-            self.count = reader.read_int32()
-            for i in range(self.count):
-                new_point = PiPoint() 
-                new_point.load(reader,load_type)
-                point_list.append(new_point)
-        elif load_type == 'shp':
-            pass
+        self.count = reader.read_int32()
+        for i in range(self.count):
+            new_point = PiPoint() 
+            new_point.load(reader)
+            point_list.append(new_point)
         super().load(point_list)
 
-    def get_mbr(self):
-        return super().get_mbr()
 
     def update_object(self,index,object):
         self._collection[index] = object

@@ -1,4 +1,4 @@
-from PiMapObj import PiGlobal,PiGeometry
+import PiGlobal,PiGeometry
 '''类别标识
 1 PiPoint
 2 PiPolyline

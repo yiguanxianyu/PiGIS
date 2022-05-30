@@ -1,0 +1,13 @@
+PiGeometry
+-id
+-type
+PiGeometryCollection
+
+
+PiGlobal
+
+PiPoint
+
+PiPolygon
+
+PiPolyline

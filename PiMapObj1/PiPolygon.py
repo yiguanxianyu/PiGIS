@@ -1,5 +1,5 @@
 import math
-from PiMapObj import PiGlobal,PiGeometry
+import PiGlobal,PiGeometry
 class PiPolygon:
     pass
 
@@ -14,20 +14,19 @@ class PiPolygon(PiGeometry.PiGeometry):
         self._area = 0
         self._changed = True
 
-    def load(self,reader,load_type):
-        if load_type == 'lay':
-            self.count = reader.read_int32()
-            for i in range(self.count):
-                self._x.append(reader.read_float64())
-                self._y.append(reader.read_float64())
-        elif load_type == 'shp':
-            pass
+    def load(self,reader):
+        self.count = reader.read_int32()
+        for i in range(self.count):
+            self._x.append(reader.read_float64())
+            self._y.append(reader.read_float64())
         #self.__calculate_attr()
 
     def __calculate_attr(self):
         if len(self._x) > 2:
             self._length  = PiGlobal.calculate_perimeter(self._x,self._y)
             self._area = PiGlobal.calculate_area(self._x,self._y)
+            for i in range(len(self._innerx)):
+                self._area -= PiGlobal.calculate_area(self._innerx[i],self._innery[i])
         if len(self._x) > 0:
             self._mbr = PiGlobal.PiMbr(min(self._x),min(self._y),max(self._x),max(self._y))
 

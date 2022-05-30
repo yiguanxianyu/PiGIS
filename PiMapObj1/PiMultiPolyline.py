@@ -1,21 +1,18 @@
-from PiMapObj.PiGeometryCollection import PiGeometryCollection
-from PiMapObj.PiPolyline import PiPolyline
+from PiGeometryCollection import PiGeometryCollection
+from PiPolyline import PiPolyline
 
 class PiMultiPolyline(PiGeometryCollection):
     def __init__(self):
         super().__init__(1)
         self.count = 0 # 折线个数
     
-    def load(self,reader,load_type):
+    def load(self,reader):
         polyline_list = []
-        if load_type == 'lay':
-            self.count = reader.read_int32()
-            for i in range(self.count):
-                new_polyline = PiPolyline() 
-                new_polyline.load(reader,load_type)
-                polyline_list.append(new_polyline)
-        elif load_type == 'shp':
-            pass
+        self.count = reader.read_int32()
+        for i in range(self.count):
+            new_polyline = PiPolyline() 
+            new_polyline.load(reader)
+            polyline_list.append(new_polyline)
         super().load(polyline_list)
     
     def get_mbr(self):

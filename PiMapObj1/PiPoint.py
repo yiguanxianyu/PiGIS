@@ -1,4 +1,4 @@
-from PiMapObj import PiGlobal,PiGeometry
+import PiGlobal,PiGeometry
 import copy
 class PiPoint():
     pass
@@ -9,12 +9,9 @@ class PiPoint(PiGeometry.PiGeometry):
         self._x = 0
         self._y = 0
     
-    def load(self,reader,load_type):
-        if load_type == 'lay':
-            self._x = reader.read_float64()
-            self._y = reader.read_float64()
-        elif load_type == 'shp':
-            pass
+    def load(self,reader):
+        self._x = reader.read_float64()
+        self._y = reader.read_float64()
     
     def clone(self) -> PiPoint:
         return PiPoint(self.x,self.y)
@@ -34,7 +31,5 @@ class PiPoint(PiGeometry.PiGeometry):
         return self._x
     def get_y(self):
         return self._y
-    def get_mbr(self):
-        return PiGlobal.PiMbr(self._x,self._y,self._x,self._y)
 
 

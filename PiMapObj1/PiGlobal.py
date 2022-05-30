@@ -6,7 +6,7 @@ TYPENAME = ["Pi","Point","Polyline","Polygon","MultiPoint","MultiPolyline","Mult
 
 '''公共变量
 '''
-layer_count = 0
+
 id_count = 0
 
 '''公用类型

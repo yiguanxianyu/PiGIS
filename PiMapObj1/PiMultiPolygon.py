@@ -1,24 +1,18 @@
-from PiMapObj.PiGeometryCollection import PiGeometryCollection
-from PiMapObj.PiPolygon import PiPolygon
+from PiGeometryCollection import PiGeometryCollection
+from PiPolygon import PiPolygon
 class PiMultiPolygon(PiGeometryCollection):
     def __init__(self):
         super().__init__(2)
         self.count = 0 # 折线个数
 
-    def load(self,reader,load_type):
+    def load(self,reader):
         polygon_list = []
-        if load_type == 'lay':
-            self.count = reader.read_int32()
-            for i in range(self.count):
-                new_polygon = PiPolygon() 
-                new_polygon.load(reader,load_type)
-                polygon_list.append(new_polygon)
-        elif load_type == 'shp':
-            pass
+        self.count = reader.read_int32()
+        for i in range(self.count):
+            new_polygon = PiPolygon() 
+            new_polygon.load(reader)
+            polygon_list.append(new_polygon)
         super().load(polygon_list)
-
-    def get_mbr(self):
-        return super().get_mbr()
         
     def update_object(self,index,object):
         self._collection[index] = object

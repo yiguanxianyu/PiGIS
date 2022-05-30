@@ -1,5 +1,5 @@
 import math
-from PiMapObj.PiConstant import PiProjectionTypeConstant,PiLinearUnitConstant
+from PiConstant import PiProjectionTypeConstant,PiLinearUnitConstant
 """常数
 """
 PI = 2 * math.acos(0)
@@ -45,7 +45,7 @@ class PiProjection():
         self.m0,self._e,self._e2,self._e3,self._e4 = 0,0,0,0,0
 
     def load(self,file_path):
-        with open(file_path,'r',encoding='utf-8') as file:
+        with open(file_path,'r') as file:
             lines = file.readlines()
             attr = {}
             for line in lines:
