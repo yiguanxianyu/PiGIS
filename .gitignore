@@ -129,5 +129,6 @@ dmypy.json
 .pyre/
 
 .vscode
+.idea/
 *.DS_Store
 .qt_for_python
