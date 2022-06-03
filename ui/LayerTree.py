@@ -192,6 +192,10 @@ class LayerTree(QWidget):
         item.update_on_item_changed()
         print('---end---')
 
+    def get_layers(self):
+        ...
+        # 返回树状图层
+
     def clicked(self, index):
         assert index == self.treeView.currentIndex()
         item = self.sim.itemFromIndex(index)

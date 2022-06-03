@@ -3,10 +3,9 @@ import sys
 
 from PySide6.QtWidgets import QApplication
 
-from ui.MainWindow import MainWindow
-
 from PiMapObj.PiLayer import PiLayer
 from PiMapObj.PiProjection import PiProjection
+from ui import MainWindow
 
 if __name__ == '__main__':
     '''小陈添加语句'''

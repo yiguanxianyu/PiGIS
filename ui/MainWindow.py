@@ -1,15 +1,11 @@
-from typing import Collection
-from PySide6.QtCore import QLine, QLineF, QPointF, Qt, QStringListModel, QPoint
-from PySide6.QtGui import QPaintDevice, QBrush, QFont, QPainter, QPen, QPixmap, QStandardItemModel, QStandardItem
-from PySide6.QtWidgets import QGraphicsView, QGraphicsItemGroup, QMainWindow, QApplication, QSplitter, QWidget, QTabWidget, QListWidgetItem, QGraphicsScene, QGraphicsPixmapItem, QGraphicsItem, QGraphicsPolygonItem, QGraphicsLineItem, QGraphicsEllipseItem
-from PiMapObj.PiLayer import PiLayer
-from PiMapObj.PiPolyline import PiPolyline
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter
+
+from project import PiGISProjectController
 from ui import LayerTree, Graph, OptionsPage, AboutPage
 from ui.raw import Ui_MainWindow
-from project import PiGISProjectController
+
 '''小陈添加'''
-from PiMapObj.PiShow import PiGraphicsItem
-from PiMapObj.PiConstant import PiGeometryTypeConstant
 from PiDrawObj.PiGraphDraw import PiGraphDraw
 ''''''
 
