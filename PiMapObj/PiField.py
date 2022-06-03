@@ -6,10 +6,13 @@ class PiField():
         self.value_type = 0 # 数据类型
         self.useless = None
     
-    def load(self,reader):
-        self.name = reader.read_string()
-        self.value_type = reader.read_int32()
-        self.useless = reader.read_int32()
+    def load(self,reader,load_type = 'lay'):
+        if load_type == 'lay':
+            self.name = reader.read_string()
+            self.value_type = reader.read_int32()
+            self.useless = reader.read_int32()
+        elif load_type == 'shp':
+            pass
     
     def get_value_type(self):
         return self.value_type
@@ -24,12 +27,15 @@ class PiFields():
         self.fields = []
         self.count = 0
     
-    def load(self,reader):
-        self.count = reader.read_int32() # 字段个数
-        for i in range(self.count):
-            new_field = PiField()
-            new_field.load(reader)
-            self.fields.append(new_field)
+    def load(self,reader,load_type = 'lay'):
+        if load_type == 'lay':
+            self.count = reader.read_int32() # 字段个数
+            for i in range(self.count):
+                new_field = PiField()
+                new_field.load(reader,load_type)
+                self.fields.append(new_field)
+        elif load_type == 'shp':
+            pass
 
     def get_count(self):
         return self.count

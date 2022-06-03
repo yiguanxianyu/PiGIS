@@ -6,13 +6,16 @@ class PiMultiPoint(PiGeometryCollection):
         super().__init__(0)
         self.count = 0 # 点个数
     
-    def load(self,reader):
+    def load(self,reader,load_type):
         point_list = []
-        self.count = reader.read_int32()
-        for i in range(self.count):
-            new_point = PiPoint() 
-            new_point.load(reader)
-            point_list.append(new_point)
+        if load_type == 'lay':
+            self.count = reader.read_int32()
+            for i in range(self.count):
+                new_point = PiPoint() 
+                new_point.load(reader,load_type)
+                point_list.append(new_point)
+        elif load_type == 'shp':
+            pass
         super().load(point_list)
 
     def get_mbr(self):
