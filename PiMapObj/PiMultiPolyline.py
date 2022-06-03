@@ -6,13 +6,16 @@ class PiMultiPolyline(PiGeometryCollection):
         super().__init__(1)
         self.count = 0 # 折线个数
     
-    def load(self,reader):
+    def load(self,reader,load_type):
         polyline_list = []
-        self.count = reader.read_int32()
-        for i in range(self.count):
-            new_polyline = PiPolyline() 
-            new_polyline.load(reader)
-            polyline_list.append(new_polyline)
+        if load_type == 'lay':
+            self.count = reader.read_int32()
+            for i in range(self.count):
+                new_polyline = PiPolyline() 
+                new_polyline.load(reader,load_type)
+                polyline_list.append(new_polyline)
+        elif load_type == 'shp':
+            pass
         super().load(polyline_list)
     
     def get_mbr(self):
