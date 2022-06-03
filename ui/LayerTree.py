@@ -169,17 +169,17 @@ class LayerTree(QWidget):
         s: LayerItem = self.sim.itemFromIndex(current_index_)
 
         if s:
-            match s.type():
-                case QItemType.Layer:
-                    # 选中图层
-                    self.layerContextMenu.move(QCursor().pos())
-                    self.layerContextMenu.show()
-                case QItemType.LayerGroup:
-                    # 选中图层组
-                    self.layerGroupContextMenu.move(QCursor().pos())
-                    self.layerGroupContextMenu.show()
-                case _:
-                    raise Exception('Some error occurred')
+            s_type = s.type()
+            if s_type == QItemType.Layer:
+                # 选中图层
+                self.layerContextMenu.move(QCursor().pos())
+                self.layerContextMenu.show()
+            elif s_type == QItemType.LayerGroup:
+                # 选中图层组
+                self.layerGroupContextMenu.move(QCursor().pos())
+                self.layerGroupContextMenu.show()
+            else:
+                raise Exception('Some error occurred')
         else:
             # 未选中项目
             self.emptyContextMenu.move(QCursor().pos())
@@ -195,6 +195,8 @@ class LayerTree(QWidget):
     def get_layers(self):
         ...
         # 返回树状图层
+
+    # TODO: get_render_list, 获取需要被渲染的图层
 
     def clicked(self, index):
         assert index == self.treeView.currentIndex()
@@ -212,8 +214,6 @@ class LayerTree(QWidget):
     def add_layer_group(self):
         item = LayerItem(QItemType.LayerGroup, 'New Layer Group')
         self.sim.appendRow(item)
-
-    # TODO: get_render_list, 获取需要被渲染的图层
 
 # def set_type(self, _type):
 #     """

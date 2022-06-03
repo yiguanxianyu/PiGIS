@@ -6,3 +6,4 @@ from ui.raw._layerTree import Ui_LayerTree
 from ui.raw._mainWindow import Ui_MainWindow
 from ui.raw._options import Ui_OptionsPage
 from ui.raw._symbology import Ui_Symbology
+from ui.raw._inputFilterDialog import Ui_inputFilterDialog
