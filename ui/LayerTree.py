@@ -12,7 +12,7 @@ from ui.raw import Ui_LayerTree
 # TODO:随机生成符号化的函数
 
 def copy_layer(layer):
-    new_item = LayerItem(layer.type(), layer.text())
+    new_item = LayerItem(layer.type(), layer.layer(), layer.text())
 
     if layer.type() is QItemType.LayerGroup:
         lrs = layer.layers
@@ -30,7 +30,8 @@ class LayerItemModel(QStandardItemModel):
     def __init__(self, layer_tree, *args):
         super(LayerItemModel, self).__init__(*args)
         self.layerTree = layer_tree
-        self.setItemPrototype(LayerItem(QItemType.Default))
+        # 设置对象原型
+        self.setItemPrototype(LayerItem(QItemType.Default, None))
 
     def remove_layer(self):
         item = self.itemFromIndex(current_index)
@@ -57,7 +58,7 @@ class LayerItemModel(QStandardItemModel):
              for i in range(len(layers))]
 
 
-selected_item: LayerItem = LayerItem(QItemType.Default)
+selected_item: LayerItem = LayerItem(QItemType.Default, None)
 current_index: QModelIndex = None
 
 
@@ -152,11 +153,11 @@ class LayerTree(QWidget):
 
     def add_layer_test(self):
 
-        item1 = LayerItem(QItemType.LayerGroup, '图层组1')
-        item2 = LayerItem(QItemType.LayerGroup, '图层组2')
+        item1 = LayerItem(QItemType.LayerGroup, [], '图层组1')
+        item2 = LayerItem(QItemType.LayerGroup, [], '图层组2')
 
         for i in range(5):
-            temp = LayerItem(QItemType.Layer, f'图层{i}')
+            temp = LayerItem(QItemType.Layer, i, f'图层{i}')
             item1.appendRow(temp)
 
         self.sim.insertRow(0, item1)
@@ -169,17 +170,17 @@ class LayerTree(QWidget):
         s: LayerItem = self.sim.itemFromIndex(current_index_)
 
         if s:
-            match s.type():
-                case QItemType.Layer:
-                    # 选中图层
-                    self.layerContextMenu.move(QCursor().pos())
-                    self.layerContextMenu.show()
-                case QItemType.LayerGroup:
-                    # 选中图层组
-                    self.layerGroupContextMenu.move(QCursor().pos())
-                    self.layerGroupContextMenu.show()
-                case _:
-                    raise Exception('Some error occurred')
+            s_type = s.type()
+            if s_type == QItemType.Layer:
+                # 选中图层
+                self.layerContextMenu.move(QCursor().pos())
+                self.layerContextMenu.show()
+            elif s_type == QItemType.LayerGroup:
+                # 选中图层组
+                self.layerGroupContextMenu.move(QCursor().pos())
+                self.layerGroupContextMenu.show()
+            else:
+                raise Exception('Some error occurred')
         else:
             # 未选中项目
             self.emptyContextMenu.move(QCursor().pos())
@@ -188,13 +189,15 @@ class LayerTree(QWidget):
     @staticmethod
     def item_changed(item):
         print('---begin---')
-        print(f'有单位发生变化:{item.text()}, {item.type()}')
+        print(f'有单位发生变化:{item.text()}, {item.type()}, {item.layer}')
         item.update_on_item_changed()
         print('---end---')
 
     def get_layers(self):
         ...
         # 返回树状图层
+
+    # TODO: get_render_list, 获取需要被渲染的图层
 
     def clicked(self, index):
         assert index == self.treeView.currentIndex()
@@ -205,15 +208,13 @@ class LayerTree(QWidget):
         current_index = index
 
     def add_layer(self, layer):
-        item = LayerItem(QItemType.Layer, 'New Layer')
+        item = LayerItem(QItemType.Layer, layer, 'New Layer')
         item.set_layer(layer)
         self.sim.appendRow(item)
 
     def add_layer_group(self):
-        item = LayerItem(QItemType.LayerGroup, 'New Layer Group')
+        item = LayerItem(QItemType.LayerGroup, [], 'New Layer Group')
         self.sim.appendRow(item)
-
-    # TODO: get_render_list, 获取需要被渲染的图层
 
 # def set_type(self, _type):
 #     """

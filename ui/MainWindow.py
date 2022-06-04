@@ -1,12 +1,13 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter
 
+import ui
 from project import PiGISProjectController
-from ui import LayerTree, Graph, OptionsPage, AboutPage
 from ui.raw import Ui_MainWindow
 
 '''小陈添加'''
 from PiDrawObj.PiGraphDraw import PiGraphDraw
+
 ''''''
 
 
@@ -22,9 +23,9 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.project = PiGISProjectController()
 
-        layer_tree_widget = LayerTree(self)
+        layer_tree_widget = ui.LayerTree(self)
         self.layerTree = layer_tree_widget.ui.treeView
-        graph_widget = Graph()
+        graph_widget = ui.Graph()
         '''小陈添加语句'''
         self.graph_draw = PiGraphDraw()
         self.layer_tree = layer_tree_widget
@@ -90,14 +91,14 @@ class MainWindow(QMainWindow):
 
     def show_options_page(self):
         if self.__optionsPage is None:
-            self.__optionsPage = OptionsPage()
+            self.__optionsPage = ui.OptionsPage()
             self.__optionsPage.setWindowModality(Qt.ApplicationModal)
 
         self.__optionsPage.show()
 
     def show_about_page(self):
         if self.__aboutPage is None:
-            self.__aboutPage = AboutPage()
+            self.__aboutPage = ui.AboutPage()
 
         self.__aboutPage.show()
 
