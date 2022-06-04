@@ -9,9 +9,9 @@ from PiMapObj import PiGlobal
 '''
 class PiGeometry():
     def __init__(self, type: int):
-        self._id = PiGlobal.id_count
+        self.id = PiGlobal.id_count
         PiGlobal.id_count += 1
-        self._type = type # 元素的类别
+        self.type = type # 元素的类别
     
     def load(self,reader):
         pass
@@ -28,10 +28,3 @@ class PiGeometry():
     def get_mbr(self) -> float:
         return None
 
-    
-    @property
-    def id(self):
-        return self._id
-    @property
-    def type(self):
-        return self._type

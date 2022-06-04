@@ -1,208 +1,200 @@
 from PySide6.QtCore import QLineF, QPointF, Qt, QPoint
 from PySide6.QtGui import QPaintDevice,QBrush, QPainter, QPen, QPixmap
-from PySide6.QtWidgets import QGraphicsRectItem, QGraphicsView,QGraphicsItemGroup,QGraphicsScene,QGraphicsPixmapItem,QGraphicsItem,QGraphicsPolygonItem,QGraphicsLineItem,QGraphicsEllipseItem
-from PiMapObj.PiConstant import PiGeometryTypeConstant
-from PiDrawObj.PiGraphicsItem import QGraphicsPolylineItem
+from PySide6.QtWidgets import QGraphicsEllipseItem, QGraphicsItemGroup,QGraphicsScene,QGraphicsPixmapItem,QGraphicsItem,QGraphicsPolygonItem
+from PiConstant import PiGeometryTypeConstant,PiGraphModeConstant,PiLayerStatusConstant
+from PiDrawObj.PiGraphicsItem import PiGraphicsPolylineItem,PiGraphicsPolygonItem,PiGraphicsEllipseItem
 # import pyqtgraph as pg
+
+cons = PiGeometryTypeConstant()
 
 
 class PiGraphDraw(QPaintDevice):
-    def __init__(self):
+    def __init__(self,view = None):
         super().__init__()
         self.scene = {
-            "editable":QGraphicsScene(),
-            "moveable":QGraphicsScene()
+            PiGraphModeConstant.editable:QGraphicsScene(-250000,-250000,500000,500000),
+            PiGraphModeConstant.moveable:QGraphicsScene(-250000,-250000,500000,500000),
         }
-        self.mode = "editable"
-        self.view = QGraphicsView()
+        self.view = view
 
         self.layers = []
-        self.cache = QGraphicsPixmapItem()
-        self.graphic_item_collection = []
+        self.mbr = None
 
+        self.cache_box = QGraphicsItemGroup(None)
+        self.pixmap = QPixmap()
+        self.painter = QPainter()
+        self.cache = QGraphicsPixmapItem()
+        self.expand_pos = QPointF(0,0)
+        
+        self.item_box = QGraphicsItemGroup(None)
+        self.item_collections = {}
+        self.layer_changed = {}
+        self.layer_added = False
         self.width = 1000
 
         self.scale = None
         self.scale_before = None
-        self.geo_x_offset = 0
-        self.geo_y_offset = 0
+        self.leftup_x = 0
+        self.leftup_y = 0
         self.gra_x_offset = 0
         self.gra_y_offset = 0
-        self.changed = True
+        self.initial_x = 0
+        self.initial_y = 0
+        # 0:no change 1:changed -1:deleted
 
     def add_layer(self,layer):
         self.layers.append(layer)
+        id = layer.id
+        self.item_collections[id] = []
+        #self.item_groups[id] = QGraphicsItemGroup()
+        self.layer_changed[id] = PiLayerStatusConstant.added
+        self.layer_added = True
 
-    def set_view(self,view):
-        view.draw_control = self
-        self.view = view
-        self.view.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.view.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.view.setScene(self.scene[self.mode])
+        #self.load_graphics()
 
-    def moveable_show(self):
-        self.mode = "moveable"
-        self.view.setScene(self.scene[self.mode])
-    
-    def editable_show(self):
-        self.mode = "editable"
-        self.view.setScene(self.scene[self.mode])
+    def delete_layer(self,layer_id):
+        self.layer_changed[layer_id] = PiLayerStatusConstant.deleted
+        #self.load_graphics()
+
+    def load_layer_data(self,layer):
+        pen = QPen(Qt.blue)
+        brush = QBrush(Qt.white)
+        # item_group = self.item_groups[layer.id]
+        item_collection = self.item_collections[layer.id]
+        for feature in layer.features.features:
+            geometry = feature.geometry
+            collection = geometry._collection
+            if layer.geometry_type == cons.multipolyline:
+                for polyline in collection:
+                    # 绘制图元
+                    item = PiGraphicsPolylineItem(polyline,self.item_box,self)
+                    item.setFlags(QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
+                    item_collection.append(item)
+            elif layer.geometry_type == cons.multipolygon:
+                for polygon in collection:
+                    # 绘制图元
+                    item = PiGraphicsPolygonItem(polygon,self.item_box,self)
+                    item.setFlags(QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
+                    item.setPen(pen)
+                    item_collection.append(item)
+            elif layer.geometry_type == cons.multipoint:
+                for point in collection:
+                    # 绘制图元
+                    item = PiGraphicsEllipseItem(point,self.item_box,self)
+                    item.setFlags(QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
+                    item_collection.append(item)
+
+    def draw_cache(self,layer):
+        item_collection = self.item_collections[layer.id]
+        match layer.geometry_type:
+            case cons.multipolyline:
+                for item in item_collection:
+                    for line in item.polyline():
+                        #line.translate(self.expand_pos)
+                        self.painter.drawLine(line)
+            case cons.multipolygon:
+                print(self.expand_pos)
+                for item in item_collection:
+                    polygon = item.polygon()
+                    #polygon.translate(self.expand_pos)
+                    self.painter.drawPolygon(item.polygon())
+            case cons.multipoint:
+                for item in item_collection:
+                    point = item.ellipse()
+                    #point.translate(self.expand_pos)
+                    self.painter.drawEllipse(item.ellipse())
 
     def load_graphics(self):
-        self.graphic_item_collection = []
-        self.scene = {
-            "editable":QGraphicsScene(-250000,-250000,500000,500000),
-            "moveable":QGraphicsScene(-250000,-250000,500000,500000)
-        }
-        if self.scale == None: # 设置默认显示数据
-            mbr = self.layers[0].features.get_mbr()
-            for layer in self.layers:
-                mbr.union(layer.features.get_mbr())
-            self.scale_before = 0
-            self.scale = 10000
-            self.width = (mbr.maxx - mbr.minx) / self.scale
-            self.height = (mbr.maxy - mbr.miny) / self.scale
-            self.geo_x_offset = mbr.minx
-            self.geo_y_offset = mbr.miny
-            self.gra_x_offset = self.width / 2
-            self.gra_y_offset = self.height / 2
-        else:
-            self.width = (mbr.maxx - mbr.minx) / self.scale
-            self.height = (mbr.maxy - mbr.miny) / self.scale
-        '''
-        if self.scale < 5 * self.scale_before5 or self.scale > 0.2 * self.scale_before > 0.2:
+        '''加载图元以及缓冲图片'''
+        #初始化
+        if len(self.layers) == 0:
             return
-        '''
+        if self.scale == None: # 设置默认显示数据
+            self.scale = 10000
+        if self.layer_added == True: 
+            # 重新调整外接矩形大小以便显示全部图像
+            self.mbr = self.layers[0].features.get_mbr()
+            for layer in self.layers:
+                self.mbr.union(layer.features.get_mbr())
+            ydis = self.mbr.maxy - self.mbr.miny
+            xdis = self.mbr.maxx - self.mbr.minx
+            self.scale = max(xdis,ydis) / 400
+            self.initial_leftup_x = self.mbr.minx
+            self.initial_leftup_y = self.mbr.maxy
+            self.mid_x = (self.mbr.minx + self.mbr.maxx) / 2
+            self.mid_y = (self.mbr.miny + self.mbr.maxy) / 2
+            self.layer_added = False
+        # 计算图片大小以及平移距离，以确保中心点在（0，0）
+        self.width = (self.mbr.maxx - self.mbr.minx) / self.scale
+        self.height = (self.mbr.maxy - self.mbr.miny) / self.scale
+        self.leftup_x = self.mbr.minx
+        self.leftup_y = self.mbr.maxy
+        self.expand_pos = QPointF((self.leftup_x - self.initial_leftup_x)/self.scale,(self.initial_leftup_y - self.leftup_y) / self.scale)
+        self.gra_x_offset = (self.mid_x - self.leftup_x) / self.scale
+        self.gra_y_offset = (self.leftup_y - self.mid_y) / self.scale
+        # self.initial_leftup_x = self.leftup_x
+        # self.initial_leftup_y = self.leftup_y
+        '''开始加载'''
         print(self.width,self.height)
-        grh_offset_point = QPointF(self.gra_x_offset,self.gra_y_offset)
-        self.scale_before = self.scale
-        cons = PiGeometryTypeConstant()
-        pixmap = QPixmap(self.width,self.height)
-        pixmap.fill(Qt.GlobalColor.transparent)
+        # 移除原先缓冲图片,重新调整定位
+        try:
+            self.scene[PiGraphModeConstant.moveable].removeItem(self.cache_box)
+            self.cache_box.removeFromGroup(self.cache)
+        except:
+            pass
+        self.cache_box.setPos( -self.gra_x_offset, -self.gra_y_offset)
+        # 初始化缓冲画布
+        self.pixmap = QPixmap(self.width,self.height)
+        self.pixmap.fill(Qt.GlobalColor.transparent)
+        # 初始化画笔
         pen = QPen(Qt.blue)
         brush = QBrush(Qt.white)
-        temp_painter = QPainter(pixmap)
-        temp_painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
-        temp_painter.begin(self)
-        temp_painter.setPen(pen)
-        temp_painter.setBrush(brush)
-        for layer in self.layers:
-            for feature in layer.features.features:
-                geometry = feature.geometry
-                collection = geometry._collection
-                if layer.geometry_type == cons.multipolyline:
-                    for polyline in collection:
-                        qpoint_list = [QPointF((polyline.get_x()[i] - self.geo_x_offset) / self.scale - self.gra_x_offset, self.height - (polyline.get_y()[i] - self.geo_y_offset) / self.scale - self.gra_y_offset) for i in range(polyline.count)]
-                        item = QGraphicsPolylineItem(qpoint_list)
-                        self.graphic_item_collection.append(item)
-                        for i in range(polyline.count - 1):
-                            temp_painter.drawLine(qpoint_list[i] + grh_offset_point,qpoint_list[i + 1] + grh_offset_point)
-                        #item.setPen(pen)
-                elif layer.geometry_type == cons.multipolygon:
-                    for polygon in collection:
-                        qpoint_list = [QPointF((polygon.get_x()[i] - self.geo_x_offset) / self.scale - self.gra_x_offset, self.height - (polygon.get_y()[i] - self.geo_y_offset) / self.scale - self.gra_y_offset) for i in range(polygon.count)]
-                        item = QGraphicsPolygonItem(qpoint_list)
-                        item.setPen(pen)
-                        self.graphic_item_collection.append(item)
-                        for qpoint in qpoint_list:
-                            qpoint += grh_offset_point
-                        temp_painter.drawPolygon(qpoint_list)
-                elif layer.geometry_type == cons.multipoint:
-                    for point in collection:
-                        xpos = (point.get_x() - self.geo_x_offset) / self.scale
-                        ypos = self.height - (point.get_y() - self.geo_y_offset) / self.scale
-                        item = QGraphicsEllipseItem(xpos-2,ypos-2,4,4)
-                        self.graphic_item_collection.append(item)
-                        temp_painter.drawEllipse(QPointF(xpos,ypos) + grh_offset_point,2,2)
-        for item in self.graphic_item_collection:
-            self.scene["editable"].addItem(item)
-            item.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
-        self.pixmap = QGraphicsPixmapItem()
-        self.pixmap.setPos( -self.gra_x_offset, -self.gra_y_offset)
-        self.cache = QGraphicsPixmapItem(pixmap,self.pixmap)
-        self.scene["moveable"].addItem(self.pixmap)
-        #pixmap.save('lalala.png','PNG')
-        temp_painter.end()
-        del pixmap
-        del temp_painter
-        self.view.setScene(self.scene[self.mode])
-
-    def stable_load(self):
-        cons = PiGeometryTypeConstant()
-        pixmap = QPixmap(self.width,self.height)
-        pixmap.fill(Qt.GlobalColor.transparent)
-        pen = QPen(Qt.blue)
-        brush = QBrush(Qt.white)
-        temp_painter = QPainter(pixmap)
-        temp_painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
-        temp_painter.begin(self)
-        temp_painter.setPen(pen)
-        temp_painter.setBrush(brush)
-        for layer in self.layers:
-            for feature in layer.features.features:
-                geometry = feature.geometry
-                collection = geometry._collection
-                if layer.geometry_type == cons.multipolyline:
-                    for polyline in collection:
-                        qpoint_list = [QPointF((polyline.get_x()[i] - self.geo_x_offset) / self.scale, self.height - (polyline.get_y()[i] - self.geo_y_offset) / self.scale) for i in range(polyline.count)]
-                        for i in range(polyline.count - 1):
-                            temp_painter.drawLine(qpoint_list[i],qpoint_list[i + 1])
-                        #item = QGraphicsPolylineItem(qpoint_list)
-                        #item.setPen(pen)
-                        #self.graphic_item_collection.append(item)
-                elif layer.geometry_type == cons.multipolygon:
-                    for polygon in collection:
-                        qpoint_list = [QPointF((polygon.get_x()[i] - self.geo_x_offset) / self.scale, self.height - (polygon.get_y()[i] - self.geo_y_offset) / self.scale) for i in range(polygon.count)]
-                        temp_painter.drawPolygon(qpoint_list)
-                        #item = QGraphicsPolygonItem(qpoint_list)
-                        #item.setPen(pen)
-                        #self.graphic_item_collection.append(item)
-                elif layer.geometry_type == cons.multipoint:
-                    for point in collection:
-                        xpos = (point.get_x() - self.geo_x_offset) / self.scale
-                        ypos = self.height - (point.get_y() - self.geo_y_offset) / self.scale
-                        temp_painter.drawEllipse(QPointF(xpos,ypos),2,2)
-                        #item = QGraphicsEllipseItem(xpos-2,ypos-2,4,4)
-                        #self.graphic_item_collection.append(item)
-        #for item in self.graphic_item_collection:
-        #    self.scene["editable"].addItem(item)
-        #    item.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
-        self.cache = QGraphicsPixmapItem(pixmap)
-        self.scene["moveable"].addItem(self.cache)
-        #pixmap.save('lalala.png','PNG')
-        temp_painter.end()
-        del pixmap
-        del temp_painter
-        self.view.setScene(self.scene[self.mode])
-
-    def active_load(self):
-        cons = PiGeometryTypeConstant()
-        pen = QPen(Qt.blue)
-        brush = QBrush(Qt.white)
-        for layer in self.layers:
-            for feature in layer.features.features:
-                geometry = feature.geometry
-                collection = geometry._collection
-                if layer.geometry_type == cons.multipolyline:
-                    for polyline in collection:
-                        qpoint_list = [QPointF((polyline.get_x()[i] - self.geo_x_offset) / self.scale, self.height - (polyline.get_y()[i] - self.geo_y_offset) / self.scale) for i in range(polyline.count)]
-                        item = QGraphicsPolylineItem(qpoint_list)
-                        self.graphic_item_collection.append(item)
-
-                elif layer.geometry_type == cons.multipolygon:
-                    for polygon in collection:
-                        qpoint_list = [QPointF((polygon.get_x()[i] - self.geo_x_offset) / self.scale, self.height - (polygon.get_y()[i] - self.geo_y_offset) / self.scale) for i in range(polygon.count)]
-                        item = QGraphicsPolygonItem(qpoint_list)
-                        item.setPen(pen)
-                        self.graphic_item_collection.append(item)
-                elif layer.geometry_type == cons.multipoint:
-                    for point in collection:
-                        xpos = (point.get_x() - self.geo_x_offset) / self.scale
-                        ypos = self.height - (point.get_y() - self.geo_y_offset) / self.scale
-                        item = QGraphicsEllipseItem(xpos-2,ypos-2,4,4)
-                        self.graphic_item_collection.append(item)
-        for item in self.graphic_item_collection:
-            self.scene["editable"].addItem(item)
-            item.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
-        self.view.setScene(self.scene[self.mode])
-        
+        self.painter = QPainter(self.pixmap)
+        self.painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
+        self.painter.begin(self)
+        self.painter.setPen(pen)
+        self.painter.setBrush(brush)
+        # 开始绘制
+        self.item_box.setPos( -self.gra_x_offset, -self.gra_y_offset)
+        for index in range(len(self.layers)):
+            layer = self.layers[index]
+            id = layer.id
+            # self.item_groups[id].setPos(-self.gra_x_offset, -self.gra_y_offset)
+            match self.layer_changed[id]:
+                case PiLayerStatusConstant.added:
+                    self.load_layer_data(layer)
+                    for item in self.item_collections[id]:
+                        self.scene[PiGraphModeConstant.editable].addItem(item)
+                    self.draw_cache(layer)
+                    self.layer_changed[id] = PiLayerStatusConstant.normal
+                case PiLayerStatusConstant.visiable:
+                    for item in self.item_collections[id]:
+                        self.scene[PiGraphModeConstant.editable].addItem(item)
+                    self.draw_cache(layer)
+                    self.layer_changed[id] = PiLayerStatusConstant.normal
+                case PiLayerStatusConstant.normal:
+                    self.draw_cache(layer)
+                case PiLayerStatusConstant.hidden:
+                    try:
+                        for item in self.item_collections[id]:
+                            self.scene[PiGraphModeConstant.editable].removeItem(item)
+                    except:
+                        pass
+                case PiLayerStatusConstant.deleted:
+                    try:
+                        for item in self.item_collections[id]:
+                            self.scene[PiGraphModeConstant.editable].removeItem(item)
+                    except:
+                        pass
+                    del self.item_collections[id]
+                    del self.layer_changed[id]
+                    del self.layers[index]
+                    
+        # 往场景中添加缓冲图片
+        self.cache = QGraphicsPixmapItem(self.pixmap,self.cache_box)
+        #self.cache.setPos(self.expand_pos)
+        self.scene[PiGraphModeConstant.moveable].addItem(self.cache_box)
+        self.painter.end()
+    
+    def get_scene(self,mode):
+        return self.scene[mode]
