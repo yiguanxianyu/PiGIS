@@ -6,29 +6,36 @@ from constants import QItemType, QUserRole
 
 class LayerItem(QStandardItem):
 
-    def __init__(self, _type, *args):
+    def __init__(self, _type, _layer, *args):
         super(LayerItem, self).__init__(*args)
         self.setCheckable(True)
         self.__type = None
-        self.layer = None
 
         if _type is QItemType.Layer:
             self.setDropEnabled(False)
 
+        self.setData(_layer, QUserRole.Layer)
         self.setData(_type, QUserRole.ItemType)
 
     def clone(self):
         """
         请注意: clone()函数并不能对其进行赋值，只能返回一个全新的对象。
-        这是因为对象本身是作为 prototype 存在的，调用 clone 时本质上
-        是在调用你传进去的那个 LayerItem(),而那个prototype里什么都没有。
+        这是因为对象本身是作为 prototype 存在的，调用 clone() 时本质上
+        是在调用你传进去的那个 LayerItem, 而那个 prototype 里什么都没有。
         """
-        return LayerItem(self.type())
+        return LayerItem(QItemType.Default, None)
 
     def type(self):
         if not self.__type:
             self.__type = self.data(QUserRole.ItemType)
         return self.__type
+
+    def layer(self):
+        __type = self.type()
+        if __type is QItemType.Layer:
+            return self.data(QUserRole.Layer)
+        elif __type is QItemType.LayerGroup:
+            return self.layers
 
     @property
     def layers(self):
