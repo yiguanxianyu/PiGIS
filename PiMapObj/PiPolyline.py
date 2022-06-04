@@ -12,11 +12,14 @@ class PiPolyline(PiGeometry.PiGeometry):
         self._mbr = None
         self._changed = True
     
-    def load(self,reader):
-        self.count = reader.read_int32()
-        for i in range(self.count):
-            self._x.append(reader.read_float64())
-            self._y.append(reader.read_float64())
+    def load(self,reader,load_type):
+        if load_type == 'lay':
+            self.count = reader.read_int32()
+            for i in range(self.count):
+                self._x.append(reader.read_float64())
+                self._y.append(reader.read_float64())
+        if load_type == 'shp':
+            pass
         #self.__calculate_attr()
     
     def __calculate_attr(self):

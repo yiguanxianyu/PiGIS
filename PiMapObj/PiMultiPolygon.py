@@ -5,13 +5,16 @@ class PiMultiPolygon(PiGeometryCollection):
         super().__init__(2)
         self.count = 0 # 折线个数
 
-    def load(self,reader):
+    def load(self,reader,load_type):
         polygon_list = []
-        self.count = reader.read_int32()
-        for i in range(self.count):
-            new_polygon = PiPolygon() 
-            new_polygon.load(reader)
-            polygon_list.append(new_polygon)
+        if load_type == 'lay':
+            self.count = reader.read_int32()
+            for i in range(self.count):
+                new_polygon = PiPolygon() 
+                new_polygon.load(reader,load_type)
+                polygon_list.append(new_polygon)
+        elif load_type == 'shp':
+            pass
         super().load(polygon_list)
 
     def get_mbr(self):

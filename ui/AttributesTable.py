@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QWidget, QAbstractItemView
 
 from ui.FieldTable import FieldTable
+from ui.FilterDialog import FilterDialog
 from ui.raw import Ui_AttributesTable
 
 
@@ -27,7 +28,8 @@ class AttributesTable(QWidget):
         ...
 
     def filter_data(self):
-        ...
+        self.di = FilterDialog()
+        self.di.open()
 
     def toggle_editing_changed(self, flag):
         if flag:
