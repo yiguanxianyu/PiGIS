@@ -10,6 +10,7 @@ class LayerItem(QStandardItem):
         super(LayerItem, self).__init__(*args)
         self.setCheckable(True)
         self.__type = None
+        self.__layer = None
 
         if _type is QItemType.Layer:
             self.setDropEnabled(False)
@@ -30,46 +31,23 @@ class LayerItem(QStandardItem):
             self.__type = self.data(QUserRole.ItemType)
         return self.__type
 
+    @property
     def layer(self):
-        __type = self.type()
-        if __type is QItemType.Layer:
-            return self.data(QUserRole.Layer)
-        elif __type is QItemType.LayerGroup:
-            return self.layers
+        """
+        图层，返回图层对象
+        """
+        assert self.type() == QItemType.Layer
+        if not self.__layer:
+            self.__layer = self.data(QUserRole.Layer)
+        return self.__layer
 
     @property
     def layers(self):
         """
-        图层组返回列表，图层返回图层对象
+        图层组，返回列表
         """
+        assert self.type() == QItemType.LayerGroup
         return [self.child(i) for i in range(self.rowCount())]
-
-    @property
-    def layer_type(self):
-        """
-        返回图层本身的类型，仅对 Layer 生效
-        """
-
-        # if self.type() is ItemType.Layer:
-        #     return self._layer.type()
-        # else:
-        #     raise Exception('Some error occurred')
-        return None
-
-    def set_layer(self, layer):
-        """
-        为图层项设置图层，仅对 Layer 生效
-        """
-        assert self.type() is QItemType.Layer
-        self.layer = layer
-
-    # def add_layer(self, layer):
-    #     """
-    #     将图层添加到图层组，仅对 LayerGroup 生效
-    #     """
-    #     warnings.warn("This is deprecated", DeprecationWarning)
-    #     assert self.type() is ItemType.LayerGroup
-    #     self.layer.append(layer)
 
     @property
     def self_visible(self):
@@ -106,13 +84,6 @@ class LayerItem(QStandardItem):
             case _:
                 raise Exception('Some error occurred')
 
-    # def update_layer_group(self):
-    #     """
-    #     更新当前图层组内包含的元素
-    #     """
-    #     warnings.warn("This is deprecated", DeprecationWarning)
-    #     elf.layer = [self.child(i) for i in range(self.rowCount())]
-
     def update_on_item_changed(self):
         """
         接受 itemChanged 事件
@@ -137,3 +108,37 @@ class LayerItem(QStandardItem):
                 print('怎么是default')
             case _:
                 raise Exception('Some error occurred')
+
+    # def update_layer_group(self):
+    #     """
+    #     更新当前图层组内包含的元素
+    #     """
+    #     warnings.warn("This is deprecated", DeprecationWarning)
+    #     elf.layer = [self.child(i) for i in range(self.rowCount())]
+
+    # @property
+    # def layer_type(self):
+    #     """
+    #     返回图层本身的类型，仅对 Layer 生效
+    #     """
+    #
+    #     # if self.type() is ItemType.Layer:
+    #     #     return self._layer.type()
+    #     # else:
+    #     #     raise Exception('Some error occurred')
+    #     return None
+    #
+    # def set_layer(self, layer):
+    #     """
+    #     为图层项设置图层，仅对 Layer 生效
+    #     """
+    #     assert self.type() is QItemType.Layer
+    #     self.layer = layer
+
+    # def add_layer(self, layer):
+    #     """
+    #     将图层添加到图层组，仅对 LayerGroup 生效
+    #     """
+    #     warnings.warn("This is deprecated", DeprecationWarning)
+    #     assert self.type() is ItemType.LayerGroup
+    #     self.layer.append(layer)

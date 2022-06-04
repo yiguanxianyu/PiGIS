@@ -8,20 +8,21 @@ from ui.LayerItem import LayerItem
 from ui.Symbology import SymbologyPage
 from ui.raw import Ui_LayerTree
 
+current_index: QModelIndex = None
 
-# TODO:随机生成符号化的函数
 
 def copy_layer(layer):
-    new_item = LayerItem(layer.type(), layer.layer(), layer.text())
+    __type = layer.type()
 
-    if layer.type() is QItemType.LayerGroup:
+    if __type is QItemType.LayerGroup:
+        new_item = LayerItem(__type, [], layer.text())
         lrs = layer.layers
         new_item.insertRows(0, len(lrs))
         for i in range(len(lrs)):
             new_i = copy_layer(lrs[i])
             new_item.setChild(i, new_i)
     else:
-        new_item.layer = layer.layer
+        new_item = LayerItem(__type, layer.layer, layer.text())
 
     return new_item
 
@@ -58,10 +59,6 @@ class LayerItemModel(QStandardItemModel):
              for i in range(len(layers))]
 
 
-selected_item: LayerItem = LayerItem(QItemType.Default, None)
-current_index: QModelIndex = None
-
-
 class LayerTree(QWidget):
     def __init__(self, main_window):
         super().__init__()
@@ -87,17 +84,21 @@ class LayerTree(QWidget):
         self.create_menu()
         self.add_layer_test()
 
+    def get_current_item(self) -> LayerItem:
+        return self.sim.itemFromIndex(current_index)
+
     def create_layer_menu(self):
         def show_color_dialog():
-            s = QColorDialog()
-            print(s.getColor())
+            s = QColorDialog.getColor()
+            print(s)
+            self.get_current_item().set_color(s)
 
         choose_color_act = QAction(self)
         choose_color_act.setText('Choose color')
         choose_color_act.triggered.connect(show_color_dialog)
 
         def show_attributes_table():
-            self.ab = AttributesTable(None)
+            self.ab = AttributesTable(self.get_current_item().layer)
             self.ab.show()
 
         show_attributes_table_act = QAction(self)
@@ -186,46 +187,36 @@ class LayerTree(QWidget):
             self.emptyContextMenu.move(QCursor().pos())
             self.emptyContextMenu.show()
 
+    def clicked(self, index):
+        global current_index
+        current_index = index
+
     @staticmethod
     def item_changed(item):
         print('---begin---')
-        print(f'有单位发生变化:{item.text()}, {item.type()}, {item.layer}')
+        if item.type() is QItemType.Layer:
+            print(f'有单位发生变化:{item.text()}, {item.type()},{item.layer}')
+        else:
+            print(f'有单位发生变化:{item.text()}, {item.type()},{item.layers}')
         item.update_on_item_changed()
         print('---end---')
 
     def get_layers(self):
-        ...
-        # 返回树状图层
+        """
+        TODO: 返回树状图层
+        """
+        pass
 
-    # TODO: get_render_list, 获取需要被渲染的图层
-
-    def clicked(self, index):
-        assert index == self.treeView.currentIndex()
-        item = self.sim.itemFromIndex(index)
-        print('visible:', item.visible)
-        global selected_item, current_index
-        selected_item = item
-        current_index = index
+    def get_render_list(self):
+        """
+        TODO: 获取需要被渲染的图层
+        """
+        pass
 
     def add_layer(self, layer):
         item = LayerItem(QItemType.Layer, layer, 'New Layer')
-        item.set_layer(layer)
         self.sim.appendRow(item)
 
     def add_layer_group(self):
         item = LayerItem(QItemType.LayerGroup, [], 'New Layer Group')
         self.sim.appendRow(item)
-
-# def set_type(self, _type):
-#     """
-#     下一步取消这个函数 集成进init里面
-#     """
-#     self.setData(_type, UserRole.ItemType)
-#
-#     match _type:
-#         case ItemType.Layer:
-#             self.setDropEnabled(False)
-#         case ItemType.LayerGroup:
-#             self.setData([], UserRole.Layer)
-#
-#     return self
