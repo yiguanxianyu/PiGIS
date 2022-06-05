@@ -1,10 +1,8 @@
 from PySide6.QtCore import Qt
-from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter
 
 from project import PiGISProjectController
-# import pyqtgraph as pg
-from ui import LayerTree, Graph, OptionsPage, AboutPage
+from ui import LayerTree, Graph, AboutPage
 from ui.raw import Ui_MainWindow
 
 '''小陈添加'''
@@ -93,11 +91,12 @@ class MainWindow(QMainWindow):
         self.project.currentLayer.editable = mode
 
     def show_options_page(self):
-        if self.__optionsPage is None:
-            self.__optionsPage = OptionsPage()
-            self.__optionsPage.setWindowModality(Qt.ApplicationModal)
-
-        self.__optionsPage.show()
+        pass
+        # if self.__optionsPage is None:
+        #     self.__optionsPage = OptionPage()
+        #     self.__optionsPage.setWindowModality(Qt.ApplicationModal)
+        #
+        # self.__optionsPage.show()
 
     def show_about_page(self):
         if self.__aboutPage is None:
