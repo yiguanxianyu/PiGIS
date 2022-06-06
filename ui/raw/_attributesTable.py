@@ -24,7 +24,7 @@ class Ui_AttributesTable(object):
         if not AttributesTable.objectName():
             AttributesTable.setObjectName(u"AttributesTable")
         AttributesTable.setWindowModality(Qt.ApplicationModal)
-        AttributesTable.resize(747, 401)
+        AttributesTable.resize(583, 401)
         AttributesTable.setContextMenuPolicy(Qt.NoContextMenu)
         self.gridLayout = QGridLayout(AttributesTable)
         self.gridLayout.setObjectName(u"gridLayout")
@@ -35,30 +35,30 @@ class Ui_AttributesTable(object):
         self.horizontalLayout = QHBoxLayout(self.widget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.editFieldButton = QToolButton(self.widget)
-        self.editFieldButton.setObjectName(u"editFieldButton")
-
-        self.horizontalLayout.addWidget(self.editFieldButton)
-
-        self.addItemButton = QToolButton(self.widget)
-        self.addItemButton.setObjectName(u"addItemButton")
-
-        self.horizontalLayout.addWidget(self.addItemButton)
-
-        self.deleteItemButton = QToolButton(self.widget)
-        self.deleteItemButton.setObjectName(u"deleteItemButton")
-
-        self.horizontalLayout.addWidget(self.deleteItemButton)
-
         self.filterData = QToolButton(self.widget)
         self.filterData.setObjectName(u"filterData")
 
         self.horizontalLayout.addWidget(self.filterData)
 
-        self.saveButton = QToolButton(self.widget)
-        self.saveButton.setObjectName(u"saveButton")
+        self.addRowButton = QToolButton(self.widget)
+        self.addRowButton.setObjectName(u"addRowButton")
 
-        self.horizontalLayout.addWidget(self.saveButton)
+        self.horizontalLayout.addWidget(self.addRowButton)
+
+        self.removeRowButton = QToolButton(self.widget)
+        self.removeRowButton.setObjectName(u"removeRowButton")
+
+        self.horizontalLayout.addWidget(self.removeRowButton)
+
+        self.addFieldButton = QToolButton(self.widget)
+        self.addFieldButton.setObjectName(u"addFieldButton")
+
+        self.horizontalLayout.addWidget(self.addFieldButton)
+
+        self.removeFieldButton = QToolButton(self.widget)
+        self.removeFieldButton.setObjectName(u"removeFieldButton")
+
+        self.horizontalLayout.addWidget(self.removeFieldButton)
 
         self.toggleEditingCheckBox = QCheckBox(self.widget)
         self.toggleEditingCheckBox.setObjectName(u"toggleEditingCheckBox")
@@ -79,23 +79,23 @@ class Ui_AttributesTable(object):
 
 
         self.retranslateUi(AttributesTable)
-        self.editFieldButton.clicked.connect(AttributesTable.edit_field)
-        self.addItemButton.clicked.connect(AttributesTable.add_item)
-        self.deleteItemButton.clicked.connect(AttributesTable.delete_item)
+        self.addRowButton.clicked.connect(AttributesTable.add_row)
         self.toggleEditingCheckBox.stateChanged.connect(AttributesTable.toggle_editing_changed)
         self.filterData.clicked.connect(AttributesTable.filter_data)
-        self.saveButton.clicked.connect(AttributesTable.save)
+        self.removeRowButton.clicked.connect(AttributesTable.remove_row)
+        self.addFieldButton.clicked.connect(AttributesTable.add_field)
+        self.removeFieldButton.clicked.connect(AttributesTable.remove_field)
 
         QMetaObject.connectSlotsByName(AttributesTable)
     # setupUi
 
     def retranslateUi(self, AttributesTable):
         AttributesTable.setWindowTitle(QCoreApplication.translate("AttributesTable", u"Attributes Table", None))
-        self.editFieldButton.setText(QCoreApplication.translate("AttributesTable", u"Edit Field", None))
-        self.addItemButton.setText(QCoreApplication.translate("AttributesTable", u"Add Item", None))
-        self.deleteItemButton.setText(QCoreApplication.translate("AttributesTable", u"Delete Item", None))
         self.filterData.setText(QCoreApplication.translate("AttributesTable", u"Filter", None))
-        self.saveButton.setText(QCoreApplication.translate("AttributesTable", u"Save", None))
-        self.toggleEditingCheckBox.setText(QCoreApplication.translate("AttributesTable", u"Togle Editing", None))
+        self.addRowButton.setText(QCoreApplication.translate("AttributesTable", u"Add Row", None))
+        self.removeRowButton.setText(QCoreApplication.translate("AttributesTable", u"Remove Row", None))
+        self.addFieldButton.setText(QCoreApplication.translate("AttributesTable", u"Add Field", None))
+        self.removeFieldButton.setText(QCoreApplication.translate("AttributesTable", u"Remove Field", None))
+        self.toggleEditingCheckBox.setText(QCoreApplication.translate("AttributesTable", u"Toggle Editing", None))
     # retranslateUi
 

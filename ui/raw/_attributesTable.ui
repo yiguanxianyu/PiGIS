@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>747</width>
+    <width>583</width>
     <height>401</height>
    </rect>
   </property>
@@ -48,27 +48,6 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QToolButton" name="editFieldButton">
-        <property name="text">
-         <string>Edit Field</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="addItemButton">
-        <property name="text">
-         <string>Add Item</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="deleteItemButton">
-        <property name="text">
-         <string>Delete Item</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QToolButton" name="filterData">
         <property name="text">
          <string>Filter</string>
@@ -76,9 +55,30 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="saveButton">
+       <widget class="QToolButton" name="addRowButton">
         <property name="text">
-         <string>Save</string>
+         <string>Add Row</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="removeRowButton">
+        <property name="text">
+         <string>Remove Row</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="addFieldButton">
+        <property name="text">
+         <string>Add Field</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="removeFieldButton">
+        <property name="text">
+         <string>Remove Field</string>
         </property>
        </widget>
       </item>
@@ -88,7 +88,7 @@
          <enum>Qt::NoContextMenu</enum>
         </property>
         <property name="text">
-         <string>Togle Editing</string>
+         <string>Toggle Editing</string>
         </property>
        </widget>
       </item>
@@ -113,45 +113,13 @@
  <resources/>
  <connections>
   <connection>
-   <sender>editFieldButton</sender>
+   <sender>addRowButton</sender>
    <signal>clicked()</signal>
    <receiver>AttributesTable</receiver>
-   <slot>edit_field()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>52</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>369</x>
-     <y>200</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>addItemButton</sender>
-   <signal>clicked()</signal>
-   <receiver>AttributesTable</receiver>
-   <slot>add_item()</slot>
+   <slot>add_row()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>217</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>369</x>
-     <y>200</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>deleteItemButton</sender>
-   <signal>clicked()</signal>
-   <receiver>AttributesTable</receiver>
-   <slot>delete_item()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>298</x>
      <y>20</y>
     </hint>
     <hint type="destinationlabel">
@@ -193,13 +161,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>saveButton</sender>
+   <sender>removeRowButton</sender>
    <signal>clicked()</signal>
    <receiver>AttributesTable</receiver>
-   <slot>save()</slot>
+   <slot>remove_row()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
+     <x>298</x>
      <y>20</y>
     </hint>
     <hint type="destinationlabel">
@@ -208,13 +176,46 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>addFieldButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AttributesTable</receiver>
+   <slot>add_field()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>262</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>291</x>
+     <y>200</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>removeFieldButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AttributesTable</receiver>
+   <slot>remove_field()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>291</x>
+     <y>200</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>edit_field()</slot>
-  <slot>add_item()</slot>
-  <slot>delete_item()</slot>
+  <slot>add_row()</slot>
+  <slot>remove_row()</slot>
   <slot>filter_data()</slot>
   <slot>toggle_editing_changed()</slot>
   <slot>save()</slot>
+  <slot>add_field()</slot>
+  <slot>remove_field()</slot>
  </slots>
 </ui>

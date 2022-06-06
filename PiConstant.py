@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class PiValueTypeConstant():  # 属性值类型参数
+class PiValueTypeConstant:  # 属性值类型参数
     def __init__(self):
         self.int16 = 0
         self.int32 = 1
