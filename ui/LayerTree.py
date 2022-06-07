@@ -2,6 +2,7 @@ from PySide6.QtCore import QModelIndex
 from PySide6.QtGui import QStandardItemModel, QStandardItem, QCursor, QAction
 from PySide6.QtWidgets import QWidget, QMenu, QColorDialog
 
+from PiMapObj.PiLayer import PiLayer
 from constants import QItemType
 from ui.AttributesTable import AttributesTable
 from ui.LayerItem import LayerItem
@@ -46,17 +47,15 @@ class LayerItemModel(QStandardItemModel):
         curr_row = current_index.row()
         is_not_root = current_index.parent().isValid()
         item_parent = item.parent() if is_not_root else self
-
-        item_to_del = item_parent.takeRow(curr_row)[0]
-        layers = item_to_del.layers
+        layers = item_parent.takeRow(curr_row)[0].layers
 
         if is_not_root:
             item_parent.insertRows(curr_row, len(layers))
             for i in range(len(layers)):
                 item_parent.setChild(curr_row + i, copy_layer(layers[i]))
         else:
-            [self.insertRow(curr_row + i, copy_layer(layers[i]))
-             for i in range(len(layers))]
+            for i in range(len(layers)):
+                self.insertRow(curr_row + i, copy_layer(layers[i]))
 
 
 class LayerTree(QWidget):
@@ -70,7 +69,6 @@ class LayerTree(QWidget):
         self.ui = Ui_LayerTree()
         self.ui.setupUi(self)
         self.treeView = self.ui.treeView
-
         # 创建一个图层树模型
         self.sim = LayerItemModel(self)
         self.sim.itemChanged.connect(self.item_changed)
@@ -152,7 +150,28 @@ class LayerTree(QWidget):
         self.create_layer_menu()
         self.create_layer_group_menu()
 
+        def load_test_layers():
+            layer1 = PiLayer()
+            layer1.load("PiMapObj/图层文件/国界线.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
+            self.add_layer(layer1)
+
+            layer2 = PiLayer()
+            layer2.load("PiMapObj/图层文件/省级行政区.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
+            self.add_layer(layer2)
+
+            layer3 = PiLayer()
+            self.add_layer(layer3)
+            layer3.load("PiMapObj/图层文件/省会城市.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
+
+            self.mainWindow.xiaochen_load_layers([layer1, layer2, layer3])
+
+        # test loading layers
+        load_layer_act = QAction(self)
+        load_layer_act.setText(u'Load test layer')
+        load_layer_act.triggered.connect(load_test_layers)
+
         self.emptyContextMenu.addAction(self.ui.action_add_layer_group)
+        self.emptyContextMenu.addAction(load_layer_act)
         self.emptyContextMenu.addAction(self.ui.action_expand_all)
         self.emptyContextMenu.addAction(self.ui.action_collapse_all)
 
