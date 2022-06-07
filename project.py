@@ -4,6 +4,7 @@ import yaml
 from PySide6.QtWidgets import QFileDialog, QWidget
 
 import layer
+from PiMapObj.PiLayer import PiLayer
 from constants import *
 from constants import class_type
 
@@ -71,9 +72,9 @@ class PiGISProject:
         config = {
             'Application': {
                 'app_name':
-                'PiGIS',
+                    'PiGIS',
                 'minimal_version':
-                f'{PiGIS_MAJOR_VERSION}.{PiGIS_MINOR_VERSION}.{PiGIS_PATCH_VERSION}',
+                    f'{PiGIS_MAJOR_VERSION}.{PiGIS_MINOR_VERSION}.{PiGIS_PATCH_VERSION}',
             }
         }
 
@@ -122,7 +123,8 @@ class PiGISProject:
 
 class PiGISProjectController:
 
-    def __init__(self):
+    def __init__(self, mw):
+        self.mainWindow = mw
         self.currentLayer = None
         self.__project = PiGISProject()
 
@@ -174,12 +176,18 @@ class PiGISProjectController:
         """
         all_types = [
             'ESRI shapefile (*.shp)', 'GPS eXchange Format (*.GPX)',
-            'Lay File (*.lay)'
+            'Lay File (*.lay)', 'All Files (*.*)'
         ]
 
         file_path, file_type = QFileDialog.getOpenFileName(
             QWidget(), 'Select File', filter=';;'.join(all_types))
-        print(file_type)
+
+        if file_type == all_types[2]:
+            new_layer = PiLayer()
+            new_layer.load(file_path)
+            self.mainWindow.layerTree.add_layer(new_layer)
+            self.mainWindow.graphWidget.load_layers([new_layer])
+
         # TODO: parse selected layer file
         self.__project.add_layer(None)
 

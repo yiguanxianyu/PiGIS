@@ -206,11 +206,15 @@ class LayerTree(QWidget):
         global current_index
         current_index = index
 
-    def item_changed(self, item):
-        layer = item.layer
-        # layer.set_visible()
-        print(f'有单位发生变化:{item.text()}, {item.type()}')
-        item.update_on_item_changed()
+    def item_changed(self, item: LayerItem):
+        self.graph.set_layer_visibility(item.layer, item.visible)
+
+        new_v = self.get_visible_layers()
+        for i in range(len(new_v) - 1, -1, -1):
+            self.graph.set_layer_zlevel(new_v[i], i)
+
+        # print(f'有单位发生变化:{item.text()}, {item.type()}')
+        # item.update_on_item_changed()
 
     def get_recursive_layers(self):
         return [self.sim.item(i).get_recursive_layers() for i in range(self.sim.rowCount())]
@@ -218,7 +222,7 @@ class LayerTree(QWidget):
     def set_layer_tree(self, layer_tree):
         for layer in layer_tree:
             if type(layer) == list:
-                pass
+                self.set_layer_tree(layer)
             else:
                 self.add_layer(layer)
 
@@ -230,8 +234,16 @@ class LayerTree(QWidget):
 
         return lrs
 
+    def get_invisible_layers(self):
+        """获取需要被渲染的图层"""
+        lrs = []
+        for i in range(self.sim.rowCount()):
+            lrs += self.sim.item(i).get_visible_layers()
+
+        return lrs
+
     def add_layer(self, layer):
-        item = LayerItem(QItemType.Layer, layer, layer.name)
+        item = LayerItem(QItemType.Layer, layer.id, layer.name)
         self.sim.appendRow(item)
 
     def add_layer_group(self):

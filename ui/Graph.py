@@ -29,3 +29,15 @@ class Graph(QWidget):
         for layer in layers:
             draw_control.add_layer(layer)
         draw_control.load_graphics()
+
+    def set_layer_visibility(self, layer_id, layer_visibility):
+        """
+        改变某个 layer 的可见性
+        """
+        print('vis,', layer_id, layer_visibility)
+
+    def set_layer_zlevel(self, layer_id, layer_z_level):
+        """
+        改变某个 layer 的 z level
+        """
+        print('zlv,', layer_id, layer_z_level)
