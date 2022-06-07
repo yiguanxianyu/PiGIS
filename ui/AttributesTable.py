@@ -1,9 +1,8 @@
 import pandas as pd
 from PySide6.QtCore import QAbstractTableModel, Qt, QModelIndex
-from PySide6.QtWidgets import QWidget, QAbstractItemView
+from PySide6.QtWidgets import QWidget, QAbstractItemView, QDialog
 
-from ui.FilterDialog import FilterDialog
-from ui.raw import Ui_AttributesTable
+from ui.raw import Ui_AttributesTable, Ui_RemoveField, Ui_inputFilterDialog
 
 test_data = pd.DataFrame([
     [1, 9, 2],
@@ -12,6 +11,23 @@ test_data = pd.DataFrame([
     [3, 3, 2],
     [5, 8, 9],
 ], columns=['A', 'B', 'C'])
+
+
+class FilterDialog(QDialog):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.ui = Ui_inputFilterDialog()
+        self.ui.setupUi(self)
+        self.setWindowModality(Qt.ApplicationModal)
+
+
+class RemoveFieldDialog(QDialog):
+    def __init__(self, parent, items):
+        super().__init__(parent)
+        self.ui = Ui_RemoveField()
+        self.ui.setupUi(self)
+        self.setWindowModality(Qt.ApplicationModal)
+        self.ui.listWidget.addItems(items)
 
 
 class TableModel(QAbstractTableModel):
@@ -67,6 +83,7 @@ class TableModel(QAbstractTableModel):
 class AttributesTable(QWidget):
     def __init__(self, layer):
         super().__init__()
+        self.data_filter = None
         self.layer = layer
         self.fieldTable = None
         self.editState = False
@@ -76,6 +93,12 @@ class AttributesTable(QWidget):
         # table = TableModel(layer.get_attr_table())
         self.table = TableModel(test_data)
         self.ui.tableView.setModel(self.table)
+
+    def focusInEvent(self, e) -> None:
+        self.grabKeyboard()
+
+    def focusOutEvent(self, e) -> None:
+        self.releaseKeyboard()
 
     def add_row(self):
         ...
@@ -90,11 +113,11 @@ class AttributesTable(QWidget):
         pass
 
     def remove_field(self):
-        ...
+        RemoveFieldDialog(self, ['1', '2', '3']).show()
 
     def filter_data(self):
-        self.di = FilterDialog()
-        self.di.open()
+        self.data_filter = FilterDialog(self)
+        self.data_filter.show()
 
     def toggle_editing_changed(self, flag):
         if flag:

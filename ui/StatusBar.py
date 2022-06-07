@@ -1,9 +1,25 @@
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QStatusBar, QLabel, QComboBox
+
 from constants import *
 
 scales_num = [100000000, 50000000, 25000000, 10000000, 5000000, 2500000, 1000000, 500000, 250000, 100000, 50000,
               25000, 10000, 5000, 2000, 1000, 500]
 scales_str = ['test'] + [f'1:{i}' for i in scales_num]
+
+
+class PiComboBox(QComboBox):
+    def __init__(self, parent):
+        super(PiComboBox, self).__init__(parent)
+        self.setEditable(True)
+        self.addItems(scales_str)
+        self.insertSeparator(1)
+
+    def focusInEvent(self, e) -> None:
+        self.grabKeyboard()
+
+    def focusOutEvent(self, e) -> None:
+        self.releaseKeyboard()
 
 
 class PiStatusBar(QStatusBar):
@@ -19,10 +35,9 @@ class PiStatusBar(QStatusBar):
         self.loc_label = QLabel('X: Y:')
         self.addWidget(self.loc_label)
 
-        qcb = QComboBox(self)
-        qcb.setEditable(True)
-        qcb.addItems(scales_str)
-        qcb.insertSeparator(1)
+        qcb = PiComboBox(self)
+        self.qcb = qcb
+
         self.addWidget(qcb)
 
     def update_mouse_loc(self, x, y):

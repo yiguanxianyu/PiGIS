@@ -7,7 +7,7 @@ from ui.raw import Ui_Graph
 
 class Graph(QWidget):
     def __init__(self, mw):
-        super().__init__()
+        super().__init__(mw)
         self.mainWindow = mw
         self.layerTree = None
         self.ui = Ui_Graph()

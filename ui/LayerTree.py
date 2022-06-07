@@ -59,7 +59,7 @@ class LayerItemModel(QStandardItemModel):
 
 class LayerTree(QWidget):
     def __init__(self, main_window):
-        super().__init__()
+        super().__init__(main_window)
         self.graph = None
         self.layerContextMenu = QMenu(self)
         self.layerGroupContextMenu = QMenu(self)
@@ -80,6 +80,12 @@ class LayerTree(QWidget):
         self._header_height = self.treeView.header().height()
 
         self.create_menu()
+
+    def focusInEvent(self, e) -> None:
+        self.grabKeyboard()
+
+    def focusOutEvent(self, e) -> None:
+        self.releaseKeyboard()
 
     def get_current_item(self) -> LayerItem:
         return self.sim.itemFromIndex(current_index)

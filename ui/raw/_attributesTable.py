@@ -8,17 +8,21 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize, Qt)
-from PySide6.QtWidgets import (QAbstractItemView, QCheckBox, QGridLayout,
-                               QHBoxLayout, QTableView,
-                               QToolButton, QWidget)
-
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QCheckBox, QGridLayout,
+    QHBoxLayout, QHeaderView, QSizePolicy, QTableView,
+    QToolButton, QWidget)
 
 class Ui_AttributesTable(object):
     def setupUi(self, AttributesTable):
         if not AttributesTable.objectName():
             AttributesTable.setObjectName(u"AttributesTable")
-        AttributesTable.setWindowModality(Qt.ApplicationModal)
         AttributesTable.resize(583, 401)
         AttributesTable.setContextMenuPolicy(Qt.NoContextMenu)
         self.gridLayout = QGridLayout(AttributesTable)
@@ -61,6 +65,7 @@ class Ui_AttributesTable(object):
 
         self.horizontalLayout.addWidget(self.toggleEditingCheckBox)
 
+
         self.gridLayout.addWidget(self.widget, 0, 0, 1, 1)
 
         self.tableView = QTableView(AttributesTable)
@@ -71,6 +76,7 @@ class Ui_AttributesTable(object):
 
         self.gridLayout.addWidget(self.tableView, 1, 0, 1, 1)
 
+
         self.retranslateUi(AttributesTable)
         self.addRowButton.clicked.connect(AttributesTable.add_row)
         self.toggleEditingCheckBox.stateChanged.connect(AttributesTable.toggle_editing_changed)
@@ -80,7 +86,6 @@ class Ui_AttributesTable(object):
         self.removeFieldButton.clicked.connect(AttributesTable.remove_field)
 
         QMetaObject.connectSlotsByName(AttributesTable)
-
     # setupUi
 
     def retranslateUi(self, AttributesTable):
@@ -92,3 +97,4 @@ class Ui_AttributesTable(object):
         self.removeFieldButton.setText(QCoreApplication.translate("AttributesTable", u"Remove Field", None))
         self.toggleEditingCheckBox.setText(QCoreApplication.translate("AttributesTable", u"Toggle Editing", None))
     # retranslateUi
+

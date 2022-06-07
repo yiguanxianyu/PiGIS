@@ -36,26 +36,6 @@ class MainWindow(QMainWindow):
     def mousePressEvent(self, event) -> None:
         self.ui.statusBar.update_mouse_loc(event.x(), event.y())
 
-    def set_status_bar(self):
-        self.ui.statusBar.mouseMoveEvent()
-        self.ui.statusBar.setMinimumHeight(30)
-        self.ui.statusBar.setMaximumHeight(30)
-        self.ui.statusBar.addWidget(
-            QLabel(f'v{PiGIS_MAJOR_VERSION}.{PiGIS_MINOR_VERSION}.{PiGIS_PATCH_VERSION}\t')
-        )
-        self.ui.statusBar.addWidget(self.loc_lable)
-
-        scales_num = [100000000, 50000000, 25000000, 10000000, 5000000, 2500000, 1000000, 500000, 250000, 100000, 50000,
-                      25000, 10000, 5000, 2000, 1000, 500]
-        scales_str = ['test'] + [f'1:{i}' for i in scales_num]
-
-        qcb = QComboBox(self.ui.statusBar)
-        qcb.insertSeparator(2)
-        qcb.addItems(scales_str)
-        qcb.setEditable(True)
-
-        self.ui.statusBar.addWidget(qcb)
-
     def draw_layers(self):
         pass
 

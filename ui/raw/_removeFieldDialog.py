@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file '_fieldTable.ui'
+## Form generated from reading UI file '_removeFieldDialog.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.3.0
 ##
@@ -12,7 +12,7 @@ from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt)
 from PySide6.QtWidgets import (QAbstractItemView, QDialogButtonBox, QGridLayout, QListWidget)
 
 
-class Ui_FieldList(object):
+class Ui_RemoveField(object):
     def setupUi(self, FieldList):
         if not FieldList.objectName():
             FieldList.setObjectName(u"FieldList")
