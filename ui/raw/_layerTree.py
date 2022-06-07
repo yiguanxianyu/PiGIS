@@ -8,16 +8,11 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
-    QCursor, QFont, QFontDatabase, QGradient,
-    QIcon, QImage, QKeySequence, QLinearGradient,
-    QPainter, QPalette, QPixmap, QRadialGradient,
-    QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QFrame, QHeaderView,
-    QSizePolicy, QTreeView, QVBoxLayout, QWidget)
+from PySide6.QtCore import (QCoreApplication, QLocale,
+                            QMetaObject, QSize, Qt)
+from PySide6.QtGui import (QAction)
+from PySide6.QtWidgets import (QAbstractItemView, QFrame, QSizePolicy, QTreeView, QVBoxLayout)
+
 
 class Ui_LayerTree(object):
     def setupUi(self, LayerTree):
@@ -57,7 +52,6 @@ class Ui_LayerTree(object):
 
         self.verticalLayout.addWidget(self.treeView)
 
-
         self.retranslateUi(LayerTree)
         LayerTree.customContextMenuRequested.connect(LayerTree.show_context_menu)
         self.treeView.pressed.connect(LayerTree.clicked)
@@ -66,18 +60,18 @@ class Ui_LayerTree(object):
         self.action_expand_all.triggered.connect(self.treeView.expandAll)
 
         QMetaObject.connectSlotsByName(LayerTree)
+
     # setupUi
 
     def retranslateUi(self, LayerTree):
         LayerTree.setWindowTitle(QCoreApplication.translate("LayerTree", u"Form", None))
         self.action_expand_all.setText(QCoreApplication.translate("LayerTree", u"Expand All", None))
-#if QT_CONFIG(tooltip)
+        # if QT_CONFIG(tooltip)
         self.action_expand_all.setToolTip(QCoreApplication.translate("LayerTree", u"Expand All Layers", None))
-#endif // QT_CONFIG(tooltip)
+        # endif // QT_CONFIG(tooltip)
         self.action_collapse_all.setText(QCoreApplication.translate("LayerTree", u"Collapse All", None))
-#if QT_CONFIG(tooltip)
+        # if QT_CONFIG(tooltip)
         self.action_collapse_all.setToolTip(QCoreApplication.translate("LayerTree", u"Collapse All Layers", None))
-#endif // QT_CONFIG(tooltip)
+        # endif // QT_CONFIG(tooltip)
         self.action_add_layer_group.setText(QCoreApplication.translate("LayerTree", u"Add Layer Group", None))
     # retranslateUi
-

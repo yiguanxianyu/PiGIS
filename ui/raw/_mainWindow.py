@@ -8,17 +8,14 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
-    QCursor, QFont, QFontDatabase, QGradient,
-    QIcon, QImage, QKeySequence, QLinearGradient,
-    QPainter, QPalette, QPixmap, QRadialGradient,
-    QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QMainWindow, QMenu,
-    QMenuBar, QSizePolicy, QStatusBar, QToolBar,
-    QWidget)
+from PySide6.QtCore import (QCoreApplication, QLocale,
+                            QMetaObject, QRect,
+                            QSize, Qt)
+from PySide6.QtGui import (QAction)
+from PySide6.QtWidgets import (QHBoxLayout, QMenu,
+                               QMenuBar, QSizePolicy, QStatusBar, QToolBar,
+                               QWidget)
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -158,19 +155,20 @@ class Ui_MainWindow(object):
         self.actionCopyLayer.triggered.connect(MainWindow.copy_layer)
 
         QMetaObject.connectSlotsByName(MainWindow)
+
     # setupUi
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u03c0GIS", None))
         self.actionProjectNew.setText(QCoreApplication.translate("MainWindow", u"New", None))
         self.actionProjectOpen.setText(QCoreApplication.translate("MainWindow", u"Open", None))
-#if QT_CONFIG(shortcut)
+        # if QT_CONFIG(shortcut)
         self.actionProjectOpen.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+O", None))
-#endif // QT_CONFIG(shortcut)
+        # endif // QT_CONFIG(shortcut)
         self.actionProjectSave.setText(QCoreApplication.translate("MainWindow", u"Save", None))
-#if QT_CONFIG(shortcut)
+        # if QT_CONFIG(shortcut)
         self.actionProjectSave.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+S", None))
-#endif // QT_CONFIG(shortcut)
+        # endif // QT_CONFIG(shortcut)
         self.actionExit.setText(QCoreApplication.translate("MainWindow", u"Exit \u03c0GIS", None))
         self.actionAbout.setText(QCoreApplication.translate("MainWindow", u"About", None))
         self.actionCut.setText(QCoreApplication.translate("MainWindow", u"Cut Features", None))
@@ -182,9 +180,9 @@ class Ui_MainWindow(object):
         self.actionShowToolBar.setText(QCoreApplication.translate("MainWindow", u"Show Tool Bar", None))
         self.actionSaveImage.setText(QCoreApplication.translate("MainWindow", u"Save Map As Image", None))
         self.actionProjectSaveAs.setText(QCoreApplication.translate("MainWindow", u"Save As", None))
-#if QT_CONFIG(shortcut)
+        # if QT_CONFIG(shortcut)
         self.actionProjectSaveAs.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+Shift+S", None))
-#endif // QT_CONFIG(shortcut)
+        # endif // QT_CONFIG(shortcut)
         self.actionNewShapefileLayer.setText(QCoreApplication.translate("MainWindow", u"New Shapefile Layer", None))
         self.actionOptions.setText(QCoreApplication.translate("MainWindow", u"Options", None))
         self.actionAddLayer.setText(QCoreApplication.translate("MainWindow", u"Add Layer", None))
@@ -199,4 +197,3 @@ class Ui_MainWindow(object):
         self.menuProject.setTitle(QCoreApplication.translate("MainWindow", u"Project", None))
         self.toolBar.setWindowTitle(QCoreApplication.translate("MainWindow", u"toolBar", None))
     # retranslateUi
-

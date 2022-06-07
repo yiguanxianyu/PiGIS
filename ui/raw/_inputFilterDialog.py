@@ -9,16 +9,14 @@
 ################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+                            QMetaObject, QObject, QPoint, QRect, QSize, QTime,
+                            QUrl, Qt)
 from PySide6.QtWidgets import (QApplication, QDialog, QLineEdit, QSizePolicy,
-    QToolButton, QWidget)
+                               QToolButton, QWidget)
+
 
 class Ui_inputFilterDialog(object):
+
     def setupUi(self, inputFilterDialog):
         if not inputFilterDialog.objectName():
             inputFilterDialog.setObjectName(u"inputFilterDialog")
@@ -27,9 +25,11 @@ class Ui_inputFilterDialog(object):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(inputFilterDialog.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            inputFilterDialog.sizePolicy().hasHeightForWidth())
         inputFilterDialog.setSizePolicy(sizePolicy)
-        inputFilterDialog.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
+        inputFilterDialog.setLocale(
+            QLocale(QLocale.English, QLocale.UnitedStates))
         inputFilterDialog.setModal(True)
         self.confirmButton = QToolButton(inputFilterDialog)
         self.confirmButton.setObjectName(u"confirmButton")
@@ -46,11 +46,16 @@ class Ui_inputFilterDialog(object):
         self.confirmButton.clicked.connect(inputFilterDialog.accept)
 
         QMetaObject.connectSlotsByName(inputFilterDialog)
+
     # setupUi
 
     def retranslateUi(self, inputFilterDialog):
-        inputFilterDialog.setWindowTitle(QCoreApplication.translate("inputFilterDialog", u"Input Filter", None))
-        self.confirmButton.setText(QCoreApplication.translate("inputFilterDialog", u"Cancel", None))
-        self.CancelButton.setText(QCoreApplication.translate("inputFilterDialog", u"Confirm", None))
-    # retranslateUi
+        inputFilterDialog.setWindowTitle(
+            QCoreApplication.translate("inputFilterDialog", u"Input Filter",
+                                       None))
+        self.confirmButton.setText(
+            QCoreApplication.translate("inputFilterDialog", u"Cancel", None))
+        self.CancelButton.setText(
+            QCoreApplication.translate("inputFilterDialog", u"Confirm", None))
 
+    # retranslateUi

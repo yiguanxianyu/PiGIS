@@ -8,15 +8,11 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QLabel, QSizePolicy, QVBoxLayout,
-    QWidget)
+from PySide6.QtCore import (QCoreApplication, QLocale,
+                            QMetaObject, QSize, Qt)
+from PySide6.QtGui import (QFont)
+from PySide6.QtWidgets import (QLabel, QVBoxLayout)
+
 
 class Ui_AboutPage(object):
     def setupUi(self, AboutPage):
@@ -35,7 +31,7 @@ class Ui_AboutPage(object):
         font = QFont()
         font.setPointSize(17)
         self.label.setFont(font)
-        self.label.setAlignment(Qt.AlignHCenter|Qt.AlignTop)
+        self.label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
 
         self.verticalLayout.addWidget(self.label)
 
@@ -49,15 +45,16 @@ class Ui_AboutPage(object):
 
         self.verticalLayout.addWidget(self.label_2)
 
-
         self.retranslateUi(AboutPage)
 
         QMetaObject.connectSlotsByName(AboutPage)
+
     # setupUi
 
     def retranslateUi(self, AboutPage):
         AboutPage.setWindowTitle(QCoreApplication.translate("AboutPage", u"About", None))
         self.label.setText(QCoreApplication.translate("AboutPage", u"About", None))
-        self.label_2.setText(QCoreApplication.translate("AboutPage", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">\u03c0GIS v0.1.0 </span></p><p align=\"center\"><span style=\" font-size:11pt;\">Made By: </span><br/>Chi Zhang <br/>Kaihao Zheng <br/>Haoliang Chen <br/>\u2764\ufe0f </p><p align=\"center\"><span style=\" font-size:11pt;\">Powered by open-source software: </span><br/>PySide6 <br/>pyinstaller <br/>PyYAML </p></body></html>", None))
+        self.label_2.setText(QCoreApplication.translate("AboutPage",
+                                                        u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">\u03c0GIS v0.1.0 </span></p><p align=\"center\"><span style=\" font-size:11pt;\">Made By: </span><br/>Chi Zhang <br/>Kaihao Zheng <br/>Haoliang Chen <br/>\u2764\ufe0f </p><p align=\"center\"><span style=\" font-size:11pt;\">Powered by open-source software: </span><br/>PySide6 <br/>pyinstaller <br/>PyYAML </p></body></html>",
+                                                        None))
     # retranslateUi
-
