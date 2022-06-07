@@ -37,12 +37,9 @@ class LayerItemModel(QStandardItemModel):
 
     def remove_layer(self):
         item = self.itemFromIndex(current_index)
-        curr_row = current_index.row()
-        # TODO: close()方法
-        item.layer.close()
-        is_not_root = current_index.parent().isValid()
-        item_parent = item.parent() if is_not_root else self
-        item_parent.removeRow(curr_row)
+        self.layerTree.graph.remove_layer(item.layer)
+        item_parent = item.parent() if current_index.parent().isValid() else self
+        item_parent.removeRow(current_index.row())
 
     def remove_layer_group(self):
         item = self.itemFromIndex(current_index)
@@ -118,7 +115,7 @@ class LayerTree(QWidget):
         show_symbology_page_act.triggered.connect(show_symbology_page)
 
         def show_label():
-            print(self.get_recursive_layers())
+            print(self.get_layer_tree())
             print(self.get_visible_layers())
 
         show_label_act = QAction(self)
@@ -158,16 +155,17 @@ class LayerTree(QWidget):
             layer1 = PiLayer()
             layer1.load("PiMapObj/图层文件/国界线.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
             self.add_layer(layer1.id, layer1.name + '0')
+            self.graph.load_layers(layer1)
 
             layer2 = PiLayer()
             layer2.load("PiMapObj/图层文件/省级行政区.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
             self.add_layer(layer2.id, layer2.name + '1')
+            self.graph.load_layers(layer2)
 
             layer3 = PiLayer()
             layer3.load("PiMapObj/图层文件/省会城市.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
             self.add_layer(layer3.id, layer3.name + '2')
-
-            self.graph.load_layers([layer1, layer2, layer3])
+            self.graph.load_layers(layer3)
 
         # test loading layers
         load_layer_act = QAction(self)
@@ -212,6 +210,7 @@ class LayerTree(QWidget):
 
         layer_id = item.layer
         new_v = self.get_visible_layers()
+
         if new_v.count(layer_id) == 2:
             indices = [i for i, x in enumerate(new_v) if x == layer_id]
             new_v.pop(indices[item.row() == indices[0]])
@@ -219,10 +218,7 @@ class LayerTree(QWidget):
         for i in range(len(new_v) - 1, -1, -1):
             self.graph.set_layer_zlevel(new_v[i], i)
 
-        # print(f'有单位发生变化:{item.text()}, {item.type()}')
-        # item.update_on_item_changed()
-
-    def get_recursive_layers(self):
+    def get_layer_tree(self):
         return [self.sim.item(i).get_recursive_layers() for i in range(self.sim.rowCount())]
 
     def set_layer_tree(self, layer_tree):

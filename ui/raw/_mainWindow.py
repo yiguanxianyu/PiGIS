@@ -20,6 +20,9 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QMainWindow, QMenu,
     QMenuBar, QSizePolicy, QStatusBar, QToolBar,
     QWidget)
 
+from ui.StatusBar import PiStatusBar
+
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
@@ -93,7 +96,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menuBar = QMenuBar(MainWindow)
         self.menuBar.setObjectName(u"menuBar")
-        self.menuBar.setGeometry(QRect(0, 0, 820, 22))
+        self.menuBar.setGeometry(QRect(0, 0, 820, 24))
         self.menuLayer = QMenu(self.menuBar)
         self.menuLayer.setObjectName(u"menuLayer")
         self.menuCreateLayer = QMenu(self.menuLayer)
@@ -113,8 +116,13 @@ class Ui_MainWindow(object):
         self.menuProject = QMenu(self.menuBar)
         self.menuProject.setObjectName(u"menuProject")
         MainWindow.setMenuBar(self.menuBar)
-        self.statusBar = QStatusBar(MainWindow)
+        self.statusBar = PiStatusBar(MainWindow)
         self.statusBar.setObjectName(u"statusBar")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.statusBar.sizePolicy().hasHeightForWidth())
+        self.statusBar.setSizePolicy(sizePolicy1)
         MainWindow.setStatusBar(self.statusBar)
         self.toolBar = QToolBar(MainWindow)
         self.toolBar.setObjectName(u"toolBar")

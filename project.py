@@ -185,7 +185,7 @@ class PiGISProjectController:
         if file_type == all_types[2]:
             new_layer = PiLayer()
             new_layer.load(file_path)
-            self.mainWindow.layerTree.add_layer(new_layer)
+            self.mainWindow.layerTree.add_layer(new_layer.id, new_layer.name)
             self.mainWindow.graphWidget.load_layers([new_layer])
 
         # TODO: parse selected layer file
@@ -193,11 +193,10 @@ class PiGISProjectController:
 
     def copy_current_layer(self):
         """
-        Append a deepcopy of the selected layer to the project
+        Append a copy of the selected layer to the project
         Not done yet
         """
-        self.__project.layer.append(
-            deepcopy(self.__project.layer[self.currentLayer]))
+        pass
 
 
 if __name__ == '__main__':

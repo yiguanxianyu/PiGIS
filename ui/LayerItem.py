@@ -28,15 +28,14 @@ class LayerItem(QStandardItem):
         return LayerItem(QItemType.Default, None)
 
     def type(self):
+        """返回该单位是图层还是图层组"""
         if not self.__type:
             self.__type = self.data(QUserRole.ItemType)
         return self.__type
 
     @property
     def layer(self):
-        """
-        图层，返回图层对象
-        """
+        """图层，返回图层对象"""
         assert self.type() == QItemType.Layer
         if not self.__layer:
             self.__layer = self.data(QUserRole.Layer)
@@ -44,18 +43,12 @@ class LayerItem(QStandardItem):
 
     @property
     def layers(self):
-        """
-        图层组，返回列表
-        """
-        if self.type() == QItemType.LayerGroup:
-            return [self.child(i) for i in range(self.rowCount())]
-        else:
-            return None
+        """图层组，返回列表"""
+        assert self.type() == QItemType.LayerGroup
+        return [self.child(i) for i in range(self.rowCount())]
 
     def get_recursive_layers(self):
-        """
-        图层组，返回递归列表
-        """
+        """图层组，返回递归列表"""
         if self.type() == QItemType.LayerGroup:
             return [self.child(i).get_recursive_layers() for i in range(self.rowCount())]
         else:
@@ -75,10 +68,12 @@ class LayerItem(QStandardItem):
 
     @property
     def self_visible(self):
+        """返回自身复选框的状态"""
         return self.checkState() == Qt.CheckState.Checked
 
     @property
     def visible(self):
+        """返回自身的可见性"""
         temp = self
         while temp:
             if not self.self_visible:
