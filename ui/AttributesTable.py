@@ -1,6 +1,6 @@
 import pandas as pd
 from PySide6.QtCore import QAbstractTableModel, Qt, QModelIndex
-from PySide6.QtWidgets import QWidget, QAbstractItemView, QInputDialog, QLineEdit
+from PySide6.QtWidgets import QWidget, QAbstractItemView
 
 from ui.FilterDialog import FilterDialog
 from ui.raw import Ui_AttributesTable
@@ -67,6 +67,7 @@ class TableModel(QAbstractTableModel):
 class AttributesTable(QWidget):
     def __init__(self, layer):
         super().__init__()
+        self.layer = layer
         self.setWindowModality(Qt.WindowModal)
         self.fieldTable = None
         self.editState = False
@@ -102,3 +103,9 @@ class AttributesTable(QWidget):
         else:
             self.editState = False
             self.ui.tableView.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
+    def closeEvent(self, event) -> None:
+        self.layer.attributesTableDestroyed()
+
+    def features_selected(self, fids):
+        pass

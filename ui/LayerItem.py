@@ -46,43 +46,69 @@ class LayerItem(QStandardItem):
         """
         图层组，返回列表
         """
-        assert self.type() == QItemType.LayerGroup
-        return [self.child(i) for i in range(self.rowCount())]
+        if self.type() == QItemType.LayerGroup:
+            return [self.child(i) for i in range(self.rowCount())]
+        else:
+            return None
+
+    def get_recursive_layers(self):
+        """
+        图层组，返回递归列表
+        """
+        if self.type() == QItemType.LayerGroup:
+            return [self.child(i).get_recursive_layers() for i in range(self.rowCount())]
+        else:
+            return self.layer
+
+    def get_visible_layers(self):
+        if not self.self_visible:
+            return []
+
+        if self.type() == QItemType.LayerGroup:
+            lrs = []
+            for item in self.layers:
+                lrs += item.get_visible_layers()
+            return lrs
+        else:
+            return [self.layer] if self.self_visible else []
 
     @property
     def self_visible(self):
-        return self.checkState()
+        return self.checkState() == Qt.CheckState.Checked
 
     @property
     def parent_visible(self):
-        return self.parent().checkState() if self.parent() else True
+        if self.parent():
+            return self.parent().checkState() == Qt.CheckState.Checked
+
+        return True
 
     @property
     def visible(self):
         temp = self
         while temp:
-            if temp.checkState() is Qt.CheckState.Unchecked:
+            if not self.self_visible:
                 return False
             temp = temp.parent()
 
         return True
 
-    def update_visible(self):
-        """
-        递归地设置每个图层的可见性
-        """
-        match self.type():
-            case QItemType.Layer:
-                # TODO: 这个 Layer 对象还没有眉目呢
-                # self.layer.set_visible(self.visible)
-                pass
-            case QItemType.LayerGroup:
-                for item in self.layers:
-                    item.update_visible()
-            case QItemType.Default:
-                print('怎么是default')
-            case _:
-                raise Exception('Some error occurred')
+    # def update_visible(self):
+    #     """
+    #     递归地设置每个图层的可见性
+    #     """
+    #     match self.type():
+    #         case QItemType.Layer:
+    #             # TODO: 这个 Layer 对象还没有眉目呢
+    #             # self.layer.set_visible(self.visible)
+    #             pass
+    #         case QItemType.LayerGroup:
+    #             for item in self.layers:
+    #                 item.update_visible()
+    #         case QItemType.Default:
+    #             print('怎么是default')
+    #         case _:
+    #             raise Exception('Some error occurred')
 
     def update_on_item_changed(self):
         """
@@ -97,7 +123,7 @@ class LayerItem(QStandardItem):
         def update_layer_group():
             pass
 
-        self.update_visible()
+        # self.update_visible()
 
         match self.type():
             case QItemType.Layer:

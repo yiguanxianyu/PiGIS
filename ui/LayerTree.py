@@ -52,8 +52,8 @@ class LayerItemModel(QStandardItemModel):
 
         if is_not_root:
             item_parent.insertRows(curr_row, len(layers))
-            [item_parent.setChild(curr_row + i, copy_layer(layers[i]))
-             for i in range(len(layers))]
+            for i in range(len(layers)):
+                item_parent.setChild(curr_row + i, copy_layer(layers[i]))
         else:
             [self.insertRow(curr_row + i, copy_layer(layers[i]))
              for i in range(len(layers))]
@@ -116,6 +116,8 @@ class LayerTree(QWidget):
         show_symbology_page_act.triggered.connect(show_symbology_page)
 
         def show_label():
+            print(self.get_recursive_layers())
+            print(self.get_visible_layers())
             pass
 
         show_label_act = QAction(self)
@@ -154,13 +156,14 @@ class LayerTree(QWidget):
         self.emptyContextMenu.addAction(self.ui.action_expand_all)
         self.emptyContextMenu.addAction(self.ui.action_collapse_all)
 
+    # for test only
     def add_layer_test(self):
 
         item1 = LayerItem(QItemType.LayerGroup, [], '图层组1')
         item2 = LayerItem(QItemType.LayerGroup, [], '图层组2')
 
         for i in range(5):
-            temp = LayerItem(QItemType.Layer, i, f'图层{i}')
+            temp = LayerItem(QItemType.Layer, i + 100, f'图层{i}')
             item1.appendRow(temp)
 
         self.sim.insertRow(0, item1)
@@ -189,7 +192,8 @@ class LayerTree(QWidget):
             self.emptyContextMenu.move(QCursor().pos())
             self.emptyContextMenu.show()
 
-    def clicked(self, index):
+    @staticmethod
+    def clicked(index):
         global current_index
         current_index = index
 
@@ -203,11 +207,15 @@ class LayerTree(QWidget):
         item.update_on_item_changed()
         print('---end---')
 
-    def get_layers(self):
-        """
-        TODO: 返回树状图层
-        """
-        pass
+    def get_recursive_layers(self):
+        return [self.sim.item(i).get_recursive_layers() for i in range(self.sim.rowCount())]
+
+    def get_visible_layers(self):
+        lrs = []
+        for i in range(self.sim.rowCount()):
+            lrs += self.sim.item(i).get_visible_layers()
+
+        return lrs
 
     def get_render_list(self):
         """

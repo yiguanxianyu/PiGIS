@@ -19,33 +19,34 @@ from PySide6.QtWidgets import (QAbstractButton, QAbstractItemView, QApplication,
     QDialogButtonBox, QGridLayout, QListWidget, QListWidgetItem,
     QSizePolicy, QWidget)
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        if not Dialog.objectName():
-            Dialog.setObjectName(u"Dialog")
-        Dialog.resize(174, 300)
-        self.gridLayout = QGridLayout(Dialog)
+class Ui_FieldList(object):
+    def setupUi(self, FieldList):
+        if not FieldList.objectName():
+            FieldList.setObjectName(u"FieldList")
+        FieldList.setWindowModality(Qt.ApplicationModal)
+        FieldList.resize(174, 300)
+        self.gridLayout = QGridLayout(FieldList)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.listWidget = QListWidget(Dialog)
+        self.listWidget = QListWidget(FieldList)
         self.listWidget.setObjectName(u"listWidget")
         self.listWidget.setSelectionMode(QAbstractItemView.MultiSelection)
         self.listWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
 
         self.gridLayout.addWidget(self.listWidget, 0, 0, 1, 1)
 
-        self.buttonBox = QDialogButtonBox(Dialog)
+        self.buttonBox = QDialogButtonBox(FieldList)
         self.buttonBox.setObjectName(u"buttonBox")
         self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
 
         self.gridLayout.addWidget(self.buttonBox, 1, 0, 1, 1)
 
 
-        self.retranslateUi(Dialog)
+        self.retranslateUi(FieldList)
 
-        QMetaObject.connectSlotsByName(Dialog)
+        QMetaObject.connectSlotsByName(FieldList)
     # setupUi
 
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
+    def retranslateUi(self, FieldList):
+        FieldList.setWindowTitle(QCoreApplication.translate("FieldList", u"Remove Field", None))
     # retranslateUi
 
