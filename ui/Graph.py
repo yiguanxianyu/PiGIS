@@ -34,10 +34,18 @@ class Graph(QWidget):
         """
         改变某个 layer 的可见性
         """
-        print('vis,', layer_id, layer_visibility)
+        # print('vis,', layer_id, layer_visibility)
+        pass
 
     def set_layer_zlevel(self, layer_id, layer_z_level):
         """
         改变某个 layer 的 z level
         """
-        print('zlv,', layer_id, layer_z_level)
+        # print('zlv,', layer_id, layer_z_level)
+        pass
+
+    def get_layer_by_id(self, layer_id):
+        """
+        根据id返回一个 PiLayer
+        """
+        pass

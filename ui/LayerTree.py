@@ -99,7 +99,8 @@ class LayerTree(QWidget):
         choose_color_act.triggered.connect(show_color_dialog)
 
         def show_attributes_table():
-            self.ab = AttributesTable(self.get_current_item().layer)
+            layer = self.graph.get_layer_by_id(self.get_current_item().layer)
+            self.ab = AttributesTable(layer)
             self.ab.show()
             self.ab.setFocus()
             self.ab.grabKeyboard()
@@ -156,15 +157,15 @@ class LayerTree(QWidget):
         def load_test_layers():
             layer1 = PiLayer()
             layer1.load("PiMapObj/图层文件/国界线.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-            self.add_layer(layer1)
+            self.add_layer(layer1.id, layer1.name + '0')
 
             layer2 = PiLayer()
             layer2.load("PiMapObj/图层文件/省级行政区.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-            self.add_layer(layer2)
+            self.add_layer(layer2.id, layer2.name + '1')
 
             layer3 = PiLayer()
-            self.add_layer(layer3)
             layer3.load("PiMapObj/图层文件/省会城市.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
+            self.add_layer(layer3.id, layer3.name + '2')
 
             self.graph.load_layers([layer1, layer2, layer3])
 
@@ -209,7 +210,12 @@ class LayerTree(QWidget):
     def item_changed(self, item: LayerItem):
         self.graph.set_layer_visibility(item.layer, item.visible)
 
+        layer_id = item.layer
         new_v = self.get_visible_layers()
+        if new_v.count(layer_id) == 2:
+            indices = [i for i, x in enumerate(new_v) if x == layer_id]
+            new_v.pop(indices[item.row() == indices[0]])
+
         for i in range(len(new_v) - 1, -1, -1):
             self.graph.set_layer_zlevel(new_v[i], i)
 
@@ -234,16 +240,8 @@ class LayerTree(QWidget):
 
         return lrs
 
-    def get_invisible_layers(self):
-        """获取需要被渲染的图层"""
-        lrs = []
-        for i in range(self.sim.rowCount()):
-            lrs += self.sim.item(i).get_visible_layers()
-
-        return lrs
-
-    def add_layer(self, layer):
-        item = LayerItem(QItemType.Layer, layer.id, layer.name)
+    def add_layer(self, layer_id, layer_name):
+        item = LayerItem(QItemType.Layer, layer_id, layer_name)
         self.sim.appendRow(item)
 
     def add_layer_group(self):
