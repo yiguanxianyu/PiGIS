@@ -68,6 +68,11 @@
       <string>Create Layer</string>
      </property>
      <addaction name="actionNewShapefileLayer"/>
+     <addaction name="actionNew_MultiPoint_Layer"/>
+     <addaction name="actionNew_Polyline_Layer"/>
+     <addaction name="actionNew_MultiPolyline_Layer"/>
+     <addaction name="actionNew_Polygon_Layer"/>
+     <addaction name="actionNew_MultiPolygon_Layer"/>
     </widget>
     <addaction name="menuCreateLayer"/>
     <addaction name="actionAddLayer"/>
@@ -243,7 +248,7 @@
   </action>
   <action name="actionNewShapefileLayer">
    <property name="text">
-    <string>New Shapefile Layer</string>
+    <string>New Point Layer</string>
    </property>
   </action>
   <action name="actionOptions">
@@ -254,6 +259,31 @@
   <action name="actionAddLayer">
    <property name="text">
     <string>Add Layer</string>
+   </property>
+  </action>
+  <action name="actionNew_MultiPoint_Layer">
+   <property name="text">
+    <string>New MultiPoint Layer</string>
+   </property>
+  </action>
+  <action name="actionNew_Polyline_Layer">
+   <property name="text">
+    <string>New Polyline Layer</string>
+   </property>
+  </action>
+  <action name="actionNew_MultiPolyline_Layer">
+   <property name="text">
+    <string>New MultiPolyline Layer</string>
+   </property>
+  </action>
+  <action name="actionNew_Polygon_Layer">
+   <property name="text">
+    <string>New Polygon Layer</string>
+   </property>
+  </action>
+  <action name="actionNew_MultiPolygon_Layer">
+   <property name="text">
+    <string>New MultiPolygon Layer</string>
    </property>
   </action>
  </widget>

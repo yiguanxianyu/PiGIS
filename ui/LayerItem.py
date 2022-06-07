@@ -72,6 +72,18 @@ class LayerItem(QStandardItem):
         else:
             return [self.layer] if self.self_visible else []
 
+    def get_invisible_layers(self):
+        if not self.self_visible:
+            return []
+
+        if self.type() == QItemType.LayerGroup:
+            lrs = []
+            for item in self.layers:
+                lrs += item.get_visible_layers()
+            return lrs
+        else:
+            return [self.layer] if not self.self_visible else []
+
     @property
     def self_visible(self):
         return self.checkState() == Qt.CheckState.Checked

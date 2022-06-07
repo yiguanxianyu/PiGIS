@@ -1,7 +1,6 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter
 
-from PiDrawObj.PiGraphDraw import PiGraphDraw
 from project import PiGISProjectController
 from ui import LayerTree, Graph, AboutPage
 from ui.raw import Ui_MainWindow
@@ -15,10 +14,10 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         self.__aboutPage = None
-        self.project = PiGISProjectController()
+        self.project = PiGISProjectController(self)
 
         layer_tree_widget = LayerTree(self)
-        self.layerTree = layer_tree_widget.ui.treeView
+        self.layerTree = layer_tree_widget
 
         graph_widget = Graph(self)
         self.graphWidget = graph_widget
