@@ -11,7 +11,7 @@ from project import PiGISProjectController
 
 '''小陈添加'''
 from PiMapObj.PiShow import PiGraphicsItem
-from PiMapObj.PiConstant import PiGeometryTypeConstant
+from PiConstant import PiGeometryTypeConstant
 from PiDrawObj.PiGraphDraw import PiGraphDraw
 ''''''
 class MainWindow(QMainWindow):
@@ -43,21 +43,22 @@ class MainWindow(QMainWindow):
         self.ui.mainLayout.addWidget(main_horizontal_splitter)
 
     """小陈添加方法"""
-    def xiaochen_add_layers(self,layers):
+    def xiaochen_load_layers(self,layers):
         for layer in layers:
-            self.graph_draw.add_layer(layer)
-
+            self.graphWidget.draw_control.add_layer(layer)
+        self.graphWidget.draw_control.load_graphics()
+    '''
     def xiaochen_load_layers(self):
         self.graph_draw.set_view(self.graphWidget)
         self.graph_draw.load_graphics()
-        '''
+        
         figure = PiShow()
         for layer in layers:
             figure.add_layer(layer,proj)
         #figure.set_scene(scene)
         scene.addWidget(figure)
-        '''
-        '''
+        
+        
         figure = PiGraphicsItem()
         for layer in self.layers:
             figure.add_layer(layer,layer.proj)

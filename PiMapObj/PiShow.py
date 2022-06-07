@@ -6,7 +6,7 @@ from PiMapObj.PiPolygon import PiPolygon
 from PySide6 import QtCore, QtWidgets, QtGui
 from PiMapObj.PiLayer import PiLayer
 from PiMapObj.PiProjection import PiProjection
-from PiMapObj.PiConstant import PiGeometryTypeConstant
+from PiConstant import PiGeometryTypeConstant
 
 class PiWindow(QtWidgets.QWidget):
     def __init__(self) -> None:

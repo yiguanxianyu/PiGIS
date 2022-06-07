@@ -19,6 +19,7 @@ class PiFeature():
         self.geometry_type = geometry_type
         self.attributes = PiAttributes(fields)
         self.symbol = None
+        self.id = self.geometry.id
     
     def load(self,reader,load_type):
         if load_type == 'lay':

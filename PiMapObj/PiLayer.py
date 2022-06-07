@@ -1,22 +1,27 @@
-import numpy
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QBrush, QPen
+import numpy as np
+import pandas as pd
 from PiMapObj import PiGlobal 
 from PiMapObj.BinaryReader import BinaryReader
 from PiMapObj.PiFeature import PiFeature,PiFeatures
 from PiMapObj.PiField import PiField,PiFields
-from PiMapObj.PiConstant import PiGeometryTypeConstant
+from PiConstant import PiGeometryTypeConstant, PiValueTypeConstant
 from PiMapObj.PiProjection import PiProjection
 cons = PiGeometryTypeConstant()
-
+typelist = [np.int16,np.int32,np.int64,np.float32,np.float64,'U20']
 class PiLayer():
     def __init__(self):
-        self.name = ""
-        self.id = PiGlobal.layer_count
+        self.name = "" # 名字
+        self.id = PiGlobal.layer_count # 唯一id
         PiGlobal.layer_count += 1
-        self.fields = PiFields()
-        self.features = PiFeatures()
-        self.proj = PiProjection()
-        self.geometry_type = 0
-        self.useless = 0
+        self.fields = PiFields() # 字段元数据
+        self.geometry_type = 0 # 几何图形类型
+        self.features = PiFeatures() # 几何图形
+        self.proj = PiProjection() # 投影
+        self.pen = QPen(Qt.blue) # 笔触
+        self.brush = QBrush(Qt.white) # 填充
+        self.useless = 0 # 没用
     
     def load(self,file_path,proj_path = None):
         '''加载坐标信息'''
@@ -32,7 +37,13 @@ class PiLayer():
             self.features.load(reader,load_type,self.geometry_type,self.fields) # 加载元素
         if proj_path != None:
             self.proj.load(proj_path)
-    
+
+    def get_attr_table(self):
+        data_type = np.dtype([(field.name,typelist[field.value_type]) for field in self.fields.fields])
+        arr = [tuple(attr.value for attr in feature.attributes.attributes) for feature in self.features.features]
+        #print(arr)
+        return pd.DataFrame(np.array(arr,dtype = data_type))
+
     def get_geometry_type(self):
         return cons.get_str(self.geometry_type)
 

@@ -1,3 +1,4 @@
+from enum import Enum
 class PiValueTypeConstant(): # 属性值类型参数
     def __init__(self):
         self.int16 = 0
@@ -103,3 +104,14 @@ class PiLinearUnitConstant(): # 线性单位常数
             return type_dict[str]
         except:
             return -1
+
+class PiGraphModeConstant(Enum):
+    editable = 0
+    moveable = 1
+
+class PiLayerStatusConstant(Enum):
+    normal = 0
+    added = 1
+    hidden = 2
+    visiable = 3
+    deleted = 4

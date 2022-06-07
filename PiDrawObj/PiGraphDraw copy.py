@@ -24,9 +24,9 @@ class PiGraphDraw(QPaintDevice):
         self.pixmap = QPixmap()
         self.painter = QPainter()
         self.cache = QGraphicsPixmapItem()
-        self.expand_pos = QPointF(0,0)
         
         self.item_box = QGraphicsItemGroup(None)
+        self.qpoint_lists_group = {}
         self.item_collections = {}
         self.layer_changed = {}
         self.layer_added = False
@@ -34,17 +34,17 @@ class PiGraphDraw(QPaintDevice):
 
         self.scale = None
         self.scale_before = None
-        self.leftup_x = 0
-        self.leftup_y = 0
+        self.geo_x_offset = 0
+        self.geo_y_offset = 0
         self.gra_x_offset = 0
         self.gra_y_offset = 0
-        self.initial_x = 0
-        self.initial_y = 0
+
         # 0:no change 1:changed -1:deleted
 
     def add_layer(self,layer):
         self.layers.append(layer)
         id = layer.id
+        self.qpoint_lists_group[id] = []
         self.item_collections[id] = []
         #self.item_groups[id] = QGraphicsItemGroup()
         self.layer_changed[id] = PiLayerStatusConstant.added
@@ -57,59 +57,59 @@ class PiGraphDraw(QPaintDevice):
         #self.load_graphics()
 
     def load_layer_data(self,layer):
-        pen = layer.pen
-        brush = layer.brush
+        pen = QPen(Qt.blue)
+        brush = QBrush(Qt.white)
         # item_group = self.item_groups[layer.id]
         item_collection = self.item_collections[layer.id]
+        qpoint_lists = self.qpoint_lists_group[layer.id]
         for feature in layer.features.features:
             geometry = feature.geometry
             collection = geometry._collection
             if layer.geometry_type == cons.multipolyline:
                 for polyline in collection:
+                    # 初始化数据
+                    x,y,id = polyline.get_x(),polyline.get_y(),polyline.id
+                    qpoint_list = [QPointF((x[i] - self.geo_x_offset) / self.scale, self.height - (y[i] - self.geo_y_offset) / self.scale) for i in range(polyline.count)]
                     # 绘制图元
-                    item = PiGraphicsPolylineItem(polyline,self.item_box,self)
-                    item.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
+                    item = PiGraphicsPolylineItem(qpoint_list,self.item_box,id)
+                    item.setFlags(QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
                     item_collection.append(item)
-                    item.setPen(pen)
+                    qpoint_lists.append(qpoint_list)
             elif layer.geometry_type == cons.multipolygon:
                 for polygon in collection:
+                    # 初始化数据
+                    x,y,id = polygon.get_x(),polygon.get_y(),polygon.id
+                    qpoint_list = [QPointF((x[i] - self.geo_x_offset) / self.scale, self.height - (y[i] - self.geo_y_offset) / self.scale) for i in range(polygon.count)]
                     # 绘制图元
-                    item = PiGraphicsPolygonItem(polygon,self.item_box,self)
-                    item.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
+                    item = PiGraphicsPolygonItem(qpoint_list,self.item_box,polygon)
+                    item.setFlags(QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
                     item.setPen(pen)
-                    item.setBrush(brush)
                     item_collection.append(item)
+                    qpoint_lists.append(qpoint_list)
             elif layer.geometry_type == cons.multipoint:
                 for point in collection:
+                    # 初始化数据
+                    xpos = (point.get_x() - self.geo_x_offset) / self.scale
+                    ypos = self.height - (point.get_y() - self.geo_y_offset) / self.scale
+                    id = point.id
                     # 绘制图元
-                    item = PiGraphicsEllipseItem(point,self.item_box,self)
-                    item.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
-                    item.setPen(pen)
-                    item.setBrush(brush)
+                    item = PiGraphicsEllipseItem(xpos-2,ypos-2,4,4,self.item_box,id)
+                    item.setFlags(QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
                     item_collection.append(item)
+                    qpoint_lists.append(QPointF(xpos,ypos))
 
     def draw_cache(self,layer):
         item_collection = self.item_collections[layer.id]
         match layer.geometry_type:
             case cons.multipolyline:
-                brush = self.painter.brush()
-                self.painter.setBrush(Qt.transparent)
                 for item in item_collection:
-                    '''for line in item.polyline():'''
-                    self.painter.drawPath(item.polyline())
-                        #line.translate(self.expand_pos)
-                        #self.painter.drawLine(line)
-                self.painter.setBrush(brush)
+                    for line in item.polyline():
+                        self.painter.drawLine(line)
             case cons.multipolygon:
-                print(self.expand_pos)
                 for item in item_collection:
-                    polygon = item.polygon()
-                    #polygon.translate(self.expand_pos)
                     self.painter.drawPolygon(item.polygon())
             case cons.multipoint:
                 for item in item_collection:
-                    point = item.ellipse()
-                    #point.translate(self.expand_pos)
                     self.painter.drawEllipse(item.ellipse())
 
     def load_graphics(self):
@@ -127,21 +127,14 @@ class PiGraphDraw(QPaintDevice):
             ydis = self.mbr.maxy - self.mbr.miny
             xdis = self.mbr.maxx - self.mbr.minx
             self.scale = max(xdis,ydis) / 400
-            self.initial_leftup_x = self.mbr.minx
-            self.initial_leftup_y = self.mbr.maxy
-            self.mid_x = (self.mbr.minx + self.mbr.maxx) / 2
-            self.mid_y = (self.mbr.miny + self.mbr.maxy) / 2
+            self.geo_x_offset = self.mbr.minx
+            self.geo_y_offset = self.mbr.miny
             self.layer_added = False
         # 计算图片大小以及平移距离，以确保中心点在（0，0）
         self.width = (self.mbr.maxx - self.mbr.minx) / self.scale
         self.height = (self.mbr.maxy - self.mbr.miny) / self.scale
-        self.leftup_x = self.mbr.minx
-        self.leftup_y = self.mbr.maxy
-        self.expand_pos = QPointF((self.leftup_x - self.initial_leftup_x)/self.scale,(self.initial_leftup_y - self.leftup_y) / self.scale)
-        self.gra_x_offset = (self.mid_x - self.leftup_x) / self.scale
-        self.gra_y_offset = (self.leftup_y - self.mid_y) / self.scale
-        # self.initial_leftup_x = self.leftup_x
-        # self.initial_leftup_y = self.leftup_y
+        self.gra_x_offset = self.width / 2
+        self.gra_y_offset = self.height / 2
         '''开始加载'''
         print(self.width,self.height)
         # 移除原先缓冲图片,重新调整定位
@@ -155,15 +148,17 @@ class PiGraphDraw(QPaintDevice):
         self.pixmap = QPixmap(self.width,self.height)
         self.pixmap.fill(Qt.GlobalColor.transparent)
         # 初始化画笔
+        pen = QPen(Qt.blue)
+        brush = QBrush(Qt.white)
         self.painter = QPainter(self.pixmap)
         self.painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
         self.painter.begin(self)
+        self.painter.setPen(pen)
+        self.painter.setBrush(brush)
         # 开始绘制
         self.item_box.setPos( -self.gra_x_offset, -self.gra_y_offset)
         for index in range(len(self.layers)):
             layer = self.layers[index]
-            self.painter.setPen(layer.pen)
-            self.painter.setBrush(layer.brush)
             id = layer.id
             # self.item_groups[id].setPos(-self.gra_x_offset, -self.gra_y_offset)
             match self.layer_changed[id]:
@@ -194,11 +189,11 @@ class PiGraphDraw(QPaintDevice):
                         pass
                     del self.item_collections[id]
                     del self.layer_changed[id]
+                    del self.qpoint_lists_group[id]
                     del self.layers[index]
                     
         # 往场景中添加缓冲图片
         self.cache = QGraphicsPixmapItem(self.pixmap,self.cache_box)
-        #self.cache.setPos(self.expand_pos)
         self.scene[PiGraphModeConstant.moveable].addItem(self.cache_box)
         self.painter.end()
     

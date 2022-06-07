@@ -1,5 +1,5 @@
 import math
-from PiMapObj.PiConstant import PiProjectionTypeConstant,PiLinearUnitConstant
+from PiConstant import PiProjectionTypeConstant,PiLinearUnitConstant
 """常数
 """
 PI = 2 * math.acos(0)

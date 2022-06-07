@@ -31,6 +31,12 @@ class PiPolygon(PiGeometry.PiGeometry):
         if len(self._x) > 0:
             self._mbr = PiGlobal.PiMbr(min(self._x),min(self._y),max(self._x),max(self._y))
 
+    def translate(self,dx,dy):
+        for i in range(self.count):
+            self._x[i] += dx
+            self._y[i] += dy
+        self._changed = True
+
     def clone(self) -> PiPolygon:
         return PiPolygon(self._x,self._y,self._innerx,self._innery)
 
