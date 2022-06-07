@@ -1,19 +1,16 @@
-from typing import Collection
-from PySide6.QtCore import QLine, QLineF, QPointF, Qt, QStringListModel, QPoint
-from PySide6.QtGui import QPaintDevice,QBrush, QFont, QPainter, QPen, QPixmap, QStandardItemModel, QStandardItem
-from PySide6.QtWidgets import QGraphicsView,QGraphicsItemGroup, QMainWindow, QApplication, QSplitter, QWidget, QTabWidget, QListWidgetItem,QGraphicsScene,QGraphicsPixmapItem,QGraphicsItem,QGraphicsPolygonItem,QGraphicsLineItem,QGraphicsEllipseItem
-from PiMapObj.PiLayer import PiLayer
-from PiMapObj.PiPolyline import PiPolyline
-# import pyqtgraph as pg
-from ui import LayerTree, Graph, OptionsPage, AboutPage
-from ui.raw import Ui_MainWindow
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter
+
 from project import PiGISProjectController
+from ui import LayerTree, Graph, AboutPage
+from ui.raw import Ui_MainWindow
 
 '''小陈添加'''
-from PiMapObj.PiShow import PiGraphicsItem
-from PiConstant import PiGeometryTypeConstant
 from PiDrawObj.PiGraphDraw import PiGraphDraw
+
 ''''''
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -43,10 +40,12 @@ class MainWindow(QMainWindow):
         self.ui.mainLayout.addWidget(main_horizontal_splitter)
 
     """小陈添加方法"""
-    def xiaochen_load_layers(self,layers):
+
+    def xiaochen_load_layers(self, layers):
         for layer in layers:
             self.graphWidget.draw_control.add_layer(layer)
         self.graphWidget.draw_control.load_graphics()
+
     '''
     def xiaochen_load_layers(self):
         self.graph_draw.set_view(self.graphWidget)
@@ -66,11 +65,6 @@ class MainWindow(QMainWindow):
         scene.addItem(figure)
         print(figure.shapeMode())
         '''
-                
-
-
-    
-
 
     def draw_layers(self):
         pass
@@ -97,11 +91,12 @@ class MainWindow(QMainWindow):
         self.project.currentLayer.editable = mode
 
     def show_options_page(self):
-        if self.__optionsPage is None:
-            self.__optionsPage = OptionsPage()
-            self.__optionsPage.setWindowModality(Qt.ApplicationModal)
-
-        self.__optionsPage.show()
+        pass
+        # if self.__optionsPage is None:
+        #     self.__optionsPage = OptionPage()
+        #     self.__optionsPage.setWindowModality(Qt.ApplicationModal)
+        #
+        # self.__optionsPage.show()
 
     def show_about_page(self):
         if self.__aboutPage is None:

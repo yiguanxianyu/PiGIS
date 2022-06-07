@@ -60,7 +60,7 @@ class PiGISProject:
 
         except Exception as ep:
             print('An error occurred while parsing project file:')
-            print(str(ep))
+            print(ep)
 
     def save(self):
         """
@@ -89,7 +89,7 @@ class PiGISProject:
             layer_config.append(layer_info)
 
         config['layer'] = layer_config
-        with open(self.path, 'w') as f:
+        with open(self.path, 'w', encoding='utf-8') as f:
             f.write(yaml.safe_dump(config))
 
     def add_layer(self, _layer):
@@ -180,7 +180,6 @@ class PiGISProjectController:
         Append a deepcopy of the selected layer to the project
         Not done yet
         """
-        pass
         self.__project.layer.append(
             deepcopy(self.__project.layer[self.currentLayer])
         )

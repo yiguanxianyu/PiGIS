@@ -22,6 +22,9 @@ class PiLayer():
         self.pen = QPen(Qt.blue) # 笔触
         self.brush = QBrush(Qt.white) # 填充
         self.useless = 0 # 没用
+
+        self.show_order = 0
+        self.change = 0
     
     def load(self,file_path,proj_path = None):
         '''加载坐标信息'''

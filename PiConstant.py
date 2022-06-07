@@ -7,8 +7,8 @@ class PiValueTypeConstant(): # 属性值类型参数
         self.float = 3
         self.double = 4
         self.string = 5
-    
-    def get_str(self,type):
+
+    def get_str(self, type):
         type_list = [
             "int16",
             "int32",
@@ -16,24 +16,26 @@ class PiValueTypeConstant(): # 属性值类型参数
             "float",
             "double",
             "string",
-            ]
+        ]
         return type_list[type]
 
-class PiGeometryTypeConstant(): # 几何要素类型参数
+
+class PiGeometryTypeConstant():  # 几何要素类型参数
     def __init__(self):
         self.multipoint = 0
         self.multipolyline = 1
         self.multipolygon = 2
-    
-    def get_str(self,type):
+
+    def get_str(self, type):
         type_list = [
             "multipoint",
             "multipolyline",
             "multipolygon",
-            ]
+        ]
         return type_list[type]
 
-class PiProjectionTypeConstant(): # 投影类型常数
+
+class PiProjectionTypeConstant():  # 投影类型常数
     def __init__(self):
         self.none = 0
         self.mercator = 1
@@ -41,8 +43,8 @@ class PiProjectionTypeConstant(): # 投影类型常数
         self.gauss_kruger = 3
         self.lambert_conformal_conic_2sp = 4
         self.albers_equal_area = 5
-    
-    def get_str(self,type):
+
+    def get_str(self, type):
         type_list = [
             "none",
             "mercator",
@@ -50,24 +52,25 @@ class PiProjectionTypeConstant(): # 投影类型常数
             "gauss_kruger",
             "lambert_conformal_conic_2sp",
             "albers_equal_area",
-            ]
+        ]
         return type_list[type]
-    
-    def get_type(self,str):
+
+    def get_type(self, str):
         type_dict = {
-            "none":0,
-            "mercator":1,
-            "utm":2,
-            "gauss_kruger":3,
-            "lambert_conformal_conic_2sp":4,
-            "albers_equal_area":5,
+            "none": 0,
+            "mercator": 1,
+            "utm": 2,
+            "gauss_kruger": 3,
+            "lambert_conformal_conic_2sp": 4,
+            "albers_equal_area": 5,
         }
         try:
             return type_dict[str]
         except:
             return -1
 
-class PiLinearUnitConstant(): # 线性单位常数
+
+class PiLinearUnitConstant():  # 线性单位常数
     def __init__(self):
         self.millimeter = 0
         self.centimeter = 1
@@ -75,30 +78,30 @@ class PiLinearUnitConstant(): # 线性单位常数
         self.meter = 3
         self.kilometer = 4
         self.scale_dict = {
-            self.millimeter:1000,
-            self.centimeter:100,
-            self.decimeter:10,
-            self.meter:1,
-            self.kilometer:0.001,
-            }
+            self.millimeter: 1000,
+            self.centimeter: 100,
+            self.decimeter: 10,
+            self.meter: 1,
+            self.kilometer: 0.001,
+        }
 
-    def get_str(self,type):
+    def get_str(self, type):
         type_list = [
             "millimeter",
             "centimeter",
             "decimeter",
             "meter",
             "kilometer",
-            ]
+        ]
         return type_list[type]
-    
-    def get_type(self,str):
+
+    def get_type(self, str):
         type_dict = {
-            "millimeter":0,
-            "centimeter":1,
-            "decimeter":2,
-            "meter":3,
-            "kilometer":4,
+            "millimeter": 0,
+            "centimeter": 1,
+            "decimeter": 2,
+            "meter": 3,
+            "kilometer": 4,
         }
         try:
             return type_dict[str]

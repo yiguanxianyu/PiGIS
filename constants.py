@@ -1,5 +1,5 @@
 from enum import Enum
-
+import numpy as np
 from PySide6.QtGui import QStandardItem
 
 PiGIS_MAJOR_VERSION = 0
@@ -25,6 +25,20 @@ class GISType(Enum):
     MultiPoint = 1
 
 
+AVAILABLE_DATATYPE = [
+    'int16', 'int32', 'int64', 'float32', 'float64', 'string'
+]
+
+
+def get_real_type(dt, max_length=16):
+    match dt:
+        case 'string':
+            return np.dtype(f'U{max_length}')
+        case _:
+            return np.dtype(dt)
+
+
 class_type = {
-    'Point': GISType.Point, 'MultiPoint': GISType.MultiPoint,
+    'Point': GISType.Point,
+    'MultiPoint': GISType.MultiPoint,
 }

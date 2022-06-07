@@ -1,9 +1,7 @@
-from PySide6.QtCore import QRectF,QMetaObject
-from PySide6.QtWidgets import QFrame,QGraphicsView,QWidget, QGraphicsScene, QGraphicsRectItem, QGraphicsItem,QVBoxLayout
-from PySide6 import QtGui
-from PiDrawObj.PiGraphDraw import PiGraphDraw
-from PiDrawObj.PiGraphView import PiGraphView
+from PySide6.QtCore import QRectF, QMetaObject
+from PySide6.QtWidgets import QFrame, QWidget
 
+from PiDrawObj.PiGraphView import PiGraphView
 from ui.raw import Ui_Graph
 
 class Graph(QWidget):
@@ -19,11 +17,10 @@ class Graph(QWidget):
         self.ui.graphicsView.setLineWidth(0)
         self.ui.gridLayout.addWidget(self.ui.graphicsView, 0, 0, 1, 1)
 
-
         self.ui.retranslateUi(self)
 
         QMetaObject.connectSlotsByName(self)
-        
+
         rect = QRectF(100, 100, 400, 200)
         '''
         item1 = QGraphicsRectItem(rect)  # 创建矩形---以场景为坐标
@@ -37,4 +34,3 @@ class Graph(QWidget):
         self.figure = PiShow()
         self.scene.addWidget(self.figure)
         '''
-        

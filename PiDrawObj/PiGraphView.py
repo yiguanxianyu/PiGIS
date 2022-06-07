@@ -32,6 +32,7 @@ class PiGraphView(QGraphicsView):
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setDragMode(QGraphicsView.NoDrag) 
+        self.setScene(self.draw_control.get_scene(self.mode))
 
     def wheelEvent(self, event: QtGui.QWheelEvent) -> None:
         if self.mode == PiGraphModeConstant.moveable:
