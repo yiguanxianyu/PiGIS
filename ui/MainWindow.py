@@ -1,36 +1,30 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter
 
+from PiDrawObj.PiGraphDraw import PiGraphDraw
 from project import PiGISProjectController
 from ui import LayerTree, Graph, AboutPage
 from ui.raw import Ui_MainWindow
 
-'''小陈添加'''
-from PiDrawObj.PiGraphDraw import PiGraphDraw
-
-''''''
-
 
 class MainWindow(QMainWindow):
+
     def __init__(self):
         super().__init__()
-
-        self.__optionsPage = None
-        self.__aboutPage = None
-
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        self.__aboutPage = None
         self.project = PiGISProjectController()
 
         layer_tree_widget = LayerTree(self)
         self.layerTree = layer_tree_widget.ui.treeView
-        graph_widget = Graph()
-        '''小陈添加语句'''
-        self.graph_draw = PiGraphDraw()
-        self.layer_tree = layer_tree_widget
-        self.graph_widget = graph_widget
-        ''''''
-        self.graphWidget = graph_widget.ui.graphicsView
+
+        graph_widget = Graph(self)
+        self.graphWidget = graph_widget
+
+        graph_widget.layerTree = layer_tree_widget
+        layer_tree_widget.graph = graph_widget
 
         # 分离器添加控件
         main_horizontal_splitter = QSplitter(Qt.Horizontal)
@@ -39,32 +33,8 @@ class MainWindow(QMainWindow):
         # 把这个 splitter 放在一个布局里才能显示出来
         self.ui.mainLayout.addWidget(main_horizontal_splitter)
 
-    """小陈添加方法"""
-
     def xiaochen_load_layers(self, layers):
-        for layer in layers:
-            self.graphWidget.draw_control.add_layer(layer)
-        self.graphWidget.draw_control.load_graphics()
-
-    '''
-    def xiaochen_load_layers(self):
-        self.graph_draw.set_view(self.graphWidget)
-        self.graph_draw.load_graphics()
-        
-        figure = PiShow()
-        for layer in layers:
-            figure.add_layer(layer,proj)
-        #figure.set_scene(scene)
-        scene.addWidget(figure)
-        
-        
-        figure = PiGraphicsItem()
-        for layer in self.layers:
-            figure.add_layer(layer,layer.proj)
-        figure.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
-        scene.addItem(figure)
-        print(figure.shapeMode())
-        '''
+        self.graphWidget.load_layers(layers)
 
     def draw_layers(self):
         pass
@@ -107,3 +77,23 @@ class MainWindow(QMainWindow):
     @staticmethod
     def exit_app():
         QApplication.instance().quit()
+
+    '''
+    def xiaochen_load_layers(self):
+        self.graph_draw.set_view(self.graphWidget)
+        self.graph_draw.load_graphics()
+        
+        figure = PiShow()
+        for layer in layers:
+            figure.add_layer(layer,proj)
+        #figure.set_scene(scene)
+        scene.addWidget(figure)
+        
+        
+        figure = PiGraphicsItem()
+        for layer in self.layers:
+            figure.add_layer(layer,layer.proj)
+        figure.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
+        scene.addItem(figure)
+        print(figure.shapeMode())
+        '''

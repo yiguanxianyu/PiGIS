@@ -68,11 +68,11 @@ class AttributesTable(QWidget):
     def __init__(self, layer):
         super().__init__()
         self.layer = layer
-        self.setWindowModality(Qt.WindowModal)
         self.fieldTable = None
         self.editState = False
         self.ui = Ui_AttributesTable()
         self.ui.setupUi(self)
+
         # table = TableModel(layer.get_attr_table())
         self.table = TableModel(test_data)
         self.ui.tableView.setModel(self.table)
@@ -104,8 +104,9 @@ class AttributesTable(QWidget):
             self.editState = False
             self.ui.tableView.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
-    def closeEvent(self, event) -> None:
-        self.layer.attributesTableDestroyed()
+    def closeEvent(self, event):
+        pass
+        # self.layer.attributesTableDestroyed()
 
     def features_selected(self, fids):
         pass
