@@ -9,6 +9,7 @@ from constants import class_type
 
 
 class PiGISProject:
+
     def __init__(self):
         self.path = None
         self.layer = []
@@ -69,8 +70,10 @@ class PiGISProject:
 
         config = {
             'Application': {
-                'app_name': 'PiGIS',
-                'minimal_version': f'{PiGIS_MAJOR_VERSION}.{PiGIS_MINOR_VERSION}.{PiGIS_PATCH_VERSION}',
+                'app_name':
+                'PiGIS',
+                'minimal_version':
+                f'{PiGIS_MAJOR_VERSION}.{PiGIS_MINOR_VERSION}.{PiGIS_PATCH_VERSION}',
             }
         }
 
@@ -118,6 +121,7 @@ class PiGISProject:
 
 
 class PiGISProjectController:
+
     def __init__(self):
         self.currentLayer = None
         self.__project = PiGISProject()
@@ -126,8 +130,13 @@ class PiGISProjectController:
         self.__project = PiGISProject()
 
     def set_save_config(self):
-        all_types = ['PiGIS Project File (*.pgz)', "YAML Ain't Markable Language (*.yaml)"]
-        fp, ft = QFileDialog.getSaveFileName(QWidget(), "Save As...", filter=';;'.join(all_types))
+        all_types = [
+            'PiGIS Project File (*.pgz)',
+            "YAML Ain't Markable Language (*.yaml)"
+        ]
+        fp, ft = QFileDialog.getSaveFileName(QWidget(),
+                                             "Save As...",
+                                             filter=';;'.join(all_types))
         self.__project.path = fp
 
     def save_project(self):
@@ -154,8 +163,7 @@ class PiGISProjectController:
         file_path, file_type = QFileDialog.getOpenFileName(
             QWidget(),
             'Select PiGIS Project File',
-            filter=';;'.join(all_types)
-        )
+            filter=';;'.join(all_types))
 
         self.__project = PiGISProject()
         self.__project.parse(file_path)
@@ -164,14 +172,14 @@ class PiGISProjectController:
         """
         Create a layer from a vector file and append it to the project
         """
-        all_types = ['shapefile (*.shp)', 'GPS eXchange Format (*.GPX)']
+        all_types = [
+            'ESRI shapefile (*.shp)', 'GPS eXchange Format (*.GPX)',
+            'Lay File (*.lay)'
+        ]
 
         file_path, file_type = QFileDialog.getOpenFileName(
-            QWidget(),
-            'Select File',
-            filter=';;'.join(all_types)
-        )
-
+            QWidget(), 'Select File', filter=';;'.join(all_types))
+        print(file_type)
         # TODO: parse selected layer file
         self.__project.add_layer(None)
 
@@ -181,8 +189,7 @@ class PiGISProjectController:
         Not done yet
         """
         self.__project.layer.append(
-            deepcopy(self.__project.layer[self.currentLayer])
-        )
+            deepcopy(self.__project.layer[self.currentLayer]))
 
 
 if __name__ == '__main__':

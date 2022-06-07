@@ -38,6 +38,8 @@ class LayerItemModel(QStandardItemModel):
     def remove_layer(self):
         item = self.itemFromIndex(current_index)
         curr_row = current_index.row()
+        # TODO: close()方法
+        item.layer.close()
         is_not_root = current_index.parent().isValid()
         item_parent = item.parent() if is_not_root else self
         item_parent.removeRow(curr_row)
@@ -61,6 +63,7 @@ class LayerItemModel(QStandardItemModel):
 class LayerTree(QWidget):
     def __init__(self, main_window):
         super().__init__()
+        self.graph = None
         self.layerContextMenu = QMenu(self)
         self.layerGroupContextMenu = QMenu(self)
         self.emptyContextMenu = QMenu(self)
@@ -80,7 +83,6 @@ class LayerTree(QWidget):
         self._header_height = self.treeView.header().height()
 
         self.create_menu()
-        self.add_layer_test()
 
     def get_current_item(self) -> LayerItem:
         return self.sim.itemFromIndex(current_index)
@@ -89,6 +91,7 @@ class LayerTree(QWidget):
         def show_color_dialog():
             s = QColorDialog.getColor()
             print(s)
+            # TODO: 设置颜色
             self.get_current_item().set_color(s)
 
         choose_color_act = QAction(self)
@@ -116,7 +119,6 @@ class LayerTree(QWidget):
         def show_label():
             print(self.get_recursive_layers())
             print(self.get_visible_layers())
-            pass
 
         show_label_act = QAction(self)
         show_label_act.setText('Show Label')
@@ -150,6 +152,7 @@ class LayerTree(QWidget):
         self.create_layer_menu()
         self.create_layer_group_menu()
 
+        # For test only
         def load_test_layers():
             layer1 = PiLayer()
             layer1.load("PiMapObj/图层文件/国界线.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
@@ -163,7 +166,7 @@ class LayerTree(QWidget):
             self.add_layer(layer3)
             layer3.load("PiMapObj/图层文件/省会城市.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
 
-            self.mainWindow.xiaochen_load_layers([layer1, layer2, layer3])
+            self.graph.load_layers([layer1, layer2, layer3])
 
         # test loading layers
         load_layer_act = QAction(self)
@@ -174,19 +177,6 @@ class LayerTree(QWidget):
         self.emptyContextMenu.addAction(load_layer_act)
         self.emptyContextMenu.addAction(self.ui.action_expand_all)
         self.emptyContextMenu.addAction(self.ui.action_collapse_all)
-
-    # for test only
-    def add_layer_test(self):
-
-        item1 = LayerItem(QItemType.LayerGroup, [], '图层组1')
-        item2 = LayerItem(QItemType.LayerGroup, [], '图层组2')
-
-        for i in range(5):
-            temp = LayerItem(QItemType.Layer, i + 100, f'图层{i}')
-            item1.appendRow(temp)
-
-        self.sim.insertRow(0, item1)
-        self.sim.insertRow(1, item2)
 
     def show_context_menu(self, qp):
         qp.setY(qp.y() - self._header_height)
@@ -216,36 +206,47 @@ class LayerTree(QWidget):
         global current_index
         current_index = index
 
-    @staticmethod
-    def item_changed(item):
-        print('---begin---')
-        if item.type() is QItemType.Layer:
-            print(f'有单位发生变化:{item.text()}, {item.type()},{item.layer}')
-        else:
-            print(f'有单位发生变化:{item.text()}, {item.type()},{item.layers}')
+    def item_changed(self, item):
+        layer = item.layer
+        # layer.set_visible()
+        print(f'有单位发生变化:{item.text()}, {item.type()}')
         item.update_on_item_changed()
-        print('---end---')
 
     def get_recursive_layers(self):
         return [self.sim.item(i).get_recursive_layers() for i in range(self.sim.rowCount())]
 
+    def set_layer_tree(self, layer_tree):
+        for layer in layer_tree:
+            if type(layer) == list:
+                pass
+            else:
+                self.add_layer(layer)
+
     def get_visible_layers(self):
+        """获取需要被渲染的图层"""
         lrs = []
         for i in range(self.sim.rowCount()):
             lrs += self.sim.item(i).get_visible_layers()
 
         return lrs
 
-    def get_render_list(self):
-        """
-        TODO: 获取需要被渲染的图层
-        """
-        pass
-
     def add_layer(self, layer):
-        item = LayerItem(QItemType.Layer, layer, 'New Layer')
+        item = LayerItem(QItemType.Layer, layer, layer.name)
         self.sim.appendRow(item)
 
     def add_layer_group(self):
         item = LayerItem(QItemType.LayerGroup, [], 'New Layer Group')
         self.sim.appendRow(item)
+
+    # # for test only
+    # def add_layer_test(self):
+    #
+    #     item1 = LayerItem(QItemType.LayerGroup, [], '图层组1')
+    #     item2 = LayerItem(QItemType.LayerGroup, [], '图层组2')
+    #
+    #     for i in range(5):
+    #         temp = LayerItem(QItemType.Layer, i + 100, f'图层{i}')
+    #         item1.appendRow(temp)
+    #
+    #     self.sim.insertRow(0, item1)
+    #     self.sim.insertRow(1, item2)
