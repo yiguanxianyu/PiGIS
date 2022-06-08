@@ -49,17 +49,19 @@ class PiGraphDraw(QPaintDevice):
 
     def delete_layer(self, layer_id):
         self.layer_changed[layer_id] = PiLayerStatusConstant.deleted
-        # self.load_graphics()
+        self.load_graphics()
 
     def load_layer_data(self, layer):
         pen = layer.pen
         brush = layer.brush
+        #print(layer.id,layer.geometry_type)
         # item_group = self.item_groups[layer.id]
         item_collection = self.item_collections[layer.id]
         for feature in layer.features.features:
             geometry = feature.geometry
             collection = geometry._collection
-            if layer.geometry_type == PiGeometryTypeConstant.multipolyline:
+            #feature_graphics_item = QGraphicsItemGroup()
+            if layer.geometry_type == PiGeometryTypeConstant.multipolyline.value:
                 for polyline in collection:
                     # 绘制图元
                     item = PiGraphicsPolylineItem(polyline, self.item_box, self)
@@ -67,7 +69,7 @@ class PiGraphDraw(QPaintDevice):
                         QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
                     item_collection.append(item)
                     item.setPen(pen)
-            elif layer.geometry_type == PiGeometryTypeConstant.multipolygon:
+            elif layer.geometry_type == PiGeometryTypeConstant.multipolygon.value:
                 for polygon in collection:
                     # 绘制图元
                     item = PiGraphicsPolygonItem(polygon, self.item_box, self)
@@ -76,7 +78,7 @@ class PiGraphDraw(QPaintDevice):
                     item.setPen(pen)
                     item.setBrush(brush)
                     item_collection.append(item)
-            elif layer.geometry_type == PiGeometryTypeConstant.multipoint:
+            elif layer.geometry_type == PiGeometryTypeConstant.multipoint.value:
                 for point in collection:
                     # 绘制图元
                     item = PiGraphicsEllipseItem(point, self.item_box, self)
@@ -125,36 +127,36 @@ class PiGraphDraw(QPaintDevice):
         self.view.scale(1 / self.view.show_scale, 1 / self.view.show_scale)
         self.item_box.setPos(0, 0)
         # 开始绘制
-        for index in self.layers.keys():
+        for index in list(self.layers.keys()):
             layer = self.layers[index]
-            id = layer.id
+            _id = layer.id
             # self.item_groups[id].setPos(-self.gra_x_offset, -self.gra_y_offset)
-            match self.layer_changed[id]:
+            match self.layer_changed[_id]:
                 case PiLayerStatusConstant.added:
                     self.load_layer_data(layer)
-                    for item in self.item_collections[id]:
+                    for item in self.item_collections[_id]:
                         self.scene.addItem(item)
-                    self.layer_changed[id] = PiLayerStatusConstant.normal
+                    self.layer_changed[_id] = PiLayerStatusConstant.normal
                 case PiLayerStatusConstant.visiable:
-                    for item in self.item_collections[id]:
+                    for item in self.item_collections[_id]:
                         self.scene.addItem(item)
-                    self.layer_changed[id] = PiLayerStatusConstant.normal
+                    self.layer_changed[_id] = PiLayerStatusConstant.normal
                 case PiLayerStatusConstant.normal:
                     pass
                 case PiLayerStatusConstant.hidden:
                     try:
-                        for item in self.item_collections[id]:
+                        for item in self.item_collections[_id]:
                             self.scene.removeItem(item)
-                    except:
-                        pass
+                    except Exception as e:
+                        print(e)
                 case PiLayerStatusConstant.deleted:
                     try:
-                        for item in self.item_collections[id]:
+                        for item in self.item_collections[_id]:
                             self.scene.removeItem(item)
-                    except:
-                        pass
-                    del self.item_collections[id]
-                    del self.layer_changed[id]
+                    except Exception as e:
+                        print(e)
+                    del self.item_collections[_id]
+                    del self.layer_changed[_id]
                     del self.layers[index]
 
     def get_scene(self):

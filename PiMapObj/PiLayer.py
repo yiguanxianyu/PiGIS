@@ -22,6 +22,7 @@ class PiLayer():
         self.useless = 0  # 没用
         self.pen = QPen(Qt.blue)  # 笔触
         self.brush = QBrush(Qt.white)  # 填充
+        self.visibility = True
         self.change = False
 
         '''马子添加属性'''
@@ -43,6 +44,16 @@ class PiLayer():
             self.features.load(reader, load_type, self.geometry_type, self.fields)  # 加载元素
         if proj_path != None:
             self.proj.load(proj_path)
+    
+    def remove_feature(self, ids: list[int]):
+        """删除指定的要素"""
+        # TODO
+        features = self.features.features
+        length = len(features)
+        for index in range(1,length+1):
+            if features[length - index].id in ids:
+                del features[length - index]
+        self.features.count -= len(ids)
 
     def get_geometry_type(self):
         return self.geometry_type
