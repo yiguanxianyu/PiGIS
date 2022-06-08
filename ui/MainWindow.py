@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter
+from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter, QLabel, QComboBox
 
 from project import PiGISProjectController
 from ui import LayerTree, Graph, AboutPage
@@ -32,8 +32,9 @@ class MainWindow(QMainWindow):
         # 把这个 splitter 放在一个布局里才能显示出来
         self.ui.mainLayout.addWidget(main_horizontal_splitter)
 
-    def xiaochen_load_layers(self, layers):
-        self.graphWidget.load_layers(layers)
+    # For test only
+    def mousePressEvent(self, event) -> None:
+        self.ui.statusBar.update_mouse_loc(event.x(), event.y())
 
     def draw_layers(self):
         pass

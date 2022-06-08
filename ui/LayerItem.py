@@ -9,6 +9,7 @@ class LayerItem(QStandardItem):
     def __init__(self, _type, _layer, *args):
         super(LayerItem, self).__init__(*args)
         self.setCheckable(True)
+        self.setCheckState(Qt.Checked)
         self.__type = None
         self.__layer = None
 
@@ -27,15 +28,14 @@ class LayerItem(QStandardItem):
         return LayerItem(QItemType.Default, None)
 
     def type(self):
+        """返回该单位是图层还是图层组"""
         if not self.__type:
             self.__type = self.data(QUserRole.ItemType)
         return self.__type
 
     @property
     def layer(self):
-        """
-        图层，返回图层对象
-        """
+        """图层，返回图层对象"""
         assert self.type() == QItemType.Layer
         if not self.__layer:
             self.__layer = self.data(QUserRole.Layer)
@@ -43,18 +43,12 @@ class LayerItem(QStandardItem):
 
     @property
     def layers(self):
-        """
-        图层组，返回列表
-        """
-        if self.type() == QItemType.LayerGroup:
-            return [self.child(i) for i in range(self.rowCount())]
-        else:
-            return None
+        """图层组，返回列表"""
+        assert self.type() == QItemType.LayerGroup
+        return [self.child(i) for i in range(self.rowCount())]
 
     def get_recursive_layers(self):
-        """
-        图层组，返回递归列表
-        """
+        """图层组，返回递归列表"""
         if self.type() == QItemType.LayerGroup:
             return [self.child(i).get_recursive_layers() for i in range(self.rowCount())]
         else:
@@ -72,31 +66,14 @@ class LayerItem(QStandardItem):
         else:
             return [self.layer] if self.self_visible else []
 
-    def get_invisible_layers(self):
-        if not self.self_visible:
-            return []
-
-        if self.type() == QItemType.LayerGroup:
-            lrs = []
-            for item in self.layers:
-                lrs += item.get_visible_layers()
-            return lrs
-        else:
-            return [self.layer] if not self.self_visible else []
-
     @property
     def self_visible(self):
+        """返回自身复选框的状态"""
         return self.checkState() == Qt.CheckState.Checked
 
     @property
-    def parent_visible(self):
-        if self.parent():
-            return self.parent().checkState() == Qt.CheckState.Checked
-
-        return True
-
-    @property
     def visible(self):
+        """返回自身的可见性"""
         temp = self
         while temp:
             if not self.self_visible:
@@ -105,47 +82,28 @@ class LayerItem(QStandardItem):
 
         return True
 
-    # def update_visible(self):
+    # def update_on_item_changed(self):
     #     """
-    #     递归地设置每个图层的可见性
+    #     接受 itemChanged 事件
     #     """
+    #
+    #     def update_layer():
+    #         # self.layer.set_text(self.text())
+    #         pass
+    #
+    #     def update_layer_group():
+    #         pass
+    #
+    #
     #     match self.type():
     #         case QItemType.Layer:
-    #             # TODO: 这个 Layer 对象还没有眉目呢
-    #             # self.layer.set_visible(self.visible)
-    #             pass
+    #             update_layer()
     #         case QItemType.LayerGroup:
-    #             for item in self.layers:
-    #                 item.update_visible()
+    #             update_layer_group()
     #         case QItemType.Default:
     #             print('怎么是default')
     #         case _:
     #             raise Exception('Some error occurred')
-
-    def update_on_item_changed(self):
-        """
-        接受 itemChanged 事件
-        """
-
-        def update_layer():
-            # TODO: 这个 Layer 对象还没有眉目呢
-            # self.layer.set_text(self.text())
-            pass
-
-        def update_layer_group():
-            pass
-
-        # self.update_visible()
-
-        match self.type():
-            case QItemType.Layer:
-                update_layer()
-            case QItemType.LayerGroup:
-                update_layer_group()
-            case QItemType.Default:
-                print('怎么是default')
-            case _:
-                raise Exception('Some error occurred')
 
     # def update_layer_group(self):
     #     """
@@ -180,3 +138,25 @@ class LayerItem(QStandardItem):
     #     warnings.warn("This is deprecated", DeprecationWarning)
     #     assert self.type() is ItemType.LayerGroup
     #     self.layer.append(layer)
+    # @property
+    # def parent_visible(self):
+    #     if self.parent():
+    #         return self.parent().checkState() == Qt.CheckState.Checked
+    #
+    #     return True
+
+    # def update_visible(self):
+    #     """
+    #     递归地设置每个图层的可见性
+    #     """
+    #     match self.type():
+    #         case QItemType.Layer:
+    #             # self.layer.set_visible(self.visible)
+    #             pass
+    #         case QItemType.LayerGroup:
+    #             for item in self.layers:
+    #                 item.update_visible()
+    #         case QItemType.Default:
+    #             print('怎么是default')
+    #         case _:
+    #             raise Exception('Some error occurred')

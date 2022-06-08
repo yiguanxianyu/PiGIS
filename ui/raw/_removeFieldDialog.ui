@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FieldList</class>
- <widget class="QDialog" name="FieldList">
+ <class>RemoveField</class>
+ <widget class="QDialog" name="RemoveField">
   <property name="windowModality">
    <enum>Qt::ApplicationModal</enum>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QListWidget" name="listWidget">
+    <widget class="QListWidget" name="fieldList">
      <property name="selectionMode">
       <enum>QAbstractItemView::MultiSelection</enum>
      </property>
@@ -37,5 +37,41 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>RemoveField</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>86</x>
+     <y>279</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>86</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>RemoveField</receiver>
+   <slot>fieldChosen()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>86</x>
+     <y>279</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>86</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>fieldChosen()</slot>
+ </slots>
 </ui>

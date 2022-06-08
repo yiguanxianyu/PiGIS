@@ -8,60 +8,66 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize, Qt)
-from PySide6.QtWidgets import (QAbstractItemView, QCheckBox, QGridLayout,
-                               QHBoxLayout, QTableView,
-                               QToolButton, QWidget)
-
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QCheckBox, QHBoxLayout,
+    QHeaderView, QSizePolicy, QSpacerItem, QTableView,
+    QToolButton, QVBoxLayout, QWidget)
 
 class Ui_AttributesTable(object):
     def setupUi(self, AttributesTable):
         if not AttributesTable.objectName():
             AttributesTable.setObjectName(u"AttributesTable")
-        AttributesTable.setWindowModality(Qt.ApplicationModal)
         AttributesTable.resize(583, 401)
         AttributesTable.setContextMenuPolicy(Qt.NoContextMenu)
-        self.gridLayout = QGridLayout(AttributesTable)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.widget = QWidget(AttributesTable)
-        self.widget.setObjectName(u"widget")
-        self.widget.setMinimumSize(QSize(0, 25))
-        self.widget.setMaximumSize(QSize(16777215, 25))
-        self.horizontalLayout = QHBoxLayout(self.widget)
+        self.verticalLayout = QVBoxLayout(AttributesTable)
+        self.verticalLayout.setSpacing(3)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(6, 3, 6, 6)
+        self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.filterData = QToolButton(self.widget)
+        self.filterData = QToolButton(AttributesTable)
         self.filterData.setObjectName(u"filterData")
 
         self.horizontalLayout.addWidget(self.filterData)
 
-        self.addRowButton = QToolButton(self.widget)
+        self.addRowButton = QToolButton(AttributesTable)
         self.addRowButton.setObjectName(u"addRowButton")
 
         self.horizontalLayout.addWidget(self.addRowButton)
 
-        self.removeRowButton = QToolButton(self.widget)
+        self.removeRowButton = QToolButton(AttributesTable)
         self.removeRowButton.setObjectName(u"removeRowButton")
 
         self.horizontalLayout.addWidget(self.removeRowButton)
 
-        self.addFieldButton = QToolButton(self.widget)
-        self.addFieldButton.setObjectName(u"addFieldButton")
-
-        self.horizontalLayout.addWidget(self.addFieldButton)
-
-        self.removeFieldButton = QToolButton(self.widget)
+        self.removeFieldButton = QToolButton(AttributesTable)
         self.removeFieldButton.setObjectName(u"removeFieldButton")
 
         self.horizontalLayout.addWidget(self.removeFieldButton)
 
-        self.toggleEditingCheckBox = QCheckBox(self.widget)
+        self.addFieldButton = QToolButton(AttributesTable)
+        self.addFieldButton.setObjectName(u"addFieldButton")
+
+        self.horizontalLayout.addWidget(self.addFieldButton)
+
+        self.toggleEditingCheckBox = QCheckBox(AttributesTable)
         self.toggleEditingCheckBox.setObjectName(u"toggleEditingCheckBox")
         self.toggleEditingCheckBox.setContextMenuPolicy(Qt.NoContextMenu)
 
         self.horizontalLayout.addWidget(self.toggleEditingCheckBox)
 
-        self.gridLayout.addWidget(self.widget, 0, 0, 1, 1)
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout.addItem(self.horizontalSpacer)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.tableView = QTableView(AttributesTable)
         self.tableView.setObjectName(u"tableView")
@@ -69,7 +75,8 @@ class Ui_AttributesTable(object):
         self.tableView.setGridStyle(Qt.SolidLine)
         self.tableView.setSortingEnabled(True)
 
-        self.gridLayout.addWidget(self.tableView, 1, 0, 1, 1)
+        self.verticalLayout.addWidget(self.tableView)
+
 
         self.retranslateUi(AttributesTable)
         self.addRowButton.clicked.connect(AttributesTable.add_row)
@@ -78,9 +85,9 @@ class Ui_AttributesTable(object):
         self.removeRowButton.clicked.connect(AttributesTable.remove_row)
         self.addFieldButton.clicked.connect(AttributesTable.add_field)
         self.removeFieldButton.clicked.connect(AttributesTable.remove_field)
+        self.tableView.clicked.connect(AttributesTable.item_clicked)
 
         QMetaObject.connectSlotsByName(AttributesTable)
-
     # setupUi
 
     def retranslateUi(self, AttributesTable):
@@ -88,7 +95,8 @@ class Ui_AttributesTable(object):
         self.filterData.setText(QCoreApplication.translate("AttributesTable", u"Filter", None))
         self.addRowButton.setText(QCoreApplication.translate("AttributesTable", u"Add Row", None))
         self.removeRowButton.setText(QCoreApplication.translate("AttributesTable", u"Remove Row", None))
-        self.addFieldButton.setText(QCoreApplication.translate("AttributesTable", u"Add Field", None))
         self.removeFieldButton.setText(QCoreApplication.translate("AttributesTable", u"Remove Field", None))
-        self.toggleEditingCheckBox.setText(QCoreApplication.translate("AttributesTable", u"Toggle Editing", None))
+        self.addFieldButton.setText(QCoreApplication.translate("AttributesTable", u"Add Field", None))
+        self.toggleEditingCheckBox.setText(QCoreApplication.translate("AttributesTable", u"\u270e", None))
     # retranslateUi
+

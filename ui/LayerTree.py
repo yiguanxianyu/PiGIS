@@ -37,12 +37,9 @@ class LayerItemModel(QStandardItemModel):
 
     def remove_layer(self):
         item = self.itemFromIndex(current_index)
-        curr_row = current_index.row()
-        # TODO: close()方法
-        item.layer.close()
-        is_not_root = current_index.parent().isValid()
-        item_parent = item.parent() if is_not_root else self
-        item_parent.removeRow(curr_row)
+        self.layerTree.graph.remove_layer(item.layer)
+        item_parent = item.parent() if current_index.parent().isValid() else self
+        item_parent.removeRow(current_index.row())
 
     def remove_layer_group(self):
         item = self.itemFromIndex(current_index)
@@ -62,7 +59,7 @@ class LayerItemModel(QStandardItemModel):
 
 class LayerTree(QWidget):
     def __init__(self, main_window):
-        super().__init__()
+        super().__init__(main_window)
         self.graph = None
         self.layerContextMenu = QMenu(self)
         self.layerGroupContextMenu = QMenu(self)
@@ -84,6 +81,12 @@ class LayerTree(QWidget):
 
         self.create_menu()
 
+    def focusInEvent(self, e) -> None:
+        self.grabKeyboard()
+
+    def focusOutEvent(self, e) -> None:
+        self.releaseKeyboard()
+
     def get_current_item(self) -> LayerItem:
         return self.sim.itemFromIndex(current_index)
 
@@ -99,10 +102,9 @@ class LayerTree(QWidget):
         choose_color_act.triggered.connect(show_color_dialog)
 
         def show_attributes_table():
-            self.ab = AttributesTable(self.get_current_item().layer)
+            layer = self.graph.get_layer_by_id(self.get_current_item().layer)
+            self.ab = AttributesTable(self.graph, layer)
             self.ab.show()
-            self.ab.setFocus()
-            self.ab.grabKeyboard()
 
         show_attributes_table_act = QAction(self)
         show_attributes_table_act.setText('Show Attribute Table')
@@ -117,7 +119,7 @@ class LayerTree(QWidget):
         show_symbology_page_act.triggered.connect(show_symbology_page)
 
         def show_label():
-            print(self.get_recursive_layers())
+            print(self.get_layer_tree())
             print(self.get_visible_layers())
 
         show_label_act = QAction(self)
@@ -156,17 +158,18 @@ class LayerTree(QWidget):
         def load_test_layers():
             layer1 = PiLayer()
             layer1.load("PiMapObj/图层文件/国界线.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-            self.add_layer(layer1)
+            self.add_layer(layer1.id, layer1.name + '0')
+            self.graph.load_layers(layer1)
 
             layer2 = PiLayer()
             layer2.load("PiMapObj/图层文件/省级行政区.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-            self.add_layer(layer2)
+            self.add_layer(layer2.id, layer2.name + '1')
+            self.graph.load_layers(layer2)
 
             layer3 = PiLayer()
-            self.add_layer(layer3)
             layer3.load("PiMapObj/图层文件/省会城市.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-
-            self.graph.load_layers([layer1, layer2, layer3])
+            self.add_layer(layer3.id, layer3.name + '2')
+            self.graph.load_layers(layer3)
 
         # test loading layers
         load_layer_act = QAction(self)
@@ -209,14 +212,17 @@ class LayerTree(QWidget):
     def item_changed(self, item: LayerItem):
         self.graph.set_layer_visibility(item.layer, item.visible)
 
+        layer_id = item.layer
         new_v = self.get_visible_layers()
+
+        if new_v.count(layer_id) == 2:
+            indices = [i for i, x in enumerate(new_v) if x == layer_id]
+            new_v.pop(indices[item.row() == indices[0]])
+
         for i in range(len(new_v) - 1, -1, -1):
             self.graph.set_layer_zlevel(new_v[i], i)
 
-        # print(f'有单位发生变化:{item.text()}, {item.type()}')
-        # item.update_on_item_changed()
-
-    def get_recursive_layers(self):
+    def get_layer_tree(self):
         return [self.sim.item(i).get_recursive_layers() for i in range(self.sim.rowCount())]
 
     def set_layer_tree(self, layer_tree):
@@ -234,16 +240,8 @@ class LayerTree(QWidget):
 
         return lrs
 
-    def get_invisible_layers(self):
-        """获取需要被渲染的图层"""
-        lrs = []
-        for i in range(self.sim.rowCount()):
-            lrs += self.sim.item(i).get_visible_layers()
-
-        return lrs
-
-    def add_layer(self, layer):
-        item = LayerItem(QItemType.Layer, layer.id, layer.name)
+    def add_layer(self, layer_id, layer_name):
+        item = LayerItem(QItemType.Layer, layer_id, layer_name)
         self.sim.appendRow(item)
 
     def add_layer_group(self):
