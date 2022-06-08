@@ -1,7 +1,5 @@
 from enum import Enum
-
-
-class PiValueTypeConstant:  # 属性值类型参数
+class PiValueTypeConstant(): # 属性值类型参数
     def __init__(self):
         self.int16 = 0
         self.int32 = 1
@@ -110,11 +108,9 @@ class PiLinearUnitConstant():  # 线性单位常数
         except:
             return -1
 
-
 class PiGraphModeConstant(Enum):
     editable = 0
     moveable = 1
-
 
 class PiLayerStatusConstant(Enum):
     normal = 0

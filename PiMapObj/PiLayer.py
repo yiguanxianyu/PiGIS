@@ -1,3 +1,5 @@
+import numpy as np
+from PySide6.QtCore import Qt
 from PySide6.QtGui import QBrush, QPen
 
 from PiConstant import PiGeometryTypeConstant
@@ -19,8 +21,8 @@ class PiLayer():
         self.geometry_type = 0  # 几何图形类型
         self.features = PiFeatures()  # 几何图形
         self.proj = PiProjection()  # 投影
-        self.pen = QPen()  # 笔触
-        self.brush = QBrush()  # 填充
+        self.pen = QPen(Qt.blue)  # 笔触
+        self.brush = QBrush(Qt.white)  # 填充
         self.useless = 0  # 没用
 
     def load(self, file_path, proj_path=None):
@@ -46,6 +48,11 @@ class PiLayer():
 
     def get_features(self):
         return self.features
+
+    def get_attr_table(self):
+        typelist = [np.int16,np.int32,np.int64,np.float32,np.float64,'U20']
+        data_type = np.dtype([(field.name,typelist[field.value_type]) for field in self.fields.fields])
+        return np.array([tuple([attr.value for attr in feature.attributes.attributes]) for feature in self.features.features],dtype = data_type)
 
 
 if __name__ == "__main__":
