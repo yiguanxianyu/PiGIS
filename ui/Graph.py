@@ -37,9 +37,11 @@ class Graph(QWidget):
         """删除图层"""
         self.draw_control.delete_layer(layer_id)
 
-    def cancel_highlight_feature(self, layer_id: int, ids: list[int]):
+    def cancel_highlight_feature(self, layer_id: int, ids: list[int] = None):
         """取消高亮指定的要素 TODO"""
-        pass
+        if not ids:
+            ids = self.highlighted_feature[layer_id]
+        ...
 
     def highlight_feature(self, layer_id: int, ids: list[int]):
         """高亮指定的要素 TODO"""

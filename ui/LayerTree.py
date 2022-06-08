@@ -120,8 +120,7 @@ class LayerTree(QWidget):
         show_symbology_page_act.triggered.connect(show_symbology_page)
 
         def show_label():
-            layer = self.graph.get_layer_by_id(self.get_current_item().layer)
-            layer.render_label()
+            self.graph.render_label(self.get_current_item().layer)
 
         show_label_act = QAction(self)
         show_label_act.setText('Show Label')
@@ -171,7 +170,6 @@ class LayerTree(QWidget):
             layer3.load("PiMapObj/图层文件/省会城市.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
             self.add_layer(layer3.id, layer3.name + '2')
             self.graph.load_layers(layer3)
-            print(layer3.get_attr_table())
 
         # test loading layers
         load_layer_act = QAction(self)
