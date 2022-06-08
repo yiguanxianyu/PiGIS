@@ -1,13 +1,16 @@
-from PySide6.QtCore import QAbstractTableModel, Qt, QModelIndex
-from PySide6.QtWidgets import QWidget, QAbstractItemView, QDialog, QTableView, QHeaderView
-
-from ui.raw import Ui_AttributesTable, Ui_RemoveField, Ui_inputFilterDialog
 import numpy as np
 import pandas as pd
+from PySide6.QtCore import QAbstractTableModel, Qt, QModelIndex
+from PySide6.QtWidgets import QWidget, QAbstractItemView, QDialog, QHeaderView, QMessageBox
 
-test_dtype = np.dtype([('fid', np.int32), ('A', np.int32), ('B', np.int32), ('C', np.int32), ('D', np.int32)])
-data0 = [tuple(range(i * 5, i * 5 + 5)) for i in range(5000)]
-test_data = np.array(data0, dtype=test_dtype)
+from ui.raw import Ui_AttributesTable, Ui_RemoveField, Ui_inputFilterDialog
+
+
+def gen_test_data():
+    test_dtype = np.dtype(
+        [('fid', np.int32), ('A', np.int32), ('B', np.int32), ('C', np.int32), ('D', np.dtype('U20'))])
+    data0 = [(i, i + 1, i + 2, i + 3, 'iiiii') for i in range(500)]
+    return np.array(data0, dtype=test_dtype)
 
 
 class FilterDialog(QDialog):
@@ -47,7 +50,12 @@ class RemoveFieldDialog(QDialog):
 class TableModel(QAbstractTableModel):
     def __init__(self, data):
         super(TableModel, self).__init__()
+
+        if data is None:
+            data = gen_test_data()
+
         self._data = pd.DataFrame(data)
+        # self._pd = pd.DataFrame(data)
         self._dtype = data.dtype
         self.__row_count = len(data)
         self.__column_count = len(data[0])
@@ -70,9 +78,13 @@ class TableModel(QAbstractTableModel):
                 return
 
     def setData(self, index, value, role: int = ...):
-        self._data.iloc[index.row(), index.column()] = value
-        # TODO 检查数据类型是否符合
-        return True
+        try:
+            new_data = self._dtype[index.column()].type(value)
+            self._data.iloc[index.row(), index.column()] = new_data
+            return True
+        except Exception as e:
+            QMessageBox.critical(QWidget(), e.__class__.__name__, str(e))
+            return False
 
     def rowCount(self, index=...):
         return self.__row_count
@@ -83,10 +95,10 @@ class TableModel(QAbstractTableModel):
     def insertRows(self, begin: int, count: int, parent=...) -> bool:
         """考虑到使用场景，这里就只考虑添加一行了"""
         self.beginInsertRows(QModelIndex(), begin, begin + count - 1)
-        for dt in self.dtype.names:
-            pass
-        data_to_insert = pd.DataFrame(np.array([1, 1, 1, 1]).reshape(1, -1))
-        pd.concat([self._data, data_to_insert])
+
+        data_to_insert = np.array([[self._dtype[i].type(0) for i in range(len(self._dtype))]])
+        self._data = pd.DataFrame(np.concatenate([self._data.values, data_to_insert]))
+
         self.__row_count += count
         self.endInsertRows()
         return True
@@ -143,7 +155,7 @@ class AttributesTable(QWidget):
         self.tableView = self.ui.tableView
         self.tableView.setVerticalHeader(PiAttrHeader(self))
         # self.tableModel = TableModel(layer.get_attr_table())
-        self.tableModel = TableModel(test_data)
+        self.tableModel = TableModel(None)
         self.tableView.setModel(self.tableModel)
 
     def focusInEvent(self, e) -> None:
@@ -156,7 +168,7 @@ class AttributesTable(QWidget):
         return [i.row() for i in self.tableView.selectionModel().selectedRows()]
 
     def highlight_feature(self):
-        self.graph.select_feature_by_id(self.get_selected_rows())
+        self.layer.highlight(self.get_selected_rows())
 
     def item_clicked(self, index):
         pass

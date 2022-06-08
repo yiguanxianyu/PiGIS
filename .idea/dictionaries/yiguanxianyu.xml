@@ -3,6 +3,7 @@
     <words>
       <w>dtype</w>
       <w>espg</w>
+      <w>zlevel</w>
     </words>
   </dictionary>
 </component>
