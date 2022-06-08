@@ -1,3 +1,4 @@
+import numpy as np
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QBrush, QPen
 
@@ -47,6 +48,11 @@ class PiLayer():
 
     def get_features(self):
         return self.features
+
+    def get_attr_table(self):
+        typelist = [np.int16,np.int32,np.int64,np.float32,np.float64,'U20']
+        data_type = np.dtype([(field.name,typelist[field.value_type]) for field in self.fields.fields])
+        return np.array([tuple([attr.value for attr in feature.attributes.attributes]) for feature in self.features.features],dtype = data_type)
 
 
 if __name__ == "__main__":
