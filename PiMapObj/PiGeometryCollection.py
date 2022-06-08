@@ -1,4 +1,5 @@
-from PiMapObj import PiGlobal,PiGeometry
+from PiMapObj import PiGeometry
+
 '''类别标识
 1 PiPoint
 2 PiPolyline
@@ -7,6 +8,7 @@ from PiMapObj import PiGlobal,PiGeometry
 5 PiMultiPolyline
 6 PiMultiPolygon
 '''
+
 
 class PiGeometryCollection(PiGeometry.PiGeometry):
     def __init__(self, type: int):
@@ -17,27 +19,26 @@ class PiGeometryCollection(PiGeometry.PiGeometry):
         self._area = 0
         self._mbr = None
         self._changed = True
-    
-    def load(self,object_list: list):
+
+    def load(self, object_list: list):
         for item in object_list:
             self._collection.append(item)
         self._object_num = len(object_list)
-        
-    
+
     def get_collection(self):
         return self._collection
 
-    def update_object(self,index,object):
+    def update_object(self, index, object):
         self._collection[index] = object
         self._changed = True
 
-    def insert_object(self,index,object):
-        self._collection.insert(index,object)
+    def insert_object(self, index, object):
+        self._collection.insert(index, object)
         self._object_numm += 1
         self._changed = True
-    
-    def delete_object(self,index):
-        del(self._collection[index])
+
+    def delete_object(self, index):
+        del (self._collection[index])
         self._object_num -= 1
         self._changed = True
 
@@ -51,7 +52,7 @@ class PiGeometryCollection(PiGeometry.PiGeometry):
             self._length += object.get_length()
             self._area += object.get_area()
             self._mbr.union(object.get_mbr())
-    
+
     def get_object_num(self) -> int:
         return self._object_num
 
@@ -66,10 +67,9 @@ class PiGeometryCollection(PiGeometry.PiGeometry):
             self._changed = False
             self.__calculate_attr()
         return self._area
-    
+
     def get_mbr(self):
         if self._changed:
             self._changed = False
             self.__calculate_attr()
         return self._mbr
-    

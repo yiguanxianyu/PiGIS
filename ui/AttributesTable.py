@@ -168,7 +168,7 @@ class AttributesTable(QWidget):
         return [i.row() for i in self.tableView.selectionModel().selectedRows()]
 
     def highlight_feature(self):
-        self.graph.select_feature_by_id(self.get_selected_rows())
+        self.layer.highlight(self.get_selected_rows())
 
     def item_clicked(self, index):
         pass

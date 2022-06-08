@@ -50,9 +50,47 @@ class PiLayer():
         return self.features
 
     def get_attr_table(self):
-        typelist = [np.int16,np.int32,np.int64,np.float32,np.float64,'U20']
-        data_type = np.dtype([(field.name,typelist[field.value_type]) for field in self.fields.fields])
-        return np.array([tuple([attr.value for attr in feature.attributes.attributes]) for feature in self.features.features],dtype = data_type)
+        """
+        小陈请注意：这里的的 feature没有维护一个内建的 id，
+        所以没有办法在把 AttrTable 里的数据和要素对应起来，
+        因此需要维护一个字典或者列表存每个要素隐藏的 feature id
+        """
+        type_list = [np.int16, np.int32, np.int64, np.float32, np.float64, 'U20']
+        data_type = np.dtype([(field.name, type_list[field.value_type]) for field in self.fields.fields])
+        table = [tuple(attr.value for attr in feature.attributes.attributes) for feature in self.features.features]
+        return np.array(table, dtype=data_type)
+
+    def __del__(self):
+        """移除图层本身"""
+        pass
+
+    def set_symbology(self, _type, _data):
+        """设定符号化方式，还没太想明白"""
+        pass
+
+    def remove_feature(self, ids: list[int]):
+        """删除指定的要素"""
+        # TODO
+        pass
+
+    def highlight_feature(self, ids: list[int]):
+        """高亮指定的要素"""
+        # TODO
+        pass
+
+    def set_visibility(self, visibility):
+        """改变某个 layer 的可见性"""
+        # print('vis,', layer_id, layer_visibility)
+        pass
+
+    def set_zlevel(self, z_level):
+        """改变本图层的 z level"""
+        # print('zlv,', layer_id, layer_z_level)
+        pass
+
+    def toggle_label(self):
+        """如果显示注记了，就去掉注记，不然添加注记"""
+        pass
 
 
 if __name__ == "__main__":

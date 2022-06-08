@@ -1,7 +1,9 @@
 import numpy as np
 
+
 class BinaryReaderError(IndexError):
     pass
+
 
 class BinaryReader:
     def __init__(self, data, endianness="<"):
@@ -79,7 +81,7 @@ class BinaryReader:
 
     def read_bytes(self, n):
         self.check_offset(self.offset + n)
-        value = self.data[self.offset:self.offset+n]
+        value = self.data[self.offset:self.offset + n]
         self.offset += n
         return value
 
@@ -99,4 +101,3 @@ class BinaryReader:
 
     def finished(self):
         return self.offset >= len(self.data)
-

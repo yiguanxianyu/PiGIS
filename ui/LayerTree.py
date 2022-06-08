@@ -91,6 +91,8 @@ class LayerTree(QWidget):
         return self.sim.itemFromIndex(current_index)
 
     def create_layer_menu(self):
+        """创建图层的右键菜单"""
+
         def show_color_dialog():
             s = QColorDialog.getColor()
             print(s)
@@ -119,8 +121,8 @@ class LayerTree(QWidget):
         show_symbology_page_act.triggered.connect(show_symbology_page)
 
         def show_label():
-            print(self.get_layer_tree())
-            print(self.get_visible_layers())
+            layer = self.graph.get_layer_by_id(self.get_current_item().layer)
+            layer.toggle_label()
 
         show_label_act = QAction(self)
         show_label_act.setText('Show Label')
@@ -210,9 +212,11 @@ class LayerTree(QWidget):
         current_index = index
 
     def item_changed(self, item: LayerItem):
-        self.graph.set_layer_visibility(item.layer, item.visible)
-
         layer_id = item.layer
+
+        layer = self.graph.get_layer_by_id(layer_id)
+        layer.set_visibility(item.layer, item.visible)
+
         new_v = self.get_visible_layers()
 
         if new_v.count(layer_id) == 2:
@@ -220,7 +224,7 @@ class LayerTree(QWidget):
             new_v.pop(indices[item.row() == indices[0]])
 
         for i in range(len(new_v) - 1, -1, -1):
-            self.graph.set_layer_zlevel(new_v[i], i)
+            layer.set_zlevel(new_v[i], i)
 
     def get_layer_tree(self):
         return [self.sim.item(i).get_recursive_layers() for i in range(self.sim.rowCount())]

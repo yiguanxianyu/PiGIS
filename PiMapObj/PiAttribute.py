@@ -1,12 +1,14 @@
 from PiConstant import PiValueTypeConstant
+
 cons = PiValueTypeConstant()
 
+
 class PiAttribute():
-    def __init__(self,value_type):
+    def __init__(self, value_type):
         self.value_type = value_type
         self.value = None
 
-    def load(self,reader,load_type):
+    def load(self, reader, load_type):
         if load_type == 'lay':
             match self.value_type:
                 case cons.int16:
@@ -25,27 +27,30 @@ class PiAttribute():
                     pass
         elif load_type == 'shp':
             pass
-    
+
     def __str__(self):
         return str(self.value)
+
     __repr__ = __str__
 
+
 class PiAttributes():
-    def __init__(self,fields):
+    def __init__(self, fields):
         self.attributes = []
         self.field_count = fields.get_count()
         self.value_type_list = fields.get_value_type_list()
 
-    def load(self,reader,load_type):
+    def load(self, reader, load_type):
         if load_type == 'lay':
             for i in range(self.field_count):
                 value_type = self.value_type_list[i]
                 new_attribute = PiAttribute(value_type)
-                new_attribute.load(reader,load_type)
+                new_attribute.load(reader, load_type)
                 self.attributes.append(new_attribute)
         elif load_type == 'shp':
             pass
 
     def __str__(self):
         return str(self.attributes)
+
     __repr__ = __str__

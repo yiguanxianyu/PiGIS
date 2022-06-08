@@ -1,48 +1,47 @@
-from enum import Enum
-from PySide6.QtCore import QPoint, QPointF, QRectF,QMetaObject,Qt
-from PySide6.QtWidgets import QFrame,QGraphicsView, QRubberBand
 from PySide6 import QtGui
-from PiDrawObj.PiGraphDraw import PiGraphDraw
+from PySide6.QtCore import QPoint, QPointF, Qt
+from PySide6.QtWidgets import QGraphicsView
+
 from PiConstant import PiGraphModeConstant
+from PiDrawObj.PiGraphDraw import PiGraphDraw
 from PiDrawObj.PiGraphEdit import PiGraphEdit
 
 
 class PiGraphView(QGraphicsView):
-    def __init__(self,widget):
+    def __init__(self, widget):
         super().__init__(widget)
-        self.mode = PiGraphModeConstant.moveable # 默认处于移动模式
-        self.last_mode = PiGraphModeConstant.editable # 默认处于显示模式
+        self.mode = PiGraphModeConstant.moveable  # 默认处于移动模式
+        self.last_mode = PiGraphModeConstant.editable  # 默认处于显示模式
         self.ui_init()
         self.display_init()
-        self.center = QPointF(0,0)
+        self.center = QPointF(0, 0)
         self.show_scale = 1
 
     def ui_init(self):
         # 绘画控制类
-        self.draw_control = PiGraphDraw(view = self)
+        self.draw_control = PiGraphDraw(view=self)
         self.setScene(self.draw_control.get_scene())
         # 视图拖动类
         self.mouse_pos_before = QPointF()
         c = Qt.MouseButton
         self.is_moving = False
         # 编辑控制类
-        self.edit_control = PiGraphEdit(view = self)
-
+        self.edit_control = PiGraphEdit(view=self)
 
     def display_init(self):
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.setDragMode(QGraphicsView.NoDrag) 
+        self.setDragMode(QGraphicsView.NoDrag)
 
-    def set_show_scale(self,show_scale):
+    def set_show_scale(self, show_scale):
         ratio = show_scale / self.show_scale
-        self.scale(ratio,ratio)
+        self.scale(ratio, ratio)
         self.show_scale = show_scale
-        
-    def centerOn(self,pos:QPointF | QPoint):
+
+    def centerOn(self, pos: QPointF | QPoint):
         super().centerOn(pos)
         self.center = pos
-    
+
     def wheelEvent(self, event: QtGui.QWheelEvent) -> None:
         if self.mode == PiGraphModeConstant.moveable:
             wheelValue = event.angleDelta().y()
@@ -63,9 +62,9 @@ class PiGraphView(QGraphicsView):
                 self.draw_control.load_graphics()
             #'''
 
-    #'''
+    # '''
     def mousePressEvent(self, event: QtGui.QMouseEvent) -> None:
-        self.mouse_pressed_button = event.button() 
+        self.mouse_pressed_button = event.button()
         if self.mode == PiGraphModeConstant.editable:
             return super().mousePressEvent(event)
         elif self.mode == PiGraphModeConstant.moveable:
@@ -96,7 +95,8 @@ class PiGraphView(QGraphicsView):
             self.setCursor(Qt.ArrowCursor)
             self.is_moving = False
         return
-    #'''
+
+    # '''
     '''
     def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
         if self.mode == PiGraphModeConstant.moveable:
@@ -114,15 +114,15 @@ class PiGraphView(QGraphicsView):
     def keyReleaseEvent(self, event: QtGui.QKeyEvent) -> None:
         if event.text() == "c":
             if self.mode != PiGraphModeConstant.moveable:
-                #self.setDragMode(QGraphicsView.ScrollHandDrag) 
-                #self.draw_control.load_graphics()
+                # self.setDragMode(QGraphicsView.ScrollHandDrag)
+                # self.draw_control.load_graphics()
                 self.last_mode = self.mode
                 self.mode = PiGraphModeConstant.moveable
             elif self.mode == PiGraphModeConstant.moveable:
-                #self.setDragMode(QGraphicsView.NoDrag) 
+                # self.setDragMode(QGraphicsView.NoDrag)
                 self.mode = self.last_mode
                 self.is_moving = False
         elif self.mode == PiGraphModeConstant.editable:
             pass
 
-        #return super().keyReleaseEvent(event)
+        # return super().keyReleaseEvent(event)

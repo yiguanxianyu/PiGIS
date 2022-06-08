@@ -2,6 +2,7 @@ from PySide6.QtCore import QMetaObject
 from PySide6.QtWidgets import QFrame, QWidget
 
 from PiDrawObj.PiGraphView import PiGraphView
+from PiMapObj import PiLayer
 from ui.raw import Ui_Graph
 
 
@@ -27,37 +28,10 @@ class Graph(QWidget):
         dc.add_layer(layer)
         dc.load_graphics()
 
-    def remove_layer(self, layer_id):
-        """删除图层"""
-        pass
-
-    def set_layer_visibility(self, layer_id, layer_visibility):
-        """改变某个 layer 的可见性"""
-        # print('vis,', layer_id, layer_visibility)
-        pass
-
-    def set_layer_zlevel(self, layer_id, layer_z_level):
-        """改变某个 layer 的 z level"""
-        # print('zlv,', layer_id, layer_z_level)
-        pass
-
-    def get_layer_by_id(self, layer_id):
+    def get_layer_by_id(self, layer_id) -> PiLayer:
         """根据id返回一个 PiLayer对象"""
         pass
 
-    def toggle_label(self, layer_id):
-        """切换是否显示注记"""
-        pass
-
-    def select_feature_by_id(self, layers: list[int]):
-        """根据在属性表中选择的fid在地图上选中相应的要素"""
-        print('selected', layers)
-        pass
-
-    def set_pen(self, layer_id):
-        """设定pen"""
-        pass
-
-    def set_brush(self, layer_id):
-        """设定brush"""
+    def remove_layer(self, layer_id):
+        """删除图层"""
         pass
