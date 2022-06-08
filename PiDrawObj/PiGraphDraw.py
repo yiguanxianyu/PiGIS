@@ -13,8 +13,8 @@ cons = PiGeometryTypeConstant()
 class PiGraphDraw(QPaintDevice):
     def __init__(self, view=None):
         super().__init__()
-        self.max_y = 10000000
-        self.max_x = 10000000
+        self.max_y = 1000000
+        self.max_x = 1000000
         self.scene = QGraphicsScene(-self.max_x, -self.max_y, 2 * self.max_x, 2 * self.max_y)
         self.view = view
 
@@ -108,7 +108,7 @@ class PiGraphDraw(QPaintDevice):
                     self.mbr.union(layer.features.get_mbr())
             ydis = self.mbr.maxy - self.mbr.miny
             xdis = self.mbr.maxx - self.mbr.minx
-            self.scale = max(xdis, ydis) / 400
+            # self.scale = max(xdis, ydis) / 400
             self.scale = 10000
             self.initial_leftup_x = self.mbr.minx
             self.initial_leftup_y = self.mbr.maxy
@@ -123,7 +123,6 @@ class PiGraphDraw(QPaintDevice):
         # self.initial_leftup_x = self.leftup_x
         # self.initial_leftup_y = self.leftup_y
         '''开始加载'''
-        # print(self.width,self.height)
         self.view.centerOn(QPointF(self.mid_x / self.scale, -self.mid_y / self.scale))
         self.view.scale(1 / self.view.show_scale, 1 / self.view.show_scale)
         self.item_box.setPos(0, 0)

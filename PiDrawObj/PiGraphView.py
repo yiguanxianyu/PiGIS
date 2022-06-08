@@ -71,7 +71,6 @@ class PiGraphView(QGraphicsView):
             if self.is_moving == False:
                 self.is_moving = True
                 self.mouse_pos_before = event.pos()
-                print(self.mapToScene(self.mouse_pos_before))
             elif self.is_moving == True:
                 self.setCursor(Qt.ClosedHandCursor)
                 pass
@@ -122,7 +121,7 @@ class PiGraphView(QGraphicsView):
                 # self.setDragMode(QGraphicsView.NoDrag)
                 self.mode = self.last_mode
                 self.is_moving = False
-        elif self.mode == PiGraphModeConstant.editable:
+        elif event.text() != "c":
             pass
 
         # return super().keyReleaseEvent(event)

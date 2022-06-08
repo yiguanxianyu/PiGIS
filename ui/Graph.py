@@ -28,9 +28,9 @@ class Graph(QWidget):
         dc.load_graphics()
 
     def get_layer_by_id(self, layer_id) -> PiLayer:
-        """根据 id 返回一个 PiLayer对象"""
-        pass
+        """根据id返回一个 PiLayer对象"""
+        return self.ui.graphicsView.draw_control.layers[layer_id]
 
     def remove_layer(self, layer_id):
         """删除图层"""
-        pass
+        return self.ui.graphicsView.draw_control.delete_layer(layer_id)

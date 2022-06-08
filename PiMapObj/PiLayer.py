@@ -55,13 +55,16 @@ class PiLayer():
 
     def get_attr_table(self):
         """
-        小陈请注意：这里的的 feature没有维护一个内建的 id，
+        小陈请注意：这里的的 feature 没有维护一个内建的 id，
         所以没有办法在把 AttrTable 里的数据和要素对应起来，
         因此需要维护一个字典或者列表存每个要素隐藏的 feature id
         """
         type_list = [np.int16, np.int32, np.int64, np.float32, np.float64, 'U20']
-        data_type = np.dtype([(field.name, type_list[field.value_type]) for field in self.fields.fields])
-        table = [tuple(attr.value for attr in feature.attributes.attributes) for feature in self.features.features]
+        data_type_list = [(field.name, type_list[field.value_type]) for field in self.fields.fields]
+        data_type_list.insert(0,('id',np.int32))
+        data_type = np.dtype(data_type_list)
+        
+        table = [tuple([feature.id] + [attr.value for attr in feature.attributes.attributes]) for feature in self.features.features]
         return np.array(table, dtype=data_type)
 
     def __del__(self):
