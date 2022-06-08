@@ -120,8 +120,7 @@ class LayerTree(QWidget):
         show_symbology_page_act.triggered.connect(show_symbology_page)
 
         def show_label():
-            layer = self.graph.get_layer_by_id(self.get_current_item().layer)
-            layer.render_label()
+            self.graph.render_label(self.get_current_item().layer)
 
         show_label_act = QAction(self)
         show_label_act.setText('Show Label')

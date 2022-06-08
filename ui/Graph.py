@@ -40,13 +40,15 @@ class Graph(QWidget):
 
     def cancel_highlight_feature(self, layer_id: int, ids: list[int]):
         """取消高亮指定的要素"""
+        if not ids:
+            ids = self.highlighted_feature[layer_id]
+            
         layer = self.get_layer_by_id[layer_id]
         for feature_id in ids:
             feature_item = self.draw_control.get_feature_item(layer_id,feature_id)
             feature_item.setPen(layer.pen)
             feature_item.setBrush(layer.brush)
-        pass
-
+ 
     def highlight_feature(self, layer_id: int, ids: list[int]):
         """高亮指定的要素"""
         if layer_id in self.highlighted_feature:
