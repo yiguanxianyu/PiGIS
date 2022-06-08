@@ -1,4 +1,7 @@
 from enum import Enum
+
+from PySide6.QtGui import QColor
+
 class PiValueTypeConstant(): # 属性值类型参数
     def __init__(self):
         self.int16 = 0
@@ -20,19 +23,10 @@ class PiValueTypeConstant(): # 属性值类型参数
         return type_list[type]
 
 
-class PiGeometryTypeConstant():  # 几何要素类型参数
-    def __init__(self):
-        self.multipoint = 0
-        self.multipolyline = 1
-        self.multipolygon = 2
-
-    def get_str(self, type):
-        type_list = [
-            "multipoint",
-            "multipolyline",
-            "multipolygon",
-        ]
-        return type_list[type]
+class PiGeometryTypeConstant(Enum):  # 几何要素类型参数
+    multipoint = 0
+    multipolyline = 1
+    multipolygon = 2
 
 
 class PiProjectionTypeConstant():  # 投影类型常数
@@ -118,3 +112,5 @@ class PiLayerStatusConstant(Enum):
     hidden = 2
     visiable = 3
     deleted = 4
+
+HIGHLIGHTCOLOR = QColor(144,238,144)

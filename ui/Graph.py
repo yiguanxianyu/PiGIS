@@ -1,9 +1,11 @@
 from PySide6.QtCore import QMetaObject
+from PySide6.QtGui import QBrush, QPen
 from PySide6.QtWidgets import QFrame, QWidget
 
 from PiDrawObj.PiGraphView import PiGraphView
-from PiMapObj import PiLayer
+from PiMapObj.PiLayer import PiLayer
 from ui.raw import Ui_Graph
+from PiConstant import HIGHLIGHTCOLOR, PiLayerStatusConstant
 
 
 class Graph(QWidget):
@@ -27,7 +29,6 @@ class Graph(QWidget):
     def load_layers(self, layer):
         """加载一个图层"""
         self.draw_control.add_layer(layer)
-        self.draw_control.load_graphics()
 
     def get_layer_by_id(self, layer_id) -> PiLayer:
         """根据id返回一个 PiLayer对象"""
@@ -37,14 +38,19 @@ class Graph(QWidget):
         """删除图层"""
         self.draw_control.delete_layer(layer_id)
 
-    def cancel_highlight_feature(self, layer_id: int, ids: list[int] = None):
-        """取消高亮指定的要素 TODO"""
+    def cancel_highlight_feature(self, layer_id: int, ids: list[int]):
+        """取消高亮指定的要素"""
         if not ids:
             ids = self.highlighted_feature[layer_id]
-        ...
-
+            
+        layer = self.get_layer_by_id[layer_id]
+        for feature_id in ids:
+            feature_item = self.draw_control.get_feature_item(layer_id,feature_id)
+            feature_item.setPen(layer.pen)
+            feature_item.setBrush(layer.brush)
+ 
     def highlight_feature(self, layer_id: int, ids: list[int]):
-        """高亮指定的要素 TODO"""
+        """高亮指定的要素"""
         if layer_id in self.highlighted_feature:
             current_highlight = self.highlighted_feature[layer_id]
         else:
@@ -56,24 +62,31 @@ class Graph(QWidget):
 
         # new_highlight 是新增的需要被高亮的要素
         new_highlight: set = _input - current_highlight
-        ...
+        for feature_id in new_highlight:
+            feature_item = self.draw_control.get_feature_item(layer_id,feature_id)
+            feature_item.setPen(QPen(HIGHLIGHTCOLOR))
+            feature_item.setBrush(QBrush(HIGHLIGHTCOLOR))
+        pass
 
     def set_visibility(self, layer_id, visibility):
-        """改变某个 layer 的可见性 TODO"""
+        """改变某个 layer 的可见性"""
         # print('vis,', layer_id, layer_visibility)
-        pass
+        if visibility == True:
+            self.draw_control.visulize_layer(layer_id)
+        elif visibility == False:
+            self.draw_control.hide_layer(layer_id)
 
     def set_zlevel(self, layer_id, z_level):
-        """改变某个 layer 的 z level TODO"""
-        pass
+        """改变某个 layer 的 z level"""
+        self.draw_control.set_zvalue_layer(layer_id,z_level)
 
     def set_symbology(self, layer_id, _type, _data):
         """设定符号化方式，还没太想明白 TODO"""
         pass
 
     def remove_feature(self, layer_id, ids: list[int]):
-        """删除指定的要素 TODO"""
-        pass
+        """删除指定的要素"""
+        self.draw_control.remove_feature(layer_id,ids)
 
     def render_label(self, layer_id):
         """添加标注（动态） TODO"""

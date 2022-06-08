@@ -2,10 +2,63 @@ from PySide6.QtCore import QPointF, Qt
 from PySide6.QtGui import QPainterPath
 from PySide6.QtWidgets import QGraphicsItemGroup, QGraphicsItem, QGraphicsPathItem, QGraphicsPolygonItem, \
     QGraphicsEllipseItem, QGraphicsSceneDragDropEvent
-
+from PiMapObj.PiFeature import PiFeature
 from PiMapObj.PiPolygon import PiPolygon
 from PiMapObj.PiPolyline import PiPolyline
+from PiConstant import PiGeometryTypeConstant
 
+class PiGraphicsItem(QGraphicsItemGroup):
+    def __init__(self, geometry: PiPolyline, parent: QGraphicsItem, draw_control):
+        super().__init__()
+        self.geometry = geometry
+        self.id = self.geometry.id
+        self.draw = draw_control
+        self.last_pos = QPointF(0, 0)
+
+class PiGraphicsItemGroup(QGraphicsItemGroup):
+    def __init__(self, feature: PiFeature,parent: QGraphicsItem, draw_control):
+        super().__init__()
+        self.feature = feature
+        self.id = self.feature.id
+        self.geometry_type = self.feature.geometry_type
+        self.draw = draw_control
+        self.last_pos = QPointF(0,0)
+        collection = feature.geometry._collection
+        if self.geometry_type == PiGeometryTypeConstant.multipolyline.value:
+            for polyline in collection:
+                item = PiGraphicsPolylineItem(polyline, parent, draw_control)
+                super().addToGroup(item)
+            pass
+        elif self.geometry_type == PiGeometryTypeConstant.multipolygon.value:
+            for polygon in collection:
+                item = PiGraphicsPolygonItem(polygon, parent, draw_control)
+                super().addToGroup(item)
+            pass
+        elif self.geometry_type == PiGeometryTypeConstant.multipoint.value:
+            for point in collection:
+                item = PiGraphicsEllipseItem(point, parent, draw_control)
+                super().addToGroup(item)
+            pass
+    
+    def setPen(self,pen):
+        for item in self.childItems():
+            item.setPen(pen)
+    
+    def setBrush(self,brush):
+        for item in self.childItems():
+            item.setBrush(brush)
+    
+    def setFlags(self, flags: QGraphicsItem.GraphicsItemFlags) -> None:
+        return super().setFlags(flags)
+    
+    def shape(self):
+        path = QPainterPath()
+        for item in self.childItems():
+            path.addPath(item.shape())
+        return path
+    
+    def setZValue(self, z: float) -> None:
+        return super().setZValue(z)
 
 class PiGraphicsPolylineItem(QGraphicsItemGroup):
     def __init__(self, geometry: PiPolyline, parent: QGraphicsItem, draw_control):
@@ -13,12 +66,10 @@ class PiGraphicsPolylineItem(QGraphicsItemGroup):
         self.geometry = geometry
         self.id = self.geometry.id
         self.draw = draw_control
+        self.last_pos = QPointF(0, 0)
         self.member = QGraphicsPathItem()
         self.loadMember(parent)
         self.addToGroup(self.member)
-        '''for item in self.member:
-            self.addToGroup(item)'''
-        self.last_pos = QPointF(0, 0)
 
     def loadMember(self, parent):
         polyline = self.geometry
@@ -28,9 +79,6 @@ class PiGraphicsPolylineItem(QGraphicsItemGroup):
         for i in range(1, polyline.count):
             end = QPointF((x[i]) / self.draw.scale, (- y[i]) / self.draw.scale)
             path.lineTo(end)
-            # item = QGraphicsLineItem(QLineF(start,end),parent)
-            # self.member.append(item)
-            # start = end
         self.member = QGraphicsPathItem(path, parent)
         self.member.setBrush(Qt.transparent)
 
@@ -41,9 +89,10 @@ class PiGraphicsPolylineItem(QGraphicsItemGroup):
         return super().setFlags(flags)
 
     def setPen(self, pen):
-        '''for item in self.member:
-            item.setPen(pen) '''
         self.member.setPen(pen)
+
+    def setBrush(self,brush):
+        pass
 
     def polyline(self):
         pos = super().pos() - self.draw.expand_pos
@@ -54,6 +103,9 @@ class PiGraphicsPolylineItem(QGraphicsItemGroup):
         path = QPainterPath()
         path.addPath(self.polyline())
         return path
+    
+    def setZValue(self, z: float) -> None:
+        return super().setZValue(z)
 
 
 class PiGraphicsPolygonItem(QGraphicsItemGroup):
@@ -101,6 +153,9 @@ class PiGraphicsPolygonItem(QGraphicsItemGroup):
         self.draw.mbr.union(self.geometry.get_mbr())
         self.last_pos = now_pos
 
+    def setZValue(self, z: float) -> None:
+        return super().setZValue(z)
+
 
 class PiGraphicsEllipseItem(QGraphicsItemGroup):
     def __init__(self, geometry, parent: QGraphicsItem, draw_control):
@@ -139,3 +194,6 @@ class PiGraphicsEllipseItem(QGraphicsItemGroup):
     def ellipse(self):
         pos = super().pos() - self.draw.expand_pos
         return self.member.rect().translated(pos)
+
+    def setZValue(self, z: float) -> None:
+        return super().setZValue(z)
