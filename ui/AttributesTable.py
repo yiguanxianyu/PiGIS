@@ -1,16 +1,13 @@
-import pandas as pd
 from PySide6.QtCore import QAbstractTableModel, Qt, QModelIndex
-from PySide6.QtWidgets import QWidget, QAbstractItemView, QDialog
+from PySide6.QtWidgets import QWidget, QAbstractItemView, QDialog, QTableView, QHeaderView
 
 from ui.raw import Ui_AttributesTable, Ui_RemoveField, Ui_inputFilterDialog
+import numpy as np
+import pandas as pd
 
-test_data = pd.DataFrame([
-    [1, 9, 2],
-    [1, 0, -1],
-    [3, 5, 2],
-    [3, 3, 2],
-    [5, 8, 9],
-], columns=['A', 'B', 'C'])
+test_dtype = np.dtype([('fid', np.int32), ('A', np.int32), ('B', np.int32), ('C', np.int32), ('D', np.int32)])
+data0 = [tuple(range(i * 5, i * 5 + 5)) for i in range(5000)]
+test_data = np.array(data0, dtype=test_dtype)
 
 
 class FilterDialog(QDialog):
@@ -18,26 +15,47 @@ class FilterDialog(QDialog):
         super().__init__(parent)
         self.ui = Ui_inputFilterDialog()
         self.ui.setupUi(self)
-        self.setWindowModality(Qt.ApplicationModal)
+
+    def accept(self) -> None:
+        super(FilterDialog, self).accept()
+
+    def done(self, arg__1: int) -> None:
+        super(FilterDialog, self).done()
+
+    def reject(self) -> None:
+        super(FilterDialog, self).reject()
 
 
 class RemoveFieldDialog(QDialog):
     def __init__(self, parent, items):
         super().__init__(parent)
+        self.chosen = []
         self.ui = Ui_RemoveField()
         self.ui.setupUi(self)
         self.setWindowModality(Qt.ApplicationModal)
-        self.ui.listWidget.addItems(items)
+        self.ui.fieldList.addItems(items)
+        self.exec()
+
+    def field_chosen(self):
+        self.chosen = [i.row() for i in self.ui.fieldList.selectedIndexes()]
+        self.accept()
+
+    def result(self) -> list:
+        return self.chosen
 
 
 class TableModel(QAbstractTableModel):
     def __init__(self, data):
         super(TableModel, self).__init__()
-        self._data = data
-        self.__row_count = data.shape[0]
-        self.__column_count = data.shape[1]
+        self._data = pd.DataFrame(data)
+        self._dtype = data.dtype
+        self.__row_count = len(data)
+        self.__column_count = len(data[0])
         self.edited = {}
         self.deleted = []
+
+    def get_columns(self):
+        return self._dtype.names
 
     def flags(self, index):
         return Qt.ItemIsEditable | Qt.ItemIsEnabled | Qt.ItemIsSelectable
@@ -46,8 +64,10 @@ class TableModel(QAbstractTableModel):
         match role:
             case Qt.ItemDataRole.DisplayRole | Qt.ItemDataRole.EditRole:
                 return str(self._data.iloc[index.row(), index.column()])
+            case Qt.ItemDataRole.ToolTipRole:
+                return f'({index.row()},{self._dtype.names[index.column()]})  {self._dtype[index.column()]}'
             case _:
-                pass
+                return
 
     def setData(self, index, value, role: int = ...):
         self._data.iloc[index.row(), index.column()] = value
@@ -60,39 +80,71 @@ class TableModel(QAbstractTableModel):
     def columnCount(self, index=...):
         return self.__column_count
 
-    def removeRows(self, row: int, count: int, parent=...):
-        self.beginRemoveRows(QModelIndex(), row, row + count - 1)
-        self._data.drop(list(range(row, row + count)))
+    def insertRows(self, begin: int, count: int, parent=...) -> bool:
+        """考虑到使用场景，这里就只考虑添加一行了"""
+        self.beginInsertRows(QModelIndex(), begin, begin + count - 1)
+        for dt in self.dtype.names:
+            pass
+        data_to_insert = pd.DataFrame(np.array([1, 1, 1, 1]).reshape(1, -1))
+        pd.concat([self._data, data_to_insert])
+        self.__row_count += count
+        self.endInsertRows()
+        return True
+
+    def removeRows(self, begin: int, count: int, parent=...):
+        self.beginRemoveRows(QModelIndex(), begin, begin + count - 1)
+        self._data.drop(list(range(begin, begin + count)), inplace=True)
+        self._data.reset_index(drop=True, inplace=True)
         self.__row_count -= count
         self.endRemoveRows()
         return True
 
-    def removeColumns(self, row: int, count: int, parent=...):
-        ...
+    def insertColumns(self, begin: int, count: int, parent=...) -> bool:
+        self.beginInsertColumns(QModelIndex(), begin, begin + count - 1)
+        # TODO
+        self.__column_count += count
+        self.endInsertColumns()
+        return True
+
+    def removeColumns(self, begin: int, count: int, parent=...):
+        self.beginRemoveColumns(QModelIndex(), begin, begin + count - 1)
+        self._data.drop([self._data.columns[i] for i in range(begin, begin + count)], inplace=True, axis=1)
+
+        self._dtype = np.dtype(
+            [(self._dtype.names[i], self._dtype[i]) for i in range(len(self._dtype)) if not 0 <= i - begin < count])
+
+        self.__column_count -= count
+        self.endRemoveColumns()
+        return True
 
     def headerData(self, section, orientation, role=...):
         # section is the index of the column/row.
-        if role == Qt.ItemDataRole.DisplayRole:
-            if orientation == Qt.Orientation.Horizontal:
-                return str(self._data.columns[section])
+        match role:
+            case Qt.ItemDataRole.DisplayRole | Qt.ItemDataRole.EditRole:
+                if orientation == Qt.Orientation.Horizontal:
+                    return str(self._dtype.names[section])
 
-            if orientation == Qt.Orientation.Vertical:
-                return str(self._data.index[section])
+                if orientation == Qt.Orientation.Vertical:
+                    return str(self._data.index[section])
+            case _:
+                return
 
 
 class AttributesTable(QWidget):
-    def __init__(self, layer):
+    def __init__(self, graph, layer):
         super().__init__()
+        self.graph = graph
         self.data_filter = None
         self.layer = layer
-        self.fieldTable = None
         self.editState = False
         self.ui = Ui_AttributesTable()
         self.ui.setupUi(self)
 
-        # table = TableModel(layer.get_attr_table())
-        self.table = TableModel(test_data)
-        self.ui.tableView.setModel(self.table)
+        self.tableView = self.ui.tableView
+        self.tableView.setVerticalHeader(PiAttrHeader(self))
+        # self.tableModel = TableModel(layer.get_attr_table())
+        self.tableModel = TableModel(test_data)
+        self.tableView.setModel(self.tableModel)
 
     def focusInEvent(self, e) -> None:
         self.grabKeyboard()
@@ -100,32 +152,51 @@ class AttributesTable(QWidget):
     def focusOutEvent(self, e) -> None:
         self.releaseKeyboard()
 
+    def get_selected_rows(self):
+        return [i.row() for i in self.tableView.selectionModel().selectedRows()]
+
+    def highlight_feature(self):
+        self.graph.select_feature_by_id(self.get_selected_rows())
+
+    def item_clicked(self, index):
+        pass
+
     def add_row(self):
-        ...
+        self.tableModel.insertRow(self.tableModel.rowCount())
+        self.tableView.scrollToBottom()
 
     def remove_row(self):
-        rows = sorted(list(set(i.row() for i in self.ui.tableView.selectedIndexes())), reverse=True)
+        rows = sorted(list(set(i.row() for i in self.tableView.selectedIndexes())), reverse=True)
+        length = len(rows)
         if rows:
-            for row in rows:
-                self.table.removeRow(row)
+            if length == 1:
+                self.tableModel.removeRow(rows[0])
+            elif length == rows[0] - rows[-1] + 1:
+                self.tableModel.removeRows(rows[-1], length)
+            else:
+                for row in rows:
+                    self.tableModel.removeRow(row)
 
     def add_field(self):
         pass
 
     def remove_field(self):
-        RemoveFieldDialog(self, ['1', '2', '3']).show()
+        s = RemoveFieldDialog(self, self.tableModel.get_columns())
+        field_to_remove = sorted(s.result(), reverse=True)
+        for f in field_to_remove:
+            self.tableModel.removeColumn(f)
 
     def filter_data(self):
-        self.data_filter = FilterDialog(self)
-        self.data_filter.show()
+        result = FilterDialog(self)
+        print(self.data_filter)
 
     def toggle_editing_changed(self, flag):
         if flag:
             self.editState = True
-            self.ui.tableView.setEditTriggers(QAbstractItemView.DoubleClicked)
+            self.tableView.setEditTriggers(QAbstractItemView.DoubleClicked)
         else:
             self.editState = False
-            self.ui.tableView.setEditTriggers(QAbstractItemView.NoEditTriggers)
+            self.tableView.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
     def closeEvent(self, event):
         pass
@@ -133,3 +204,15 @@ class AttributesTable(QWidget):
 
     def features_selected(self, fids):
         pass
+
+
+class PiAttrHeader(QHeaderView):
+    def __init__(self, table_widget):
+        super(PiAttrHeader, self).__init__(Qt.Orientation.Vertical, table_widget.tableView)
+        self.table_widget = table_widget
+        self.setSectionsClickable(True)
+        self.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
+
+    def mouseReleaseEvent(self, e) -> None:
+        self.table_widget.highlight_feature()
+        super(PiAttrHeader, self).mouseReleaseEvent(e)

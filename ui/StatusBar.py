@@ -35,10 +35,8 @@ class PiStatusBar(QStatusBar):
         self.loc_label = QLabel('X: Y:')
         self.addWidget(self.loc_label)
 
-        qcb = PiComboBox(self)
-        self.qcb = qcb
-
-        self.addWidget(qcb)
+        self.qcb = PiComboBox(self)
+        self.addWidget(self.qcb)
 
     def update_mouse_loc(self, x, y):
         self.loc_label.setText(f'X:{x}  Y:{y}')

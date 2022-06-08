@@ -49,6 +49,11 @@ class Graph(QWidget):
         """切换是否显示注记"""
         pass
 
+    def select_feature_by_id(self, layers: list[int]):
+        """根据在属性表中选择的fid在地图上选中相应的要素"""
+        print('selected', layers)
+        pass
+
     def set_pen(self, layer_id):
         """设定pen"""
         pass

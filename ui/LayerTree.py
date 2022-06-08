@@ -103,10 +103,8 @@ class LayerTree(QWidget):
 
         def show_attributes_table():
             layer = self.graph.get_layer_by_id(self.get_current_item().layer)
-            self.ab = AttributesTable(layer)
+            self.ab = AttributesTable(self.graph, layer)
             self.ab.show()
-            self.ab.setFocus()
-            self.ab.grabKeyboard()
 
         show_attributes_table_act = QAction(self)
         show_attributes_table_act.setText('Show Attribute Table')
