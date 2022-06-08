@@ -122,7 +122,7 @@ class PiGraphView(QGraphicsView):
                 #self.setDragMode(QGraphicsView.NoDrag) 
                 self.mode = self.last_mode
                 self.is_moving = False
-        elif self.mode == PiGraphModeConstant.editable:
+        elif event.text() != "c":
             pass
 
         #return super().keyReleaseEvent(event)
