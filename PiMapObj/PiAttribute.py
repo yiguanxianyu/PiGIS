@@ -41,6 +41,7 @@ class PiAttributes():
         self.value_type_list = fields.get_value_type_list()
 
     def load(self, reader, load_type):
+        default_attribute = PiAttribute(cons.int32)
         if load_type == 'lay':
             for i in range(self.field_count):
                 value_type = self.value_type_list[i]

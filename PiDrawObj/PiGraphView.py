@@ -71,7 +71,6 @@ class PiGraphView(QGraphicsView):
             if self.is_moving == False:
                 self.is_moving = True
                 self.mouse_pos_before = event.pos()
-                print(self.mapToScene(self.mouse_pos_before))
             elif self.is_moving == True:
                 self.setCursor(Qt.ClosedHandCursor)
                 pass
