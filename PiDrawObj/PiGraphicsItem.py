@@ -2,10 +2,29 @@ from PySide6.QtCore import QPointF, Qt
 from PySide6.QtGui import QPainterPath
 from PySide6.QtWidgets import QGraphicsItemGroup, QGraphicsItem, QGraphicsPathItem, QGraphicsPolygonItem, \
     QGraphicsEllipseItem, QGraphicsSceneDragDropEvent
+from PiMapObj.PiFeature import PiFeature
 
 from PiMapObj.PiPolygon import PiPolygon
 from PiMapObj.PiPolyline import PiPolyline
 
+class PiGraphicsItem(QGraphicsItemGroup):
+    def __init__(self, geometry: PiPolyline, parent: QGraphicsItem, draw_control):
+        super().__init__()
+        self.geometry = geometry
+        self.id = self.geometry.id
+        self.draw = draw_control
+        self.last_pos = QPointF(0, 0)
+
+class PiGraphicsItemGroup(QGraphicsItemGroup):
+    def __init__(self, feature: PiFeature,parent: QGraphicsItem, draw_control):
+        super().__init__()
+        self.feature = feature
+        self.id = self.feature.id
+        self.geometry_type = self.feature.geometry_type
+        self.draw = draw_control
+        self.last_pos = QPointF(0,0)
+        if self.geometry_type == 0:
+            pass
 
 class PiGraphicsPolylineItem(QGraphicsItemGroup):
     def __init__(self, geometry: PiPolyline, parent: QGraphicsItem, draw_control):
@@ -13,12 +32,10 @@ class PiGraphicsPolylineItem(QGraphicsItemGroup):
         self.geometry = geometry
         self.id = self.geometry.id
         self.draw = draw_control
+        self.last_pos = QPointF(0, 0)
         self.member = QGraphicsPathItem()
         self.loadMember(parent)
         self.addToGroup(self.member)
-        '''for item in self.member:
-            self.addToGroup(item)'''
-        self.last_pos = QPointF(0, 0)
 
     def loadMember(self, parent):
         polyline = self.geometry
@@ -28,9 +45,6 @@ class PiGraphicsPolylineItem(QGraphicsItemGroup):
         for i in range(1, polyline.count):
             end = QPointF((x[i]) / self.draw.scale, (- y[i]) / self.draw.scale)
             path.lineTo(end)
-            # item = QGraphicsLineItem(QLineF(start,end),parent)
-            # self.member.append(item)
-            # start = end
         self.member = QGraphicsPathItem(path, parent)
         self.member.setBrush(Qt.transparent)
 
@@ -41,8 +55,6 @@ class PiGraphicsPolylineItem(QGraphicsItemGroup):
         return super().setFlags(flags)
 
     def setPen(self, pen):
-        '''for item in self.member:
-            item.setPen(pen) '''
         self.member.setPen(pen)
 
     def polyline(self):

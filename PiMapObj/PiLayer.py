@@ -8,9 +8,7 @@ from PiMapObj.BinaryReader import BinaryReader
 from PiMapObj.PiFeature import PiFeatures
 from PiMapObj.PiField import PiFields
 from PiMapObj.PiProjection import PiProjection
-
-cons = PiGeometryTypeConstant()
-
+from numpy.core.numeric import _full_like_dispatcher
 
 class PiLayer():
     def __init__(self):
@@ -21,13 +19,15 @@ class PiLayer():
         self.geometry_type = 0  # 几何图形类型
         self.features = PiFeatures()  # 几何图形
         self.proj = PiProjection()  # 投影
+        self.useless = 0  # 没用
         self.pen = QPen(Qt.blue)  # 笔触
         self.brush = QBrush(Qt.white)  # 填充
-        self.useless = 0  # 没用
+        self.change = False
 
     def load(self, file_path, proj_path=None):
         '''加载坐标信息'''
         print(self.id)
+        self.change = True
         self.name = file_path[:-4]
         load_type = file_path[-3:]
         if load_type == 'lay':
@@ -41,7 +41,7 @@ class PiLayer():
             self.proj.load(proj_path)
 
     def get_geometry_type(self):
-        return cons.get_str(self.geometry_type)
+        return self.geometry_type
 
     def get_fields(self):
         return self.fields
@@ -95,14 +95,3 @@ class PiLayer():
         """如果显示注记了，就去掉注记，不然添加注记"""
         pass
 
-
-if __name__ == "__main__":
-    # reader = LayerReader("图层文件/国界线.lay")
-    # reader = LayerReader("图层文件/省级行政区.lay")
-    layer = PiLayer()
-    layer.load("图层文件/省会城市.lay")
-    print(layer.get_geometry_type())
-    print(layer.get_fields())
-    fe = layer.features.features[0]
-    fea = fe.attributes
-    print(fea)

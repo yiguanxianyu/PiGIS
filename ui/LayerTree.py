@@ -172,7 +172,6 @@ class LayerTree(QWidget):
             layer3.load("PiMapObj/图层文件/省会城市.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
             self.add_layer(layer3.id, layer3.name + '2')
             self.graph.load_layers(layer3)
-            print(layer3.get_attr_table())
 
         # test loading layers
         load_layer_act = QAction(self)

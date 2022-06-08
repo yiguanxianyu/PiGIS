@@ -20,7 +20,12 @@ class PiValueTypeConstant(): # 属性值类型参数
         return type_list[type]
 
 
-class PiGeometryTypeConstant():  # 几何要素类型参数
+class PiGeometryTypeConstant(Enum):  # 几何要素类型参数
+    multipoint = 0
+    multipolyline = 1
+    multipolygon = 2
+
+'''class PiGeometryTypeConstant():  # 几何要素类型参数
     def __init__(self):
         self.multipoint = 0
         self.multipolyline = 1
@@ -32,7 +37,7 @@ class PiGeometryTypeConstant():  # 几何要素类型参数
             "multipolyline",
             "multipolygon",
         ]
-        return type_list[type]
+        return type_list[type]'''
 
 
 class PiProjectionTypeConstant():  # 投影类型常数

@@ -54,15 +54,12 @@ class PiGraphDraw(QPaintDevice):
     def load_layer_data(self, layer):
         pen = layer.pen
         brush = layer.brush
-        print(layer.id,layer.geometry_type)
         # item_group = self.item_groups[layer.id]
         item_collection = self.item_collections[layer.id]
         for feature in layer.features.features:
             geometry = feature.geometry
             collection = geometry._collection
-            #feature_graphics_item = QGraphicsItemGroup()
             if layer.geometry_type == PiGeometryTypeConstant.multipolyline:
-                print("multipolyline")
                 for polyline in collection:
                     # 绘制图元
                     item = PiGraphicsPolylineItem(polyline, self.item_box, self)
