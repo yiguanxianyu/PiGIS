@@ -10,17 +10,17 @@ from PiDrawObj.PiGraphEdit import PiGraphEdit
 class PiGraphView(QGraphicsView):
     def __init__(self,widget):
         super().__init__(widget)
-        self.mode = PiGraphModeConstant.editable # 默认处于显示模式
+        self.mode = PiGraphModeConstant.moveable # 默认处于移动模式
         self.last_mode = PiGraphModeConstant.editable # 默认处于显示模式
         self.ui_init()
         self.display_init()
         self.center = QPointF(0,0)
-        self.sc = 1
+        self.show_scale = 1
 
     def ui_init(self):
         # 绘画控制类
         self.draw_control = PiGraphDraw(view = self)
-        self.setScene(self.draw_control.get_scene(self.mode))
+        self.setScene(self.draw_control.get_scene())
         # 视图拖动类
         self.mouse_pos_before = QPointF()
         c = Qt.MouseButton
@@ -28,18 +28,27 @@ class PiGraphView(QGraphicsView):
         # 编辑控制类
         self.edit_control = PiGraphEdit(view = self)
 
+
     def display_init(self):
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setDragMode(QGraphicsView.NoDrag) 
-        self.setScene(self.draw_control.get_scene(self.mode))
 
+    def set_show_scale(self,show_scale):
+        ratio = show_scale / self.show_scale
+        self.scale(ratio,ratio)
+        self.show_scale = show_scale
+        
+    def centerOn(self,pos:QPointF | QPoint):
+        super().centerOn(pos)
+        self.center = pos
+    
     def wheelEvent(self, event: QtGui.QWheelEvent) -> None:
         if self.mode == PiGraphModeConstant.moveable:
             wheelValue = event.angleDelta().y()
             ratio = wheelValue / 1200 + 1
             self.scale(ratio, ratio)
-            self.sc *= ratio
+            self.show_scale *= ratio
             self.centerOn(self.center)
             '''
             if self.sc > 5:
@@ -63,12 +72,12 @@ class PiGraphView(QGraphicsView):
             if self.is_moving == False:
                 self.is_moving = True
                 self.mouse_pos_before = event.pos()
+                print(self.mapToScene(self.mouse_pos_before))
             elif self.is_moving == True:
                 self.setCursor(Qt.ClosedHandCursor)
                 pass
 
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
-        print(event)
         if self.mode == PiGraphModeConstant.editable:
             return super().mouseMoveEvent(event)
         elif self.mode == PiGraphModeConstant.moveable:
@@ -106,14 +115,12 @@ class PiGraphView(QGraphicsView):
         if event.text() == "c":
             if self.mode != PiGraphModeConstant.moveable:
                 #self.setDragMode(QGraphicsView.ScrollHandDrag) 
-                self.draw_control.load_graphics()
+                #self.draw_control.load_graphics()
                 self.last_mode = self.mode
                 self.mode = PiGraphModeConstant.moveable
-                self.setScene(self.draw_control.get_scene(self.mode))
             elif self.mode == PiGraphModeConstant.moveable:
                 #self.setDragMode(QGraphicsView.NoDrag) 
                 self.mode = self.last_mode
-                self.setScene(self.draw_control.get_scene(self.mode))
                 self.is_moving = False
         elif self.mode == PiGraphModeConstant.editable:
             pass

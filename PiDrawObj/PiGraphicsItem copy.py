@@ -25,10 +25,10 @@ class PiGraphicsPolylineItem(QGraphicsItemGroup):
     def loadMember(self,parent):
         polyline = self.geometry
         x,y = polyline.get_x(),polyline.get_y()
-        start = QPointF((x[0]) / self.draw.scale, ( - y[0]) / self.draw.scale)
+        start = QPointF((x[0] - self.draw.leftup_x) / self.draw.scale, (self.draw.leftup_y - y[0]) / self.draw.scale)
         path = QPainterPath(start)
         for i in range(1,polyline.count):
-            end = QPointF((x[i]) / self.draw.scale, (- y[i]) / self.draw.scale)
+            end = QPointF((x[i] - self.draw.leftup_x) / self.draw.scale, (self.draw.leftup_y - y[i]) / self.draw.scale)
             path.lineTo(end)
             #item = QGraphicsLineItem(QLineF(start,end),parent)
             #self.member.append(item)
@@ -70,7 +70,7 @@ class PiGraphicsPolygonItem(QGraphicsItemGroup):
 
     def loadMember(self,parent):
         x,y,count = self.geometry.get_x(),self.geometry.get_y(),self.geometry.count
-        qpoint_list = [QPointF((x[i]) / self.draw.scale, ( - y[i]) / self.draw.scale) for i in range(count)]
+        qpoint_list = [QPointF((x[i] - self.draw.leftup_x) / self.draw.scale, (self.draw.leftup_y - y[i]) / self.draw.scale) for i in range(count)]
         self.member = QGraphicsPolygonItem(qpoint_list,parent)
     
     def addToGroup(self, item: QGraphicsItem) -> None:
@@ -114,8 +114,8 @@ class PiGraphicsEllipseItem(QGraphicsItemGroup):
 
     def loadMember(self,parent):
         point = self.geometry
-        xpos = (point.get_x()) / self.draw.scale
-        ypos = ( - point.get_y()) / self.draw.scale
+        xpos = (point.get_x() - self.draw.leftup_x) / self.draw.scale
+        ypos = (self.draw.leftup_y - point.get_y()) / self.draw.scale
         self.member = QGraphicsEllipseItem(xpos-1,ypos-1,2,2,parent)
 
     def addToGroup(self, item: QGraphicsItem) -> None:
