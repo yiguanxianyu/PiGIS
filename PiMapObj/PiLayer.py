@@ -24,6 +24,10 @@ class PiLayer():
         self.brush = QBrush(Qt.white)  # 填充
         self.change = False
 
+        '''马子添加属性'''
+        self.label_status = False
+        self.annotation_status = False
+
     def load(self, file_path, proj_path=None):
         '''加载坐标信息'''
         print(self.id)
@@ -57,41 +61,13 @@ class PiLayer():
         """
         type_list = [np.int16, np.int32, np.int64, np.float32, np.float64, 'U20']
         data_type_list = [(field.name, type_list[field.value_type]) for field in self.fields.fields]
-        data_type_list.insert(0,('id',np.int32))
+        data_type_list.insert(0, ('id', np.int32))
         data_type = np.dtype(data_type_list)
-        
-        table = [tuple([feature.id] + [attr.value for attr in feature.attributes.attributes]) for feature in self.features.features]
+
+        table = [tuple([feature.id] + [attr.value for attr in feature.attributes.attributes]) for feature in
+                 self.features.features]
         return np.array(table, dtype=data_type)
 
-    def __del__(self):
-        """移除图层本身"""
-        pass
-
-    def set_symbology(self, _type, _data):
-        """设定符号化方式，还没太想明白"""
-        pass
-
-    def remove_feature(self, ids: list[int]):
-        """删除指定的要素"""
-        # TODO
-        pass
-
-    def highlight_feature(self, ids: list[int]):
-        """高亮指定的要素"""
-        # TODO
-        pass
-
-    def set_visibility(self, visibility):
-        """改变某个 layer 的可见性"""
-        # print('vis,', layer_id, layer_visibility)
-        pass
-
-    def set_zlevel(self, z_level):
-        """改变本图层的 z level"""
-        # print('zlv,', layer_id, layer_z_level)
-        pass
-
-    def toggle_label(self):
-        """如果显示注记了，就去掉注记，不然添加注记"""
-        pass
+    def has_label_or_anno(self):
+        return self.label_status or self.label_status
 

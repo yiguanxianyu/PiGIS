@@ -85,7 +85,6 @@ class Ui_AttributesTable(object):
         self.removeRowButton.clicked.connect(AttributesTable.remove_row)
         self.addFieldButton.clicked.connect(AttributesTable.add_field)
         self.removeFieldButton.clicked.connect(AttributesTable.remove_field)
-        self.tableView.clicked.connect(AttributesTable.item_clicked)
 
         QMetaObject.connectSlotsByName(AttributesTable)
     # setupUi
@@ -97,6 +96,6 @@ class Ui_AttributesTable(object):
         self.removeRowButton.setText(QCoreApplication.translate("AttributesTable", u"Remove Row", None))
         self.removeFieldButton.setText(QCoreApplication.translate("AttributesTable", u"Remove Field", None))
         self.addFieldButton.setText(QCoreApplication.translate("AttributesTable", u"Add Field", None))
-        self.toggleEditingCheckBox.setText(QCoreApplication.translate("AttributesTable", u"\u270e", None))
+        self.toggleEditingCheckBox.setText(QCoreApplication.translate("AttributesTable", u"Edit", None))
     # retranslateUi
 

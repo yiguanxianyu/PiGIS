@@ -3,14 +3,8 @@ import pandas as pd
 from PySide6.QtCore import QAbstractTableModel, Qt, QModelIndex
 from PySide6.QtWidgets import QWidget, QAbstractItemView, QDialog, QHeaderView, QMessageBox
 
+from PiMapObj.PiLayer import PiLayer
 from ui.raw import Ui_AttributesTable, Ui_RemoveField, Ui_inputFilterDialog
-
-
-def gen_test_data():
-    test_dtype = np.dtype(
-        [('fid', np.int32), ('A', np.int32), ('B', np.int32), ('C', np.int32), ('D', np.dtype('U20'))])
-    data0 = [(i, i + 1, i + 2, i + 3, 'iiiii') for i in range(500)]
-    return np.array(data0, dtype=test_dtype)
 
 
 class FilterDialog(QDialog):
@@ -48,22 +42,17 @@ class RemoveFieldDialog(QDialog):
 
 
 class TableModel(QAbstractTableModel):
-    def __init__(self, data):
-        super(TableModel, self).__init__()
-
-        if data is None:
-            data = gen_test_data()
-
+    def __init__(self, parent, data):
+        super(TableModel, self).__init__(parent)
         self._data = pd.DataFrame(data)
-        # self._pd = pd.DataFrame(data)
         self._dtype = data.dtype
         self.__row_count = len(data)
-        self.__column_count = len(data[0])
+        self.__column_count = len(data[0]) - 1
         self.edited = {}
         self.deleted = []
 
     def get_columns(self):
-        return self._dtype.names
+        return self._dtype.names[1:]
 
     def flags(self, index):
         return Qt.ItemIsEditable | Qt.ItemIsEnabled | Qt.ItemIsSelectable
@@ -71,15 +60,16 @@ class TableModel(QAbstractTableModel):
     def data(self, index, role: int = ...):
         match role:
             case Qt.ItemDataRole.DisplayRole | Qt.ItemDataRole.EditRole:
-                return str(self._data.iloc[index.row(), index.column()])
+                # -1是因为第一列是 feature id
+                return str(self._data.iloc[index.row(), index.column() + 1])
             case Qt.ItemDataRole.ToolTipRole:
-                return f'({index.row()},{self._dtype.names[index.column()]})  {self._dtype[index.column()]}'
+                return f'({index.row()},{self._dtype.names[index.column() + 1]})  {self._dtype[index.column() + 1]}'
             case _:
                 return
 
     def setData(self, index, value, role: int = ...):
         try:
-            new_data = self._dtype[index.column()].type(value)
+            new_data = self._dtype[index.column()+1].type(value)
             self._data.iloc[index.row(), index.column()] = new_data
             return True
         except Exception as e:
@@ -134,16 +124,20 @@ class TableModel(QAbstractTableModel):
         match role:
             case Qt.ItemDataRole.DisplayRole | Qt.ItemDataRole.EditRole:
                 if orientation == Qt.Orientation.Horizontal:
-                    return str(self._dtype.names[section])
+                    return str(self._dtype.names[section + 1])
 
                 if orientation == Qt.Orientation.Vertical:
                     return str(self._data.index[section])
             case _:
                 return
 
+    def save(self):
+        # TODO
+        pass
+
 
 class AttributesTable(QWidget):
-    def __init__(self, graph, layer):
+    def __init__(self, graph, layer: PiLayer):
         super().__init__()
         self.graph = graph
         self.data_filter = None
@@ -154,8 +148,7 @@ class AttributesTable(QWidget):
 
         self.tableView = self.ui.tableView
         self.tableView.setVerticalHeader(PiAttrHeader(self))
-        # self.tableModel = TableModel(layer.get_attr_table())
-        self.tableModel = TableModel(None)
+        self.tableModel = TableModel(self, layer.get_attr_table())
         self.tableView.setModel(self.tableModel)
 
     def focusInEvent(self, e) -> None:
@@ -168,10 +161,7 @@ class AttributesTable(QWidget):
         return [i.row() for i in self.tableView.selectionModel().selectedRows()]
 
     def highlight_feature(self):
-        self.layer.highlight(self.get_selected_rows())
-
-    def item_clicked(self, index):
-        pass
+        self.graph.highlight_feature(self.layer.id, self.get_selected_rows())
 
     def add_row(self):
         self.tableModel.insertRow(self.tableModel.rowCount())
@@ -188,6 +178,7 @@ class AttributesTable(QWidget):
             else:
                 for row in rows:
                     self.tableModel.removeRow(row)
+            self.graph.remove_feature(self.layer.id, rows)
 
     def add_field(self):
         pass
@@ -196,7 +187,7 @@ class AttributesTable(QWidget):
         s = RemoveFieldDialog(self, self.tableModel.get_columns())
         field_to_remove = sorted(s.result(), reverse=True)
         for f in field_to_remove:
-            self.tableModel.removeColumn(f)
+            self.tableModel.removeColumn(f + 1)
 
     def filter_data(self):
         result = FilterDialog(self)
@@ -228,3 +219,10 @@ class PiAttrHeader(QHeaderView):
     def mouseReleaseEvent(self, e) -> None:
         self.table_widget.highlight_feature()
         super(PiAttrHeader, self).mouseReleaseEvent(e)
+
+#
+# def gen_test_data():
+#     test_dtype = np.dtype(
+#         [('fid', np.int32), ('A', np.int32), ('B', np.int32), ('C', np.int32), ('D', np.dtype('U20'))])
+#     data0 = [(i, i + 1, i + 2, i + 3, 'iiiii') for i in range(500)]
+#     return np.array(data0, dtype=test_dtype)
