@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter, QLabel, QComboBox
+from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter
 
 from project import PiGISProjectController
 from ui import LayerTree, Graph, AboutPage
@@ -7,7 +7,6 @@ from ui.raw import Ui_MainWindow
 
 
 class MainWindow(QMainWindow):
-
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()

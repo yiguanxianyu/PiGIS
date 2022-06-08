@@ -37,7 +37,9 @@ class LayerItemModel(QStandardItemModel):
 
     def remove_layer(self):
         item = self.itemFromIndex(current_index)
-        self.layerTree.graph.remove_layer(item.layer)
+        layer = self.layerTree.graph.get_layer_by_id(item.layer)
+        del layer
+
         item_parent = item.parent() if current_index.parent().isValid() else self
         item_parent.removeRow(current_index.row())
 
@@ -64,7 +66,6 @@ class LayerTree(QWidget):
         self.layerContextMenu = QMenu(self)
         self.layerGroupContextMenu = QMenu(self)
         self.emptyContextMenu = QMenu(self)
-        self.mainWindow = main_window
 
         self.ui = Ui_LayerTree()
         self.ui.setupUi(self)
@@ -122,7 +123,7 @@ class LayerTree(QWidget):
 
         def show_label():
             layer = self.graph.get_layer_by_id(self.get_current_item().layer)
-            layer.toggle_label()
+            layer.render_label()
 
         show_label_act = QAction(self)
         show_label_act.setText('Show Label')

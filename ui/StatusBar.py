@@ -1,4 +1,3 @@
-from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QStatusBar, QLabel, QComboBox
 
 from constants import *
@@ -23,8 +22,8 @@ class PiComboBox(QComboBox):
 
 
 class PiStatusBar(QStatusBar):
-    def __init__(self, mainwindow):
-        super(PiStatusBar, self).__init__(mainwindow)
+    def __init__(self, main_window):
+        super(PiStatusBar, self).__init__(main_window)
         self.setMinimumHeight(30)
         self.setMaximumHeight(30)
 

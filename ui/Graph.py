@@ -9,7 +9,6 @@ from ui.raw import Ui_Graph
 class Graph(QWidget):
     def __init__(self, mw):
         super().__init__(mw)
-        self.mainWindow = mw
         self.layerTree = None
         self.ui = Ui_Graph()
         self.ui.setupUi(self)
@@ -29,7 +28,7 @@ class Graph(QWidget):
         dc.load_graphics()
 
     def get_layer_by_id(self, layer_id) -> PiLayer:
-        """根据id返回一个 PiLayer对象"""
+        """根据 id 返回一个 PiLayer对象"""
         pass
 
     def remove_layer(self, layer_id):
