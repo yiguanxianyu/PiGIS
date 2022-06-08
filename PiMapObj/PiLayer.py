@@ -61,63 +61,15 @@ class PiLayer():
         """
         type_list = [np.int16, np.int32, np.int64, np.float32, np.float64, 'U20']
         data_type_list = [(field.name, type_list[field.value_type]) for field in self.fields.fields]
-        data_type_list.insert(0,('id',np.int32))
+        data_type_list.insert(0, ('id', np.int32))
         data_type = np.dtype(data_type_list)
-        
-        table = [tuple([feature.id] + [attr.value for attr in feature.attributes.attributes]) for feature in self.features.features]
+
+        table = [tuple([feature.id] + [attr.value for attr in feature.attributes.attributes]) for feature in
+                 self.features.features]
         return np.array(table, dtype=data_type)
-
-    def __del__(self):
-        """移除图层本身 TODO"""
-        pass
-
-    def set_symbology(self, _type, _data):
-        """设定符号化方式，还没太想明白 TODO"""
-        pass
-
-    def remove_feature(self, ids: list[int]):
-        """删除指定的要素 TODO"""
-        pass
-
-    def highlight_feature(self, ids: list[int]):
-        """高亮指定的要素 TODO"""
-        pass
-
-    def set_visibility(self, visibility):
-        """改变某个 layer 的可见性 TODO"""
-        # print('vis,', layer_id, layer_visibility)
-        pass
-
-    def set_zlevel(self, z_level):
-        """改变本图层的 z level TODO"""
-        pass
 
     def has_label_or_anno(self):
         return self.label_status or self.label_status
-
-    def render_label(self):
-        """添加标注（动态） TODO"""
-        if self.annotation_status:
-            self.remove_annotation()
-        ...
-        self.label_status = True
-
-    def render_annotation(self):
-        """添加注记（静态） TODO"""
-        if self.label_status:
-            self.remove_annotation()
-        ...
-        self.annotation_status = True
-
-    def remove_label(self):
-        """移除标注（动态） TODO"""
-        ...
-        self.label_status = False
-
-    def remove_annotation(self):
-        """移除注记（静态） TODO"""
-        ...
-        self.annotation_status = False
 
 
 if __name__ == "__main__":

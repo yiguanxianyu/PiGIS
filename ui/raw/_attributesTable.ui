@@ -75,7 +75,7 @@
         <enum>Qt::NoContextMenu</enum>
        </property>
        <property name="text">
-        <string>✎</string>
+        <string>Edit</string>
        </property>
       </widget>
      </item>
@@ -207,22 +207,6 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>tableView</sender>
-   <signal>clicked(QModelIndex)</signal>
-   <receiver>AttributesTable</receiver>
-   <slot>item_clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>291</x>
-     <y>217</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>291</x>
-     <y>200</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
  <slots>
   <slot>add_row()</slot>
@@ -232,6 +216,5 @@
   <slot>save()</slot>
   <slot>add_field()</slot>
   <slot>remove_field()</slot>
-  <slot>item_clicked()</slot>
  </slots>
 </ui>

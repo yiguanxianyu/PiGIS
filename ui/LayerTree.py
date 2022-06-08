@@ -37,9 +37,7 @@ class LayerItemModel(QStandardItemModel):
 
     def remove_layer(self):
         item = self.itemFromIndex(current_index)
-        layer = self.layerTree.graph.get_layer_by_id(item.layer)
-        del layer
-
+        self.layerTree.graph.remove_layer(item.layer)
         item_parent = item.parent() if current_index.parent().isValid() else self
         item_parent.removeRow(current_index.row())
 
@@ -215,10 +213,7 @@ class LayerTree(QWidget):
 
     def item_changed(self, item: LayerItem):
         layer_id = item.layer
-
-        layer = self.graph.get_layer_by_id(layer_id)
-        layer.set_visibility(item.layer, item.visible)
-
+        self.graph.set_visibility(layer_id, item.visible)
         new_v = self.get_visible_layers()
 
         if new_v.count(layer_id) == 2:
@@ -226,17 +221,19 @@ class LayerTree(QWidget):
             new_v.pop(indices[item.row() == indices[0]])
 
         for i in range(len(new_v) - 1, -1, -1):
-            layer.set_zlevel(new_v[i], i)
+            self.graph.set_zlevel(new_v[i], i)
 
     def get_layer_tree(self):
+        """获取递归图层树，为嵌套列表"""
         return [self.sim.item(i).get_recursive_layers() for i in range(self.sim.rowCount())]
 
     def set_layer_tree(self, layer_tree):
+        """这个 layer 应该是 PiLayer对象"""
         for layer in layer_tree:
             if type(layer) == list:
                 self.set_layer_tree(layer)
             else:
-                self.add_layer(layer)
+                self.add_layer(layer.id, layer.name)
 
     def get_visible_layers(self):
         """获取需要被渲染的图层"""
