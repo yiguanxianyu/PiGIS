@@ -45,9 +45,8 @@ class PiLayer():
         if proj_path != None:
             self.proj.load(proj_path)
     
-    def remove_feature(self, ids: list[int]):
+    def remove_features(self, ids: list[int]):
         """删除指定的要素"""
-        # TODO
         features = self.features.features
         length = len(features)
         for index in range(1,length+1):

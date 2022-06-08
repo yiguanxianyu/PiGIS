@@ -54,6 +54,15 @@ class LayerItem(QStandardItem):
         else:
             return self.layer
 
+    def get_all_children(self):
+        if self.type() == QItemType.LayerGroup:
+            lrs = []
+            for item in self.layers:
+                lrs += item.get_all_children()
+            return lrs
+        else:
+            return [self]
+
     def get_visible_layers(self):
         if not self.self_visible:
             return []
@@ -76,7 +85,7 @@ class LayerItem(QStandardItem):
         """返回自身的可见性"""
         temp = self
         while temp:
-            if not self.self_visible:
+            if not temp.self_visible:
                 return False
             temp = temp.parent()
 

@@ -186,7 +186,7 @@ class PiGISProjectController:
             new_layer = PiLayer()
             new_layer.load(file_path)
             self.mainWindow.layerTree.add_layer(new_layer.id, new_layer.name)
-            self.mainWindow.graphWidget.load_layers([new_layer])
+            self.mainWindow.graphWidget.load_layer(new_layer)
 
         # TODO: parse selected layer file
         self.__project.add_layer(None)

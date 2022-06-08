@@ -158,18 +158,18 @@ class LayerTree(QWidget):
         def load_test_layers():
             layer1 = PiLayer()
             layer1.load("PiMapObj/图层文件/国界线.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-            self.add_layer(layer1.id, layer1.name + '0')
-            self.graph.load_layers(layer1)
+            self.add_layer(layer1.id, layer1.name + '1')
+            self.graph.load_layer(layer1)
 
             layer2 = PiLayer()
             layer2.load("PiMapObj/图层文件/省级行政区.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-            self.add_layer(layer2.id, layer2.name + '1')
-            self.graph.load_layers(layer2)
+            self.add_layer(layer2.id, layer2.name + '2')
+            self.graph.load_layer(layer2)
 
             layer3 = PiLayer()
             layer3.load("PiMapObj/图层文件/省会城市.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-            self.add_layer(layer3.id, layer3.name + '2')
-            self.graph.load_layers(layer3)
+            self.add_layer(layer3.id, layer3.name + '3')
+            self.graph.load_layer(layer3)
 
         # test loading layers
         load_layer_act = QAction(self)
@@ -210,16 +210,22 @@ class LayerTree(QWidget):
         current_index = index
 
     def item_changed(self, item: LayerItem):
-        layer_id = item.layer
-        self.graph.set_visibility(layer_id, item.visible)
-        new_v = self.get_visible_layers()
+        if item.type() is QItemType.Layer:
+            layer_id = item.layer
+            self.graph.set_visibility(layer_id, item.visible)
+            new_v = self.get_visible_layers()
 
-        if new_v.count(layer_id) == 2:
-            indices = [i for i, x in enumerate(new_v) if x == layer_id]
-            new_v.pop(indices[item.row() == indices[0]])
+            if new_v.count(layer_id) == 2:
+                indices = [i for i, x in enumerate(new_v) if x == layer_id]
+                new_v.pop(indices[item.row() == indices[0]])
 
-        for i in range(len(new_v) - 1, -1, -1):
-            self.graph.set_zlevel(new_v[i], i)
+            for i in range(len(new_v) - 1, -1, -1):
+                self.graph.set_zvalue(new_v[i], 10000 - i)
+        else:
+            new_v = self.get_visible_layers()
+            print(new_v, item.row())
+            for _item in item.get_all_children():
+                self.graph.set_visibility(_item.layer, _item.visible)
 
     def get_layer_tree(self):
         """获取递归图层树，为嵌套列表"""
