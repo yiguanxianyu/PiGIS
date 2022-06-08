@@ -68,6 +68,7 @@ class PiGraphView(QGraphicsView):
                 pass
 
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
+        print(event)
         if self.mode == PiGraphModeConstant.editable:
             return super().mouseMoveEvent(event)
         elif self.mode == PiGraphModeConstant.moveable:

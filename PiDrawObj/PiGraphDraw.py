@@ -17,10 +17,11 @@ class PiGraphDraw(QPaintDevice):
         }
         self.view = view
 
-        self.layers = []
+        self.layers = {}
         self.mbr = None
 
         self.cache_box = QGraphicsItemGroup(None)
+        #self.scene[PiGraphModeConstant.moveable].addItem(self.cache_box)
         self.pixmap = QPixmap()
         self.painter = QPainter()
         self.cache = QGraphicsPixmapItem()
@@ -43,8 +44,8 @@ class PiGraphDraw(QPaintDevice):
         # 0:no change 1:changed -1:deleted
 
     def add_layer(self,layer):
-        self.layers.append(layer)
         id = layer.id
+        self.layers[id] = layer
         self.item_collections[id] = []
         #self.item_groups[id] = QGraphicsItemGroup()
         self.layer_changed[id] = PiLayerStatusConstant.added
@@ -95,35 +96,34 @@ class PiGraphDraw(QPaintDevice):
                 brush = self.painter.brush()
                 self.painter.setBrush(Qt.transparent)
                 for item in item_collection:
-                    '''for line in item.polyline():'''
                     self.painter.drawPath(item.polyline())
-                        #line.translate(self.expand_pos)
-                        #self.painter.drawLine(line)
                 self.painter.setBrush(brush)
             case cons.multipolygon:
                 print(self.expand_pos)
                 for item in item_collection:
-                    polygon = item.polygon()
-                    #polygon.translate(self.expand_pos)
                     self.painter.drawPolygon(item.polygon())
             case cons.multipoint:
                 for item in item_collection:
-                    point = item.ellipse()
-                    #point.translate(self.expand_pos)
                     self.painter.drawEllipse(item.ellipse())
 
     def load_graphics(self):
         '''加载图元以及缓冲图片'''
-        #初始化
+        # 如果没有图层就不用加载
         if len(self.layers) == 0:
             return
+        # 如果全部layer都没有变化那不需要重新加载
+        
+        layers = self.layers.values()
         if self.scale == None: # 设置默认显示数据
             self.scale = 10000
         if self.layer_added == True: 
             # 重新调整外接矩形大小以便显示全部图像
-            self.mbr = self.layers[0].features.get_mbr()
-            for layer in self.layers:
-                self.mbr.union(layer.features.get_mbr())
+            self.mbr = None
+            for layer in layers:
+                if self.mbr == None:
+                    self.mbr = layer.features.get_mbr()
+                else:
+                    self.mbr.union(layer.features.get_mbr())
             ydis = self.mbr.maxy - self.mbr.miny
             xdis = self.mbr.maxx - self.mbr.minx
             self.scale = max(xdis,ydis) / 400
@@ -143,7 +143,8 @@ class PiGraphDraw(QPaintDevice):
         # self.initial_leftup_x = self.leftup_x
         # self.initial_leftup_y = self.leftup_y
         '''开始加载'''
-        print(self.width,self.height)
+        # print(self.width,self.height)
+
         # 移除原先缓冲图片,重新调整定位
         try:
             self.scene[PiGraphModeConstant.moveable].removeItem(self.cache_box)
@@ -151,6 +152,7 @@ class PiGraphDraw(QPaintDevice):
         except:
             pass
         self.cache_box.setPos( -self.gra_x_offset, -self.gra_y_offset)
+        self.item_box.setPos( -self.gra_x_offset, -self.gra_y_offset)
         # 初始化缓冲画布
         self.pixmap = QPixmap(self.width,self.height)
         self.pixmap.fill(Qt.GlobalColor.transparent)
@@ -159,8 +161,7 @@ class PiGraphDraw(QPaintDevice):
         self.painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
         self.painter.begin(self)
         # 开始绘制
-        self.item_box.setPos( -self.gra_x_offset, -self.gra_y_offset)
-        for index in range(len(self.layers)):
+        for index in self.layers.keys():
             layer = self.layers[index]
             self.painter.setPen(layer.pen)
             self.painter.setBrush(layer.brush)
@@ -198,8 +199,8 @@ class PiGraphDraw(QPaintDevice):
                     
         # 往场景中添加缓冲图片
         self.cache = QGraphicsPixmapItem(self.pixmap,self.cache_box)
-        #self.cache.setPos(self.expand_pos)
         self.scene[PiGraphModeConstant.moveable].addItem(self.cache_box)
+        #self.cache.setPos(self.expand_pos)
         self.painter.end()
     
     def get_scene(self,mode):
