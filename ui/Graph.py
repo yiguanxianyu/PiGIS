@@ -31,7 +31,7 @@ class Graph(QWidget):
         self.draw_control.add_layer(layer)
 
     def get_layer_by_id(self, layer_id) -> PiLayer:
-        """根据id返回一个 PiLayer对象"""
+        """根据id返回一个 PiLayer 对象"""
         return self.draw_control.layers[layer_id]
 
     def remove_layer(self, layer_id):
@@ -46,7 +46,7 @@ class Graph(QWidget):
             else:
                 return
         else:
-            ids = set(i for i in ids if i in self.highlighted_feature[layer_id])
+            ids = {i for i in ids if i in self.highlighted_feature[layer_id]}
 
         layer = self.get_layer_by_id(layer_id)
         for feature_id in ids:

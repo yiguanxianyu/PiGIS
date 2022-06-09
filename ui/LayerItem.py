@@ -7,6 +7,7 @@ from constants import QItemType, QUserRole
 
 
 class LayerItem(QStandardItem):
+
     def __init__(self, _type, _layer, *args):
         super(LayerItem, self).__init__(*args)
         self.setCheckable(True)
@@ -20,12 +21,6 @@ class LayerItem(QStandardItem):
         self.setData(_layer, QUserRole.Layer)
         self.setData(_type, QUserRole.ItemType)
         self.setData(random(), QUserRole.UniqueID)
-
-    def row_total(self):
-        if self.parent():
-            return self.parent().row() + 1
-        else:
-            return self.row()
 
     def clone(self):
         """
@@ -61,7 +56,10 @@ class LayerItem(QStandardItem):
     def get_recursive_layers(self):
         """图层组，返回递归列表"""
         if self.type() == QItemType.LayerGroup:
-            return [self.child(i).get_recursive_layers() for i in range(self.rowCount())]
+            return [
+                self.child(i).get_recursive_layers()
+                for i in range(self.rowCount())
+            ]
         else:
             return self.layer
 
@@ -77,17 +75,17 @@ class LayerItem(QStandardItem):
             return [self]
 
     def get_visible_layers(self, item):
-        if (item.id() == self.id() and id(item) != id(self)) or not self.self_visible:
-            # if item.parent() != self.parent() or item.row() != self.row():
+        if (item.id() == self.id()
+                and id(item) != id(self)) or not self.self_visible:
             return []
 
-        if self.type() == QItemType.LayerGroup:
-            lrs = []
-            for iter_item in self.layers:
-                lrs += iter_item.get_visible_layers(item)
-            return lrs
-        else:
+        if self.type() == QItemType.Layer:
             return [self.layer]
+
+        lrs = []
+        for iter_item in self.layers:
+            lrs += iter_item.get_visible_layers(item)
+        return lrs
 
     @property
     def self_visible(self):
