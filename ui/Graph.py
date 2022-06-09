@@ -200,17 +200,20 @@ class Graph(QWidget):
     # 但如果在编辑的三个模式间跳转，则会取消编辑
 
     def graph_turn_move(self):
-        """切换图层可移动"""
+        '''切换图层可移动'''
         self.view_control.mode_turn_move()
 
-    def graph_turn_layer_dragable(self, layer_id):
-        """把对应图层切换成可以拖动的模式"""
+    def graph_turn_realize(self):
+        self.view_control.mode_turn_realize()
+    
+    def graph_turn_layer_dragable(self,layer_id):
+        '''把对应图层切换成可以拖动的模式'''
         self.view_control.mode_turn_drag_layer(layer_id)
 
-    def graph_turn_layer_editable(self, layer_id):
-        """把对应图层切换成可以编辑的模式"""
+    def graph_turn_layer_editable(self,layer_id):
+        '''把对应图层切换成可以编辑的模式'''
         self.view_control.mode_turn_edit_layer(layer_id)
 
-    def graph_turn_layer_addable(self, layer_id):
-        """把图层切换成可以增加要素的模式"""
+    def graph_turn_layer_addable(self,layer_id):
+        '''把图层切换成可以增加要素的模式'''
         self.view_control.mode_turn_add_layer(layer_id)

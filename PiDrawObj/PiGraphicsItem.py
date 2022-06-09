@@ -1,7 +1,7 @@
 from PySide6.QtCore import QPointF, Qt
 from PySide6.QtGui import QBrush, QFont, QPainterPath, QPen, QPolygonF
 from PySide6.QtWidgets import QGraphicsItemGroup, QGraphicsItem, QGraphicsPathItem, QGraphicsPolygonItem, \
-    QGraphicsEllipseItem, QGraphicsSceneDragDropEvent, QGraphicsSceneMouseEvent, QGraphicsTextItem
+    QGraphicsEllipseItem, QGraphicsSceneDragDropEvent, QGraphicsSceneMouseEvent, QGraphicsTextItem, QMessageBox
 from PiDrawObj.PiGraphEdit import PiEditCacheItem
 from PiMapObj.PiFeature import PiFeature
 from PiMapObj.PiGeometry import PiGeometry
@@ -135,12 +135,23 @@ class PiGraphicsItemGroup(QGraphicsItemGroup):
             delta_pos = now_pos - self.last_pos
             self.feature.translate(delta_pos.x() * self.draw.scale, - delta_pos.y() * self.draw.scale)
             self.last_pos = now_pos
+        elif self.draw.view.mode == PiGraphModeConstant.realizable:
+            self.show_message()
         return super().mouseReleaseEvent(event)
     
+    def show_message(self):
+        typelist = ["MultiPoint","MultiPolyline","MultiPolygon","Point","Polyline","Polygon"] 
+        message = "要素ID：%s\n" % self.id
+        message += "要素类型：%s\n" % typelist[self.geometry_type]
+        message += "属性字段：%s\n" % self.feature.attributes
+        message += "所属图层：%s\n" % self.draw.layers[self.layer_id].name
+
+        QMessageBox.about(self.draw.view.window,'识别要素',message)
+
     def get_text_pos(self):
+        rect = self.boundingRect()
         match self.geometry_type:
             case PiGeometryTypeConstant.multipolygon.value:
-                rect = self.boundingRect()
                 point = rect.center()
                 if self.contains(point):
                     return point
@@ -151,6 +162,11 @@ class PiGraphicsItemGroup(QGraphicsItemGroup):
                         if self.contains(np):
                             return np
                 return point
+            case PiGeometryTypeConstant.multipoint.value:
+                return rect.topRight()
+            case PiGeometryTypeConstant.multipolyline.value:
+                path = self.shape()
+                return path.pointAtPercent(0.5)
 
 class PiGraphicsTextItem(QGraphicsTextItem):
     def __init__(self,text, parent:PiGraphicsItemGroup = None):
