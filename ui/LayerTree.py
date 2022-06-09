@@ -129,7 +129,6 @@ class LayerTree(QWidget):
                     sorted_fids = sorted_data[:, 0]
                     levels = np.linspace(0, len(sorted_fids), len(brush) + 1)
                     levels = np.round(levels).astype(int)
-                    print(len(levels))
                     brush_dict = {}
                     for i in range(len(levels) - 1):
                         for fid in sorted_fids[levels[i]:levels[i + 1]]:
