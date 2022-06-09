@@ -1,10 +1,11 @@
+from PiConstant import PiGeometryTypeConstant
 from PiMapObj.PiGeometryCollection import PiGeometryCollection
 from PiMapObj.PiPoint import PiPoint
 
 
 class PiMultiPoint(PiGeometryCollection):
     def __init__(self):
-        super().__init__(0)
+        super().__init__(PiGeometryTypeConstant.multipoint)
         self.count = 0  # 点个数
 
     def load(self, reader, load_type):

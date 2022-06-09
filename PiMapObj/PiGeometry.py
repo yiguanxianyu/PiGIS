@@ -11,7 +11,7 @@ from PiMapObj import PiGlobal
 
 
 class PiGeometry():
-    def __init__(self, type: int):
+    def __init__(self, type: int = -1):
         self.id = PiGlobal.id_count
         PiGlobal.id_count += 1
         self.type = type  # 元素的类别

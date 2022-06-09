@@ -22,7 +22,7 @@ class PiLayer():
         self.useless = 0  # 没用
         self.pen = QPen(Qt.blue)  # 笔触
         self.brush = QBrush(Qt.white)  # 填充
-        self.visibility = True
+        self.visibility = False
         self.change = False
 
         '''马子添加属性'''

@@ -27,6 +27,9 @@ class PiGeometryTypeConstant(Enum):  # 几何要素类型参数
     multipoint = 0
     multipolyline = 1
     multipolygon = 2
+    point = 3
+    polyline = 4
+    polygon = 5
 
 
 class PiProjectionTypeConstant():  # 投影类型常数
@@ -119,3 +122,5 @@ class PiEditModeConstant(Enum):
     addable = 1
 
 HIGHLIGHTCOLOR = QColor(144,238,144)
+EDITPENCOLOR = QColor(255,0,0,100)
+EDITBRUSHCOLOR = QColor(0,0,0,100)

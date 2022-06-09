@@ -1,10 +1,11 @@
+from PiConstant import PiGeometryTypeConstant
 from PiMapObj.PiGeometryCollection import PiGeometryCollection
 from PiMapObj.PiPolygon import PiPolygon
 
 
 class PiMultiPolygon(PiGeometryCollection):
     def __init__(self):
-        super().__init__(2)
+        super().__init__(PiGeometryTypeConstant.multipolygon)
         self.count = 0  # 折线个数
 
     def load(self, reader, load_type):
