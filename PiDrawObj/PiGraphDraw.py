@@ -39,7 +39,7 @@ class PiGraphDraw(QPaintDevice):
         # self.item_groups[id] = QGraphicsItemGroup()
         self.reset_draw_attr()
         self.load_layer_data(layer)
-        print(layer.id,layer.geometry_type)
+        # print(layer.id,layer.geometry_type)
         
     def delete_layer(self, layer_id):
         if self.layers[layer_id].visibility is True:

@@ -78,6 +78,9 @@ class Graph(QWidget):
 
         self.highlighted_feature[layer_id] = _input
 
+    def set_name(self, layer_id, text):
+        self.get_layer_by_id(layer_id).name = text
+
     def set_visibility(self, layer_id, visibility):
         """改变某个 layer 的可见性"""
         if visibility:
@@ -89,24 +92,22 @@ class Graph(QWidget):
         """改变某个 layer 的 z level"""
         self.draw_control.set_zvalue_layer(layer_id, z_level)
 
-    def set_symbology_unique_value(self, layer_id, pen, brush_dict):
-        """唯一值渲染 TODO"""
-        print(len(brush_dict), brush_dict)
-        item_collection = self.draw_control.item_collections[layer_id]
-        for feature_id, brush in brush_dict.items():
-            item_collection[feature_id].setPen(pen)
-            item_collection[feature_id].setBrush(brush)
-
     def set_symbology_single_value(self, layer_id, pen, brush):
-        """单一值渲染，不需要feature_id了，直接渲染就可以 TODO"""
+        """单一值渲染，不需要feature_id了，直接渲染就可以"""
         item_collection = self.draw_control.item_collections[layer_id]
         for item in item_collection.values():
             item.setPen(pen)
             item.setBrush(brush)
 
+    def set_symbology_unique_value(self, layer_id, pen, brush_dict):
+        """唯一值渲染"""
+        item_collection = self.draw_control.item_collections[layer_id]
+        for feature_id, brush in brush_dict.items():
+            item_collection[feature_id].setPen(pen)
+            item_collection[feature_id].setBrush(brush)
+
     def set_symbology_by_level(self, layer_id, pen, brush_dict):
-        """分级渲染 TODO"""
-        print(len(brush_dict), brush_dict)
+        """分级渲染"""
         item_collection = self.draw_control.item_collections[layer_id]
         for feature_id, brush in brush_dict.items():
             item_collection[feature_id].setPen(pen)
@@ -158,7 +159,7 @@ class Graph(QWidget):
         # extension就是文件后缀名
         print(fp, extension)
         # put your code here
-        self.draw_control.save_fig(fp+extension)
+        self.draw_control.save_fig(fp + extension)
 
     def render_label(self, layer_id):
         """添加标注（动态） TODO"""
@@ -173,15 +174,15 @@ class Graph(QWidget):
         layer = self.get_layer_by_id(layer_id)
         if layer.label_status:
             self.remove_annotation(layer_id)
-        # put your code here
+
         self.view_control.add_layer_text(layer_id)
-        # put your code here
+
         layer.annotation_status = True
 
     def remove_label(self, layer_id):
-        """移除标注（动态） TODO"""
+
         layer = self.get_layer_by_id(layer_id)
-        # put your code here
+
         layer.label_status = False
 
     def remove_annotation(self, layer_id):
@@ -193,21 +194,22 @@ class Graph(QWidget):
         layer.annotation_status = False
 
     """小陈添加接口"""
+
     # 从编辑的三个模式切换到移动模式再切回来，编辑进度不变，
     # 但如果在编辑的三个模式间跳转，则会取消编辑
 
     def graph_turn_move(self):
-        '''切换图层可移动'''
-        return self.view_control.mode_turn_move()
-    
-    def graph_turn_layer_dragable(self,layer_id):
-        '''把对应图层切换成可以拖动的模式'''
-        return self.view_control.mode_turn_drag_layer(layer_id)
+        """切换图层可移动"""
+        self.view_control.mode_turn_move()
 
-    def graph_turn_layer_editable(self,layer_id):
-        '''把对应图层切换成可以编辑的模式'''
-        return self.view_control.mode_turn_edit_layer(layer_id)
+    def graph_turn_layer_dragable(self, layer_id):
+        """把对应图层切换成可以拖动的模式"""
+        self.view_control.mode_turn_drag_layer(layer_id)
 
-    def graph_turn_layer_addable(self,layer_id):
-        '''把图层切换成可以增加要素的模式'''
-        return self.view_control.mode_turn_add_layer(layer_id)
+    def graph_turn_layer_editable(self, layer_id):
+        """把对应图层切换成可以编辑的模式"""
+        self.view_control.mode_turn_edit_layer(layer_id)
+
+    def graph_turn_layer_addable(self, layer_id):
+        """把图层切换成可以增加要素的模式"""
+        self.view_control.mode_turn_add_layer(layer_id)
