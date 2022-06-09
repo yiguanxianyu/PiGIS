@@ -3,6 +3,7 @@ from PySide6.QtCore import QPoint, QPointF, Qt
 from PySide6.QtWidgets import QGraphicsView
 
 from PiConstant import PiGraphModeConstant
+from PiDrawObj.PiGraphAdd import PiGraphAdd
 from PiDrawObj.PiGraphDrag import PiGraphDrag
 from PiDrawObj.PiGraphDraw import PiGraphDraw
 from PiDrawObj.PiGraphEdit import PiGraphEdit
@@ -30,6 +31,7 @@ class PiGraphView(QGraphicsView):
         # 编辑控制类
         self.drag_control = PiGraphDrag(view=self)
         self.edit_control = PiGraphEdit(view=self)
+        self.add_control = PiGraphAdd(view=self)
 
     def display_init(self):
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
@@ -70,6 +72,8 @@ class PiGraphView(QGraphicsView):
                 self.move_control.mousePressEvent(event)
             case PiGraphModeConstant.editable:
                 self.edit_control.mousePressEvent(event)
+            case PiGraphModeConstant.addable:
+                self.add_control.mousePressEvent(event)
 
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
         match self.mode:
@@ -79,6 +83,9 @@ class PiGraphView(QGraphicsView):
                 self.move_control.mouseMoveEvent(event)
             case PiGraphModeConstant.editable:
                 self.edit_control.mouseMoveEvent(event)
+            case PiGraphModeConstant.addable:
+                self.add_control.mouseMoveEvent(event)
+            
 
     def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
         self.mouse_pressed_button = event.button()
@@ -89,14 +96,20 @@ class PiGraphView(QGraphicsView):
                 self.move_control.mouseReleaseEvent(event)
             case PiGraphModeConstant.editable:
                 self.edit_control.mouseReleaseEvent(event)
+            case PiGraphModeConstant.addable:
+                self.add_control.mouseReleaseEvent(event)
 
     def keyReleaseEvent(self, event: QtGui.QKeyEvent) -> None:
+        # 键盘暂且用来测试 0折线 1多边形 2点
+        test_layer_id = 1
         if event.text() == "c":
             self.mode_turn_move()
         elif event.text() == "d":
-            self.mode_turn_drag_layer(2)
+            self.mode_turn_drag_layer(test_layer_id)
         elif event.text() == "e":
-            self.mode_turn_edit_layer(2)
+            self.mode_turn_edit_layer(test_layer_id)
+        elif event.text() == "a":
+            self.mode_turn_add_layer(test_layer_id)
 
         # return super().keyReleaseEvent(event)
 
@@ -109,13 +122,23 @@ class PiGraphView(QGraphicsView):
 
     def mode_turn_drag_layer(self,layer_id):
         if self.mode != PiGraphModeConstant.dragable:
+            self.add_control.end_add()
             self.edit_control.end_edit()
             self.drag_control.start_drag_on(layer_id)
             self.mode = PiGraphModeConstant.dragable
 
     def mode_turn_edit_layer(self,layer_id):
         if self.mode != PiGraphModeConstant.editable:
-            self.drag_control.end_drag()
+            self.add_control.end_add()
             self.edit_control.start_edit_on(layer_id)
+            self.drag_control.end_drag()
             self.mode = PiGraphModeConstant.editable
+    
+    def mode_turn_add_layer(self,layer_id):
+        if self.mode != PiGraphModeConstant.addable:
+            self.add_control.start_add_on(layer_id)
+            self.edit_control.end_edit()
+            self.drag_control.end_drag()
+            self.mode = PiGraphModeConstant.addable
+
 
