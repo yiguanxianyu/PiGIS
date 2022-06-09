@@ -113,7 +113,7 @@ class Graph(QWidget):
 
     def save_image(self):
         """根据文件路径和后缀名将地图保存成图片"""
-        all_types = ['png (*.png)', 'jpg (*.jpg, *.jpeg)', '*.*']
+        all_types = ['png (*.png)', 'jpg (*.jpg, *.jpeg)', 'bitmap (*.bmp)', '*.*']
         fp, ft = QFileDialog.getSaveFileName(QWidget(), "Save Image To", filter=';;'.join(all_types))
         # fp -> file path,ft -> file extension
         match all_types.index(ft):
@@ -121,7 +121,9 @@ class Graph(QWidget):
                 extension = '.png'
             case 1:
                 extension = '.jpg'
-            case 2 | _:
+            case 2:
+                extension = '.bmp'
+            case _:
                 pass
         # extension就是文件后缀名
         print(fp, ft)
