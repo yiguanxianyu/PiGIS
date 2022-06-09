@@ -13,7 +13,6 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.add_status_bar()
 
         self.__aboutPage = None
         self.project = PiGISProjectController(self)
@@ -23,9 +22,9 @@ class MainWindow(QMainWindow):
 
         graph_widget = Graph(self)
         self.graphWidget = graph_widget
-
         graph_widget.layerTree = layer_tree_widget
         layer_tree_widget.graph = graph_widget
+        self.add_status_bar()
 
         # 分离器添加控件
         main_horizontal_splitter = QSplitter(Qt.Horizontal)
@@ -34,9 +33,15 @@ class MainWindow(QMainWindow):
         # 把这个 splitter 放在一个布局里才能显示出来
         self.ui.mainLayout.addWidget(main_horizontal_splitter)
 
+    def update_scale(self, scale):
+        self.statusBar.update_scale(scale)
+
+    def update_coord(self, x, y):
+        self.update_coord(x, y)
+
     # For test only
     def mousePressEvent(self, event) -> None:
-        self.statusBar.update_mouse_loc(event.x(), event.y())
+        self.statusBar.update_coord(event.x(), event.y())
 
     def draw_layers(self):
         pass
