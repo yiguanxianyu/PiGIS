@@ -18,6 +18,7 @@ class LayerItem(QStandardItem):
 
         self.setData(_layer, QUserRole.Layer)
         self.setData(_type, QUserRole.ItemType)
+        self.setData(id(self), QUserRole.UniqueID)
 
     def clone(self):
         """
@@ -32,6 +33,9 @@ class LayerItem(QStandardItem):
         if not self.__type:
             self.__type = self.data(QUserRole.ItemType)
         return self.__type
+
+    def id(self):
+        return self.data(QUserRole.UniqueID)
 
     @property
     def layer(self):
@@ -54,14 +58,28 @@ class LayerItem(QStandardItem):
         else:
             return self.layer
 
-    def get_visible_layers(self):
+    def get_all_children(self, item):
+        if item.id() == self.id() and item.index() != self.index():
+            return
+        elif self.type() == QItemType.LayerGroup:
+            lrs = []
+            for item in self.layers:
+                lrs += item.get_all_children(item)
+            return lrs
+        else:
+            return [self]
+
+    def get_visible_layers(self, item):
+        if item.id() == self.id() and item.index() != self.index():
+            return []
+
         if not self.self_visible:
             return []
 
         if self.type() == QItemType.LayerGroup:
             lrs = []
             for item in self.layers:
-                lrs += item.get_visible_layers()
+                lrs += item.get_visible_layers(item)
             return lrs
         else:
             return [self.layer] if self.self_visible else []
@@ -76,7 +94,7 @@ class LayerItem(QStandardItem):
         """返回自身的可见性"""
         temp = self
         while temp:
-            if not self.self_visible:
+            if not temp.self_visible:
                 return False
             temp = temp.parent()
 

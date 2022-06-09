@@ -2,8 +2,8 @@ from PySide6.QtCore import QPointF
 from PySide6.QtGui import QPaintDevice
 from PySide6.QtWidgets import QGraphicsItemGroup, QGraphicsScene, QGraphicsItem
 
-from PiConstant import PiGeometryTypeConstant, PiLayerStatusConstant
-from PiDrawObj.PiGraphicsItem import PiGraphicsItemGroup, PiGraphicsPolylineItem, PiGraphicsPolygonItem, PiGraphicsEllipseItem
+from PiDrawObj.PiGraphicsItem import PiGraphicsItemGroup
+
 
 # import pyqtgraph as pg
 
@@ -41,37 +41,37 @@ class PiGraphDraw(QPaintDevice):
         print(layer.id,layer.geometry_type)
         
     def delete_layer(self, layer_id):
-        if self.layers[layer_id].visibility == True:
+        if self.layers[layer_id].visibility is True:
             self.hide_layer(layer_id)
         del self.item_collections[layer_id]
         del self.layers[layer_id]
-    
-    def visulize_layer(self,layer_id):
+
+    def visulize_layer(self, layer_id):
         self.layers[layer_id].visibility = True
         for item in self.item_collections[layer_id].values():
             self.scene.addItem(item)
-    
-    def hide_layer(self,layer_id):
+
+    def hide_layer(self, layer_id):
         self.layers[layer_id].visibility = False
         for item in self.item_collections[layer_id].values():
             self.scene.removeItem(item)
-    
-    def set_zvalue_layer(self,layer_id,zvalue):
+
+    def set_zvalue_layer(self, layer_id, zvalue):
         for item in self.item_collections[layer_id].values():
             item.setZValue(zvalue)
 
-    def remove_feature(self,layer_id,ids):
+    def remove_features(self, layer_id, ids):
         layer = self.layers[layer_id]
-        layer.remove_feature(ids)
+        layer.remove_features(ids)
         for feature_id in ids:
-            if layer.visibility == True:
+            if layer.visibility is True:
                 self.scene.removeItem(self.item_collections[layer_id][feature_id])
             del self.item_collections[layer_id][feature_id]
 
     def load_layer_data(self, layer):
         pen = layer.pen
         brush = layer.brush
-        #print(layer.id,layer.geometry_type)
+        # print(layer.id,layer.geometry_type)
         # item_group = self.item_groups[layer.id]
         layer_id = layer.id
         item_collection = self.item_collections[layer_id]
@@ -104,7 +104,7 @@ class PiGraphDraw(QPaintDevice):
     def load_graphics(self):
         pass
 
-    def get_feature_item(self,layer_id,feature_id) -> PiGraphicsItemGroup:
+    def get_feature_item(self, layer_id, feature_id) -> PiGraphicsItemGroup:
         return self.item_collections[layer_id][feature_id]
 
     def get_scene(self):

@@ -1,4 +1,5 @@
 from enum import Enum
+
 import numpy as np
 from PySide6.QtGui import QStandardItem
 
@@ -18,6 +19,7 @@ class QUserRole:
     ItemType = 1000 + min_value
     Layer = 1010 + min_value
     Visible = 1020 + min_value
+    UniqueID = 1030 + min_value
 
 
 class GISType(Enum):
