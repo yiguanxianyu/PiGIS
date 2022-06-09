@@ -1,7 +1,7 @@
 from PySide6.QtCore import QPointF, Qt
-from PySide6.QtGui import QBrush, QPainterPath, QPen, QPolygonF
+from PySide6.QtGui import QBrush, QFont, QPainterPath, QPen, QPolygonF
 from PySide6.QtWidgets import QGraphicsItemGroup, QGraphicsItem, QGraphicsPathItem, QGraphicsPolygonItem, \
-    QGraphicsEllipseItem, QGraphicsSceneDragDropEvent, QGraphicsSceneMouseEvent
+    QGraphicsEllipseItem, QGraphicsSceneDragDropEvent, QGraphicsSceneMouseEvent, QGraphicsTextItem
 from PiDrawObj.PiGraphEdit import PiEditCacheItem
 from PiMapObj.PiFeature import PiFeature
 from PiMapObj.PiGeometry import PiGeometry
@@ -134,3 +134,29 @@ class PiGraphicsItemGroup(QGraphicsItemGroup):
             self.feature.translate(delta_pos.x() * self.draw.scale, - delta_pos.y() * self.draw.scale)
             self.last_pos = now_pos
         return super().mouseReleaseEvent(event)
+    
+    def get_text_pos(self):
+        match self.geometry_type:
+            case PiGeometryTypeConstant.multipolygon.value:
+                rect = self.boundingRect()
+                point = rect.center()
+                if self.contains(point):
+                    return point
+                else:
+                    points = [rect.bottomLeft(),rect.bottomRight(),rect.topLeft(),rect.topRight()]
+                    for point1 in points:
+                        np = QPointF((point.x()+point1.x())/2,(point.y()+point1.y())/2)
+                        if self.contains(np):
+                            return np
+                return point
+
+class PiGraphicsTextItem(QGraphicsTextItem):
+    def __init__(self,text, parent:PiGraphicsItemGroup = None):
+        super().__init__(text)
+        pos = parent.get_text_pos()
+        self.setPos(pos.x()-self.textWidth()/2,pos.y())
+        font = QFont()
+        font.setPointSizeF(50)
+        self.setFont(font)
+        self.setDefaultTextColor(Qt.blue)
+

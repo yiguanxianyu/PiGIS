@@ -21,6 +21,10 @@ class PiGraphView(QGraphicsView):
         self.show_scale = 1
         self.ui_init()
         self.display_init()
+        self.window = None
+    
+    def set_window(self,window):
+        self.window = window
 
     def ui_init(self):
         # 绘画控制类
@@ -42,6 +46,7 @@ class PiGraphView(QGraphicsView):
         ratio = show_scale / self.show_scale
         self.scale(ratio, ratio)
         self.show_scale = show_scale
+        self.window.update_scale(self.draw_control.scale / self.show_scale)
 
     def centerOn(self, pos: QPointF | QPoint):
         super().centerOn(pos)
@@ -51,9 +56,7 @@ class PiGraphView(QGraphicsView):
         if self.mode == PiGraphModeConstant.moveable:
             wheelValue = event.angleDelta().y()
             ratio = wheelValue / 1200 + 1
-            self.scale(ratio, ratio)
-            self.show_scale *= ratio
-            self.centerOn(self.center)
+            self.set_show_scale(self.show_scale*ratio)
 
     def super_mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
         return super().mouseMoveEvent(event)
@@ -101,7 +104,7 @@ class PiGraphView(QGraphicsView):
 
     def keyReleaseEvent(self, event: QtGui.QKeyEvent) -> None:
         # 键盘暂且用来测试 0折线 1多边形 2点
-        test_layer_id = 2
+        test_layer_id = 1
         if event.text() == "c":
             self.mode_turn_move()
         elif event.text() == "d":
@@ -110,6 +113,8 @@ class PiGraphView(QGraphicsView):
             self.mode_turn_edit_layer(test_layer_id)
         elif event.text() == "a":
             self.mode_turn_add_layer(test_layer_id)
+        elif event.text() == "s":
+            self.visulize_text_layer(test_layer_id)
 
         # return super().keyReleaseEvent(event)
 
@@ -148,6 +153,9 @@ class PiGraphView(QGraphicsView):
         map_pos = QPointF(scene_pos.x()*draw_scale,scene_pos.y()*draw_scale)
         return map_pos
         pass
+
+    def visulize_text_layer(self,layer_id):
+        self.draw_control.visulize_text_layer(layer_id)
 
 
 
