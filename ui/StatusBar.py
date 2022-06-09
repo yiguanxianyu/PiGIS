@@ -6,22 +6,40 @@ scales_num = [
     100000000, 50000000, 25000000, 10000000, 5000000, 2500000, 1000000, 500000,
     250000, 100000, 50000, 25000, 10000, 5000, 2000, 1000, 500
 ]
-scales_str = ['test'] + [f'1:{i}' for i in scales_num]
+scales_str = [f'1:{i}' for i in scales_num]
 
 
 class PiComboBox(QComboBox):
 
-    def __init__(self, parent):
+    def __init__(self, parent, set_scale):
         super(PiComboBox, self).__init__(parent)
         self.setEditable(True)
+        self.setInsertPolicy(QComboBox.NoInsert)
         self.addItems(scales_str)
-        self.insertSeparator(1)
+        self.set_scale = set_scale
+        self.currentIndexChanged.connect(self.index_changed)
 
     def focusInEvent(self, e) -> None:
         self.grabKeyboard()
 
     def focusOutEvent(self, e) -> None:
         self.releaseKeyboard()
+
+    def keyReleaseEvent(self, e) -> None:
+        txt = e.text()
+        if len(txt) == 1:
+            if ord(txt) == 13:
+                try:
+                    scale = int(self.lineEdit().text()[2:])
+                    self.set_scale(scale)
+                except Exception as e:
+                    print(e)
+
+    def index_changed(self, index):
+        self.set_scale(scales_num[index])
+
+    def update_scale(self, scale) -> None:
+        self.lineEdit().setText(str(scale))
 
 
 class PiStatusBar(QStatusBar):
@@ -36,8 +54,12 @@ class PiStatusBar(QStatusBar):
         self.loc_label = QLabel('X: Y:\t')
         self.addWidget(self.loc_label)
 
-        self.qcb = PiComboBox(self)
+        self.qcb = PiComboBox(self, main_window.graphWidget.set_scale)
         self.addWidget(self.qcb)
 
-    def update_mouse_loc(self, x, y):
+    def update_coord(self, x, y):
         self.loc_label.setText(f'X:{x}  Y:{y}\t')
+        print(self.qcb.lineEdit().text())
+
+    def update_scale(self, scale):
+        self.qcb.update_scale(scale)

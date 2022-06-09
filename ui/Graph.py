@@ -89,19 +89,31 @@ class Graph(QWidget):
         """改变某个 layer 的 z level"""
         self.draw_control.set_zvalue_layer(layer_id, z_level)
 
-    def set_symbology(self, layer_id, _type, _data):
+    def set_symbology_point(self, layer_id, _dict):
         """设定符号化方式，还没太想明白 TODO"""
-        pass
+        for feature_id, value in _dict.items():
+            pen, brush = value
+
+    def set_symbology_polyline(self, layer_id, _dict):
+        """设定符号化方式，还没太想明白 TODO"""
+        for feature_id, pen in _dict.items():
+            pass
+
+    def set_symbology_poltgon(self, layer_id, _dict):
+        """设定符号化方式，还没太想明白 TODO"""
+        for feature_id, value in _dict.items():
+            pen, brush = value
 
     def set_scale(self, scale):
         """设置比例尺，传入的是1:x的那个x缩放点就
         怎么方便怎么来吧，可以直接用当前中心点什么的 TODO"""
+        print('setting scale', scale)
         pass
 
-    def set_features_visibility(self, layer_id, ids: list[int],visibility:bool):
+    def set_features_visibility(self, layer_id, ids: list[int], visibility: bool):
         """隐藏指定的要素 TODO"""
         # 暂时先用删除顶一下
-        self.draw_control.set_features_visibility(layer_id, ids,visibility)
+        self.draw_control.set_features_visibility(layer_id, ids, visibility)
 
     def add_empty_features(self, layer_id, ids: list[int]):
         """添加空要素，id已经被给定了,目前的 feature_id
