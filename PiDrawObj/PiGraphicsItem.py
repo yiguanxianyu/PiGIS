@@ -53,6 +53,7 @@ class PiGraphicsItem(QGraphicsPathItem):
                 self.setPath(path)
                 self.setPen(pen)
                 self.setBrush(brush)
+                #print(self.point_list)
 
     def shape(self) -> QPainterPath:
         return self.path().translated(self.pos())
@@ -76,10 +77,10 @@ class PiGraphicsItemGroup(QGraphicsItemGroup):
         collection = feature.geometry._collection
         for geometry in collection:
             item = PiGraphicsItem(geometry,parent,draw_control,pen,brush)
-            #print(item.shape())
             self.addToGroup(item)
         self.accept_edit = False
         self.edit_cache = None
+        self.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
     
     def setPen(self,pen):
         for item in self.childItems():
@@ -117,12 +118,19 @@ class PiGraphicsItemGroup(QGraphicsItemGroup):
                 self.edit_cache = None
                 print("end edit feature %d" % self.id)
         else:
-            super().mouseDoubleClickEvent(event)
+            pass
+        return super().mouseDoubleClickEvent(event)
+    
+    def mousePressEvent(self, event: QGraphicsSceneMouseEvent) -> None:
+        return super().mousePressEvent(event)
+    
+    def mouseMoveEvent(self, event: QGraphicsSceneMouseEvent) -> None:
+        return super().mouseMoveEvent(event)
 
     def mouseReleaseEvent(self, event: QGraphicsSceneMouseEvent) -> None:
-        super().mouseReleaseEvent(event)
         if self.draw.view.mode == PiGraphModeConstant.dragable:
             now_pos = super().pos()
             delta_pos = now_pos - self.last_pos
             self.feature.translate(delta_pos.x() * self.draw.scale, - delta_pos.y() * self.draw.scale)
             self.last_pos = now_pos
+        return super().mouseReleaseEvent(event)

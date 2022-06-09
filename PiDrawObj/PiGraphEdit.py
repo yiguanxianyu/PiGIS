@@ -155,18 +155,21 @@ class PiGraphEdit():
     
     def mousePressEvent(self,event:QMouseEvent):
         if self.view.mouse_pressed_button == Qt.MouseButton.LeftButton:
-            self.view.super_mousePressEvent(event)
+            pass
         elif self.view.mouse_pressed_button == Qt.MouseButton.RightButton:
-            self.view.super_mousePressEvent(event)
+            pass
+        return self.view.super_mousePressEvent(event)
 
     def mouseMoveEvent(self,event):
         if self.view.mouse_pressed_button == Qt.MouseButton.LeftButton:
-            self.view.super_mouseMoveEvent(event)
+            pass
         elif self.view.mouse_pressed_button == Qt.MouseButton.RightButton:
-            self.view.super_mouseMoveEvent(event)
+            pass
+        return self.view.super_mouseMoveEvent(event)
 
     def mouseReleaseEvent(self,event):
         if self.view.mouse_pressed_button == Qt.MouseButton.LeftButton:
-            self.view.super_mouseReleaseEvent(event)
+            pass
         elif self.view.mouse_pressed_button == Qt.MouseButton.RightButton:
-            self.view.super_mouseReleaseEvent(event)
+            pass
+        return self.view.super_mouseReleaseEvent(event)

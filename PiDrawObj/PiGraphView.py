@@ -101,7 +101,7 @@ class PiGraphView(QGraphicsView):
 
     def keyReleaseEvent(self, event: QtGui.QKeyEvent) -> None:
         # 键盘暂且用来测试 0折线 1多边形 2点
-        test_layer_id = 1
+        test_layer_id = 2
         if event.text() == "c":
             self.mode_turn_move()
         elif event.text() == "d":
@@ -140,5 +140,14 @@ class PiGraphView(QGraphicsView):
             self.edit_control.end_edit()
             self.drag_control.end_drag()
             self.mode = PiGraphModeConstant.addable
+        
+    def window_to_map(self,window,window_pos:QPoint) -> QPointF:
+        view_pos = self.mapFrom(window,window_pos)
+        scene_pos = self.mapToScene(view_pos)
+        draw_scale = self.draw_control.scale
+        map_pos = QPointF(scene_pos.x()*draw_scale,scene_pos.y()*draw_scale)
+        return map_pos
+        pass
+
 
 

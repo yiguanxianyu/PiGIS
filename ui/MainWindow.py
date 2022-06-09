@@ -1,4 +1,4 @@
-from PySide6.QtCore import Qt
+from PySide6.QtCore import QPoint, QPointF, Qt
 from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter, QSizePolicy
 
 from project import PiGISProjectController
@@ -41,7 +41,9 @@ class MainWindow(QMainWindow):
 
     # For test only
     def mousePressEvent(self, event) -> None:
-        self.statusBar.update_coord(event.x(), event.y())
+        window_pos = QPoint(event.x(), event.y())
+        map_pos = self.graphWidget.view_control.window_to_map(self,window_pos)
+        self.statusBar.update_coord(map_pos.x(), map_pos.y())
 
     def draw_layers(self):
         pass

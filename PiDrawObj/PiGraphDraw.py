@@ -98,7 +98,6 @@ class PiGraphDraw(QPaintDevice):
         item_collection = self.item_collections[layer_id]
         for feature in layer.features.features:
             item = PiGraphicsItemGroup(layer_id,feature,self.item_box,self,pen,brush)
-            item.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
             item_collection[feature.id] = item
         self.visulize_layer(layer_id)
 

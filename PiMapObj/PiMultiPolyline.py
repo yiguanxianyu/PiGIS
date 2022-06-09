@@ -22,6 +22,10 @@ class PiMultiPolyline(PiGeometryCollection):
 
     def get_mbr(self):
         return super().get_mbr()
+    
+    def add_object(self,object):
+        self._collection.append(object)
+        self.count += 1
 
     def update_object(self, index, object):
         self._collection[index] = object

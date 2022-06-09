@@ -33,6 +33,13 @@ class PiFeature():
     def get_mbr(self):
         return self.geometry.get_mbr()
 
+    def set_geometry(self,geometry):
+        self.geometry = geometry
+        self.id = geometry.id
+    
+    def set_attributes(self,attributes):
+        self.attributes = attributes
+
     def __str__(self):
         return "geo:%s,attr:%s" % (self.geometry, self.attributes)
 

@@ -26,6 +26,7 @@ class PiGraphMove():
                 self.view.setCursor(Qt.ClosedHandCursor)
         elif self.view.mouse_pressed_button == Qt.MouseButton.RightButton:
             pass
+        return self.view.super_mousePressEvent(event)
 
     def mouseMoveEvent(self,event):
         if self.is_moving == True:
@@ -35,6 +36,7 @@ class PiGraphMove():
             self.view.center -= d
             self.view.centerOn(self.view.center)
             self.mouse_pos_before = mouse_pos_now
+        return self.view.super_mouseMoveEvent(event)
 
     def mouseReleaseEvent(self,event):
         if self.view.mouse_pressed_button == Qt.MouseButton.LeftButton:
@@ -42,4 +44,5 @@ class PiGraphMove():
             self.is_moving = False
         elif self.view.mouse_pressed_button == Qt.MouseButton.RightButton:
             pass
+        return self.view.super_mouseReleaseEvent(event)
 
