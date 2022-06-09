@@ -1,6 +1,6 @@
-from PySide6.QtCore import QPointF
+from PySide6.QtCore import QPointF, QRectF
 from PySide6.QtGui import QPaintDevice, QPainter, QPixmap
-from PySide6.QtWidgets import QGraphicsItemGroup, QGraphicsPathItem, QGraphicsScene, QGraphicsItem, QGraphicsTextItem
+from PySide6.QtWidgets import QGraphicsItemGroup, QGraphicsPathItem, QGraphicsScene, QGraphicsItem, QGraphicsTextItem, QGraphicsView
 
 from PiDrawObj.PiGraphicsItem import PiGraphicsItemGroup, PiGraphicsTextItem
 
@@ -144,11 +144,13 @@ class PiGraphDraw(QPaintDevice):
             self.scene.removeItem(item)
 
     def save_fig(self,file_path):
-        rect = self.view.rect()
+        rect = QGraphicsView.viewport(self.view).rect()
         pixmap = QPixmap(rect.size())
         painter = QPainter(pixmap)
-        
-
+        painter.begin(pixmap)
+        self.view.render(painter,QRectF(pixmap.rect()),rect)
+        painter.end()
+        pixmap.save(file_path)
 
     def load_graphics(self):
         pass

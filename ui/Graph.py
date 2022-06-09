@@ -202,12 +202,12 @@ class Graph(QWidget):
     
     def graph_turn_layer_dragable(self,layer_id):
         '''把对应图层切换成可以拖动的模式'''
-        return self.view.mode_turn_drag_layer(layer_id)
+        return self.view_control.mode_turn_drag_layer(layer_id)
 
     def graph_turn_layer_editable(self,layer_id):
         '''把对应图层切换成可以编辑的模式'''
-        return self.view.mode_turn_edit_layer(layer_id)
+        return self.view_control.mode_turn_edit_layer(layer_id)
 
     def graph_turn_layer_addable(self,layer_id):
         '''把图层切换成可以增加要素的模式'''
-        return self.view.mode_turn_add_layer(layer_id)
+        return self.view_control.mode_turn_add_layer(layer_id)
