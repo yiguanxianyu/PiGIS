@@ -230,12 +230,9 @@ class LayerTree(QWidget):
         if item.type() is QItemType.Layer:
             layer_id = item.layer
             self.graph.set_visibility(layer_id, item.visible)
-        else:
-            all_children = item.get_all_children(item)
-            print(all_children)
-            if all_children:
-                for _item in all_children:
-                    self.graph.set_visibility(_item.layer, _item.visible)
+        elif all_children := item.get_all_children(item):
+            for _item in all_children:
+                self.graph.set_visibility(_item.layer, _item.visible)
 
         new_v = self.get_visible_layers(item)
         for i in range(len(new_v) - 1, -1, -1):

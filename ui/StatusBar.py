@@ -59,7 +59,6 @@ class PiStatusBar(QStatusBar):
 
     def update_coord(self, x, y):
         self.loc_label.setText(f'X:{int(x)}  Y:{int(y)}\t')
-        print(self.qcb.lineEdit().text())
 
     def update_scale(self, scale):
         self.qcb.update_scale(scale)
