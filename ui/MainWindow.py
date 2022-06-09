@@ -48,16 +48,28 @@ class MainWindow(QMainWindow):
         self.statusBar.update_edit_status('Dragging map')
 
     def enable_drag_feature(self):
-        self.graphWidget.graph_turn_layer_dragable(self.layerTree.get_current_item().layer)
-        self.statusBar.update_edit_status('Dragging feature')
+        curr_layer = self.layerTree.get_current_item()
+        if curr_layer:
+            self.graphWidget.graph_turn_layer_dragable(curr_layer.layer)
+            self.statusBar.update_edit_status('Dragging feature')
+        else:
+            self.statusBar.update_edit_status('Layer not selected')
 
     def enable_add_feature(self):
-        self.graphWidget.graph_turn_layer_addable(self.layerTree.get_current_item().layer)
-        self.statusBar.update_edit_status('Adding feature')
+        curr_layer = self.layerTree.get_current_item()
+        if curr_layer:
+            self.graphWidget.graph_turn_layer_addable(curr_layer.layer)
+            self.statusBar.update_edit_status('Adding feature')
+        else:
+            self.statusBar.update_edit_status('Layer not selected')
 
     def enable_edit_feature(self):
-        self.graphWidget.graph_turn_layer_editable(self.layerTree.get_current_item().layer)
-        self.statusBar.update_edit_status('Editing feature')
+        curr_layer = self.layerTree.get_current_item()
+        if curr_layer:
+            self.graphWidget.graph_turn_layer_editable(curr_layer.layer)
+            self.statusBar.update_edit_status('Editing feature')
+        else:
+            self.statusBar.update_edit_status('Layer not selected')
 
     # For test only
     def mouseMoveEvent(self, event) -> None:

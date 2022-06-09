@@ -88,8 +88,10 @@ class LayerTree(QWidget):
     def focusOutEvent(self, e) -> None:
         self.releaseKeyboard()
 
-    def get_current_item(self) -> LayerItem:
-        return self.sim.itemFromIndex(current_index)
+    def get_current_item(self):
+        if current_index:
+            return self.sim.itemFromIndex(current_index)
+        return None
 
     def create_layer_menu(self):
         """创建图层的右键菜单"""
