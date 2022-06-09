@@ -56,6 +56,11 @@ class Ui_AttributesTable(object):
 
         self.horizontalLayout.addWidget(self.addFieldButton)
 
+        self.saveButton = QToolButton(AttributesTable)
+        self.saveButton.setObjectName(u"saveButton")
+
+        self.horizontalLayout.addWidget(self.saveButton)
+
         self.toggleEditingCheckBox = QCheckBox(AttributesTable)
         self.toggleEditingCheckBox.setObjectName(u"toggleEditingCheckBox")
         self.toggleEditingCheckBox.setContextMenuPolicy(Qt.NoContextMenu)
@@ -85,6 +90,7 @@ class Ui_AttributesTable(object):
         self.removeRowButton.clicked.connect(AttributesTable.remove_row)
         self.addFieldButton.clicked.connect(AttributesTable.add_field)
         self.removeFieldButton.clicked.connect(AttributesTable.remove_field)
+        self.saveButton.clicked.connect(AttributesTable.save)
 
         QMetaObject.connectSlotsByName(AttributesTable)
     # setupUi
@@ -96,6 +102,7 @@ class Ui_AttributesTable(object):
         self.removeRowButton.setText(QCoreApplication.translate("AttributesTable", u"Remove Row", None))
         self.removeFieldButton.setText(QCoreApplication.translate("AttributesTable", u"Remove Field", None))
         self.addFieldButton.setText(QCoreApplication.translate("AttributesTable", u"Add Field", None))
+        self.saveButton.setText(QCoreApplication.translate("AttributesTable", u"Save", None))
         self.toggleEditingCheckBox.setText(QCoreApplication.translate("AttributesTable", u"Edit", None))
     # retranslateUi
 

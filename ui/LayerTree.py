@@ -156,20 +156,14 @@ class LayerTree(QWidget):
 
         # For test only
         def load_test_layers():
-            layer1 = PiLayer()
-            layer1.load("PiMapObj/图层文件/国界线.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-            self.add_layer(layer1.id, layer1.name + '1')
-            self.graph.load_layer(layer1)
-
-            layer2 = PiLayer()
-            layer2.load("PiMapObj/图层文件/省级行政区.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-            self.add_layer(layer2.id, layer2.name + '2')
-            self.graph.load_layer(layer2)
-
-            layer3 = PiLayer()
-            layer3.load("PiMapObj/图层文件/省会城市.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-            self.add_layer(layer3.id, layer3.name + '3')
-            self.graph.load_layer(layer3)
+            def _load(arg0, arg1):
+                layer1 = PiLayer()
+                layer1.load(arg0, "PiMapObj/图层文件/图层文件坐标系统说明.txt")
+                self.add_layer(layer1.id, f'{layer1.name}{arg1}')
+                self.graph.load_layer(layer1)
+            _load("PiMapObj/图层文件/国界线.lay", '1')
+            _load("PiMapObj/图层文件/省级行政区.lay", '2')
+            _load("PiMapObj/图层文件/省会城市.lay", '3')
 
         # test loading layers
         load_layer_act = QAction(self)
@@ -198,7 +192,7 @@ class LayerTree(QWidget):
                 self.layerGroupContextMenu.move(QCursor().pos())
                 self.layerGroupContextMenu.show()
             else:
-                raise Exception('Some error occurred')
+                raise TypeError('Some error occurred')
         else:
             # 未选中项目
             self.emptyContextMenu.move(QCursor().pos())
@@ -251,16 +245,3 @@ class LayerTree(QWidget):
     def add_layer_group(self):
         item = LayerItem(QItemType.LayerGroup, [], 'New Layer Group')
         self.sim.appendRow(item)
-
-    # # for test only
-    # def add_layer_test(self):
-    #
-    #     item1 = LayerItem(QItemType.LayerGroup, [], '图层组1')
-    #     item2 = LayerItem(QItemType.LayerGroup, [], '图层组2')
-    #
-    #     for i in range(5):
-    #         temp = LayerItem(QItemType.Layer, i + 100, f'图层{i}')
-    #         item1.appendRow(temp)
-    #
-    #     self.sim.insertRow(0, item1)
-    #     self.sim.insertRow(1, item2)

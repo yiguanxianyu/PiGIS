@@ -7,6 +7,7 @@ from ui.raw import Ui_MainWindow
 
 
 class MainWindow(QMainWindow):
+
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
@@ -50,6 +51,9 @@ class MainWindow(QMainWindow):
     def save_project_as(self):
         self.project.save_project_as()
 
+    def save_image(self):
+        self.graphWidget.save_image()
+
     def add_layer(self):
         self.project.add_layer()
 
@@ -76,23 +80,3 @@ class MainWindow(QMainWindow):
     @staticmethod
     def exit_app():
         QApplication.instance().quit()
-
-    '''
-    def xiaochen_load_layers(self):
-        self.graph_draw.set_view(self.graphWidget)
-        self.graph_draw.load_graphics()
-        
-        figure = PiShow()
-        for layer in layers:
-            figure.add_layer(layer,proj)
-        #figure.set_scene(scene)
-        scene.addWidget(figure)
-        
-        
-        figure = PiGraphicsItem()
-        for layer in self.layers:
-            figure.add_layer(layer,layer.proj)
-        figure.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
-        scene.addItem(figure)
-        print(figure.shapeMode())
-        '''

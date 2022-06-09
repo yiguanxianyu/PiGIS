@@ -70,6 +70,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QToolButton" name="saveButton">
+       <property name="text">
+        <string>Save</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QCheckBox" name="toggleEditingCheckBox">
        <property name="contextMenuPolicy">
         <enum>Qt::NoContextMenu</enum>
@@ -200,6 +207,22 @@
     <hint type="sourcelabel">
      <x>349</x>
      <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>291</x>
+     <y>200</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>saveButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AttributesTable</receiver>
+   <slot>save()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>420</x>
+     <y>14</y>
     </hint>
     <hint type="destinationlabel">
      <x>291</x>

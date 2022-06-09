@@ -1,6 +1,6 @@
 from PySide6.QtCore import QMetaObject
 from PySide6.QtGui import QBrush, QPen
-from PySide6.QtWidgets import QFrame, QWidget
+from PySide6.QtWidgets import QFrame, QWidget, QFileDialog
 
 from PiConstant import HIGHLIGHTCOLOR
 from PiDrawObj.PiGraphView import PiGraphView
@@ -8,7 +8,10 @@ from PiMapObj.PiLayer import PiLayer
 from ui.raw import Ui_Graph
 
 
+# TODO 更新比例尺和鼠标坐标
+
 class Graph(QWidget):
+
     def __init__(self, mw):
         super().__init__(mw)
         self.layerTree = None
@@ -31,7 +34,7 @@ class Graph(QWidget):
         self.draw_control.add_layer(layer)
 
     def get_layer_by_id(self, layer_id) -> PiLayer:
-        """根据id返回一个 PiLayer对象"""
+        """根据id返回一个 PiLayer 对象"""
         return self.draw_control.layers[layer_id]
 
     def remove_layer(self, layer_id):
@@ -40,13 +43,14 @@ class Graph(QWidget):
 
     def cancel_highlight_feature(self, layer_id: int, ids=None):
         """取消高亮指定的要素"""
-        if ids is None:
-            if layer_id in self.highlighted_feature:
-                ids = self.highlighted_feature[layer_id]
-            else:
-                return
+        if ids:
+            highlighted = self.highlighted_feature[layer_id]
+            ids = {i for i in ids if i in highlighted}
+        elif layer_id in self.highlighted_feature:
+            highlighted = self.highlighted_feature[layer_id]
+            ids = highlighted
         else:
-            ids = set(i for i in ids if i in self.highlighted_feature[layer_id])
+            return
 
         layer = self.get_layer_by_id(layer_id)
         for feature_id in ids:
@@ -54,7 +58,7 @@ class Graph(QWidget):
             feature_item.setPen(layer.pen)
             feature_item.setBrush(layer.brush)
 
-        self.highlighted_feature[layer_id] -= ids
+        highlighted -= ids
 
     def highlight_feature(self, layer_id: int, ids: list[int]):
         """高亮指定的要素"""
@@ -76,7 +80,6 @@ class Graph(QWidget):
 
     def set_visibility(self, layer_id, visibility):
         """改变某个 layer 的可见性"""
-        # print('vis,', layer_id, layer_visibility)
         if visibility:
             self.draw_control.visulize_layer(layer_id)
         else:
@@ -90,35 +93,66 @@ class Graph(QWidget):
         """设定符号化方式，还没太想明白 TODO"""
         pass
 
+    def set_scale(self, scale):
+        """设置比例尺，传入的是1:x的那个x TODO"""
+        pass
+
     def remove_features(self, layer_id, ids: list[int]):
         """删除指定的要素"""
         self.cancel_highlight_feature(layer_id, ids)
         self.draw_control.remove_features(layer_id, ids)
 
+    def save_attr_table(self, layer_id, new_attr_data):
+        """保存修改后的属性表，数据格式和传进来的一样，
+        为元组组成的ndarray，第一位是隐藏的 feature_id
+        注意：因为可能会在属性表内新增要素，所以不是所有的 feature_id
+        都存在图里，需要判断一下。目前的feature_id生成方式是最大的
+        feature_id + 2 TODO"""
+        print('saving...')
+        pass
+
+    def save_image(self):
+        """根据文件路径和后缀名将地图保存成图片"""
+        all_types = ['png (*.png)', 'jpg (*.jpg, *.jpeg)', 'bitmap (*.bmp)', '*.*']
+        fp, ft = QFileDialog.getSaveFileName(QWidget(), "Save Image To", filter=';;'.join(all_types))
+        # fp -> file path,ft -> file extension
+        match all_types.index(ft):
+            case 0:
+                extension = '.png'
+            case 1:
+                extension = '.jpg'
+            case 2:
+                extension = '.bmp'
+            case _:
+                pass
+        # extension就是文件后缀名
+        print(fp, ft)
+        # put your code here
+
     def render_label(self, layer_id):
         """添加标注（动态） TODO"""
         layer = self.get_layer_by_id(layer_id)
         if layer.annotation_status:
-            layer.remove_annotation()
-        ...
+            self.remove_annotation(layer_id)
+        # put your code here
         layer.label_status = True
 
     def render_annotation(self, layer_id):
         """添加注记（静态） TODO"""
         layer = self.get_layer_by_id(layer_id)
         if layer.label_status:
-            layer.remove_annotation()
-        ...
+            self.remove_annotation(layer_id)
+        # put your code here
         layer.annotation_status = True
 
     def remove_label(self, layer_id):
         """移除标注（动态） TODO"""
         layer = self.get_layer_by_id(layer_id)
-        ...
+        # put your code here
         layer.label_status = False
 
     def remove_annotation(self, layer_id):
         """移除注记（静态） TODO"""
         layer = self.get_layer_by_id(layer_id)
-        ...
+        # put your code here
         layer.annotation_status = False
