@@ -8,6 +8,8 @@ from PiMapObj.PiLayer import PiLayer
 from ui.raw import Ui_Graph
 
 
+# TODO 更新比例尺和鼠标坐标
+
 class Graph(QWidget):
 
     def __init__(self, mw):
@@ -41,10 +43,11 @@ class Graph(QWidget):
 
     def cancel_highlight_feature(self, layer_id: int, ids=None):
         """取消高亮指定的要素"""
-        highlighted = self.highlighted_feature[layer_id]
         if ids:
+            highlighted = self.highlighted_feature[layer_id]
             ids = {i for i in ids if i in highlighted}
         elif layer_id in self.highlighted_feature:
+            highlighted = self.highlighted_feature[layer_id]
             ids = highlighted
         else:
             return
@@ -90,6 +93,10 @@ class Graph(QWidget):
         """设定符号化方式，还没太想明白 TODO"""
         pass
 
+    def set_scale(self, scale):
+        """设置比例尺，传入的是1:x的那个x TODO"""
+        pass
+
     def remove_features(self, layer_id, ids: list[int]):
         """删除指定的要素"""
         self.cancel_highlight_feature(layer_id, ids)
@@ -99,7 +106,7 @@ class Graph(QWidget):
         """添加标注（动态） TODO"""
         layer = self.get_layer_by_id(layer_id)
         if layer.annotation_status:
-            layer.remove_annotation()
+            self.remove_annotation(layer_id)
         # put your code here
         layer.label_status = True
 
@@ -107,7 +114,7 @@ class Graph(QWidget):
         """添加注记（静态） TODO"""
         layer = self.get_layer_by_id(layer_id)
         if layer.label_status:
-            layer.remove_annotation()
+            self.remove_annotation(layer_id)
         # put your code here
         layer.annotation_status = True
 
