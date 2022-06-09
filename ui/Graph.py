@@ -199,6 +199,9 @@ class Graph(QWidget):
     def graph_turn_move(self):
         '''切换图层可移动'''
         return self.view_control.mode_turn_move()
+
+    def graph_turn_realize(self):
+        return self.view_control.mode_turn_realize()
     
     def graph_turn_layer_dragable(self,layer_id):
         '''把对应图层切换成可以拖动的模式'''

@@ -111,6 +111,7 @@ class PiGraphModeConstant(Enum):
     moveable = 1
     dragable = 2
     addable = 3
+    realizable = 4
 
 class PiLayerStatusConstant(Enum):
     normal = 0
