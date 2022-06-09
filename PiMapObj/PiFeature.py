@@ -26,6 +26,9 @@ class PiFeature():
             self.attributes.load(reader, load_type)
         elif type == 'shp':
             pass
+    
+    def translate(self,dx,dy):
+        self.geometry.translate(dx,dy)
 
     def get_mbr(self):
         return self.geometry.get_mbr()

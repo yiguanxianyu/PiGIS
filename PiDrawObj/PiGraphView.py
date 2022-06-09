@@ -3,29 +3,32 @@ from PySide6.QtCore import QPoint, QPointF, Qt
 from PySide6.QtWidgets import QGraphicsView
 
 from PiConstant import PiGraphModeConstant
+from PiDrawObj.PiGraphDrag import PiGraphDrag
 from PiDrawObj.PiGraphDraw import PiGraphDraw
 from PiDrawObj.PiGraphEdit import PiGraphEdit
+from PiDrawObj.PiGraphMove import PiGraphMove
+from PiMapObj.PiLayer import PiLayer
 
 
 class PiGraphView(QGraphicsView):
     def __init__(self, widget):
         super().__init__(widget)
         self.mode = PiGraphModeConstant.moveable  # 默认处于移动模式
-        self.last_mode = PiGraphModeConstant.editable  # 默认处于显示模式
-        self.ui_init()
-        self.display_init()
+        self.last_mode = PiGraphModeConstant.dragable  # 默认处于拖动模式
+        self.mouse_pressed_button = Qt.MouseButton.LeftButton
         self.center = QPointF(0, 0)
         self.show_scale = 1
+        self.ui_init()
+        self.display_init()
 
     def ui_init(self):
         # 绘画控制类
         self.draw_control = PiGraphDraw(view=self)
         self.setScene(self.draw_control.get_scene())
         # 视图拖动类
-        self.mouse_pos_before = QPointF()
-        c = Qt.MouseButton
-        self.is_moving = False
+        self.move_control = PiGraphMove(view=self)
         # 编辑控制类
+        self.drag_control = PiGraphDrag(view=self)
         self.edit_control = PiGraphEdit(view=self)
 
     def display_init(self):
@@ -49,79 +52,70 @@ class PiGraphView(QGraphicsView):
             self.scale(ratio, ratio)
             self.show_scale *= ratio
             self.centerOn(self.center)
-            '''
-            if self.sc > 5:
-                self.draw_control.scale /= 5 
-                self.scale(1/self.sc,1/self.sc)
-                self.sc = 1
-                self.draw_control.load_graphics()
-            elif self.sc < 0.2:
-                self.draw_control.scale /= 0.2
-                self.scale(1/self.sc,1/self.sc)
-                self.sc = 1
-                self.draw_control.load_graphics()
-            #'''
 
+    def super_mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
+        return super().mouseMoveEvent(event)
+
+    def super_mousePressEvent(self, event: QtGui.QMouseEvent) -> None:
+        return super().mousePressEvent(event)
+
+    def super_mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
+        return super().mouseReleaseEvent(event)
     # '''
     def mousePressEvent(self, event: QtGui.QMouseEvent) -> None:
-        self.mouse_pressed_button = event.button()
-        if self.mode == PiGraphModeConstant.editable:
-            return super().mousePressEvent(event)
-        elif self.mode == PiGraphModeConstant.moveable:
-            if self.is_moving == False:
-                self.is_moving = True
-                self.mouse_pos_before = event.pos()
-            elif self.is_moving == True:
-                self.setCursor(Qt.ClosedHandCursor)
-                pass
+        match self.mode:
+            case PiGraphModeConstant.dragable:
+                self.drag_control.mousePressEvent(event)
+            case PiGraphModeConstant.moveable:
+                self.move_control.mousePressEvent(event)
+            case PiGraphModeConstant.editable:
+                self.edit_control.mousePressEvent(event)
 
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
-        if self.mode == PiGraphModeConstant.editable:
-            return super().mouseMoveEvent(event)
-        elif self.mode == PiGraphModeConstant.moveable:
-            if self.is_moving == True:
-                self.setCursor(Qt.ClosedHandCursor)
-                mouse_pos_now = event.pos()
-                d = self.mapToScene(mouse_pos_now) - self.mapToScene(self.mouse_pos_before)
-                self.center -= d
-                self.centerOn(self.center)
-                self.mouse_pos_before = mouse_pos_now
+        match self.mode:
+            case PiGraphModeConstant.dragable:
+                self.drag_control.mouseMoveEvent(event)
+            case PiGraphModeConstant.moveable:
+                self.move_control.mouseMoveEvent(event)
+            case PiGraphModeConstant.editable:
+                self.edit_control.mouseMoveEvent(event)
 
     def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
-        if self.mode == PiGraphModeConstant.editable:
-            super().mouseReleaseEvent(event)
-        elif self.mode == PiGraphModeConstant.moveable:
-            self.setCursor(Qt.ArrowCursor)
-            self.is_moving = False
-        return
-
-    # '''
-    '''
-    def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
-        if self.mode == PiGraphModeConstant.moveable:
-            pass
-        elif self.mode == PiGraphModeConstant.editable:
-            if event.text() == "c":
-                #self.setDragMode(QGraphicsView.ScrollHandDrag) 
-                self.draw_control.load_graphics()
-                self.mode = PiGraphModeConstant.moveable
-                self.setScene(self.draw_control.get_scene(self.mode))
-
-        #return super().wheelEvent(event)
-    '''
+        self.mouse_pressed_button = event.button()
+        match self.mode:
+            case PiGraphModeConstant.dragable:
+                self.drag_control.mouseReleaseEvent(event)
+            case PiGraphModeConstant.moveable:
+                self.move_control.mouseReleaseEvent(event)
+            case PiGraphModeConstant.editable:
+                self.edit_control.mouseReleaseEvent(event)
 
     def keyReleaseEvent(self, event: QtGui.QKeyEvent) -> None:
         if event.text() == "c":
-            if self.mode != PiGraphModeConstant.moveable:
-                # self.setDragMode(QGraphicsView.ScrollHandDrag)
-                # self.draw_control.load_graphics()
-                self.last_mode = self.mode
-                self.mode = PiGraphModeConstant.moveable
-            elif self.mode == PiGraphModeConstant.moveable:
-                # self.setDragMode(QGraphicsView.NoDrag)
-                self.mode = self.last_mode
-                self.is_moving = False
-        elif event.text() != "c":
-            pass
+            self.mode_turn_move()
+        elif event.text() == "d":
+            self.mode_turn_drag_layer(1)
+        elif event.text() == "e":
+            self.mode_turn_edit_layer(1)
 
         # return super().keyReleaseEvent(event)
+
+    def get_layer_by_id(self,layer_id) -> PiLayer:
+        return self.drag_control.layers[layer_id]
+
+    def mode_turn_move(self):
+        if self.mode != PiGraphModeConstant.moveable:
+            self.drag_control.end_drag()
+            self.edit_control.end_edit()
+            self.mode = PiGraphModeConstant.moveable
+
+    def mode_turn_drag_layer(self,layer_id):
+        if self.mode != PiGraphModeConstant.dragable:
+            self.drag_control.start_drag_on(layer_id)
+            self.mode = PiGraphModeConstant.dragable
+
+    def mode_turn_edit_layer(self,layer_id):
+        if self.mode != PiGraphModeConstant.editable:
+            self.edit_control.start_edit_on(layer_id)
+            self.mode = PiGraphModeConstant.editable
+

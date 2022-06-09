@@ -29,12 +29,6 @@ class PiGraphDraw(QPaintDevice):
 
         self.scale = None
         self.scale_before = None
-        self.leftup_x = 0
-        self.leftup_y = 0
-        self.gra_x_offset = 0
-        self.gra_y_offset = 0
-        self.initial_x = 0
-        self.initial_y = 0
         # 0:no change 1:changed -1:deleted
 
     def add_layer(self, layer):
@@ -44,7 +38,8 @@ class PiGraphDraw(QPaintDevice):
         # self.item_groups[id] = QGraphicsItemGroup()
         self.reset_draw_attr()
         self.load_layer_data(layer)
-
+        print(layer.id,layer.geometry_type)
+        
     def delete_layer(self, layer_id):
         if self.layers[layer_id].visibility is True:
             self.hide_layer(layer_id)
@@ -78,15 +73,15 @@ class PiGraphDraw(QPaintDevice):
         brush = layer.brush
         # print(layer.id,layer.geometry_type)
         # item_group = self.item_groups[layer.id]
-        item_collection = self.item_collections[layer.id]
+        layer_id = layer.id
+        item_collection = self.item_collections[layer_id]
         for feature in layer.features.features:
-            item = PiGraphicsItemGroup(feature, self.item_box, self)
-            item.setFlags(
-                QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemIsFocusable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
+            item = PiGraphicsItemGroup(layer_id,feature,self.item_box,self)
+            item.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
             item_collection[feature.id] = item
             item.setPen(pen)
             item.setBrush(brush)
-        self.visulize_layer(layer.id)
+        self.visulize_layer(layer_id)
 
     def reset_draw_attr(self):
         '''当添加新图层时刷新绘图参数'''
@@ -99,11 +94,12 @@ class PiGraphDraw(QPaintDevice):
         ydis = self.mbr.maxy - self.mbr.miny
         xdis = self.mbr.maxx - self.mbr.minx
         # self.scale = max(xdis, ydis) / 400
-        self.scale = 10000
+        self.scale = 1000
+        self.view.set_show_scale(1 / 10)
         self.mid_x = (self.mbr.minx + self.mbr.maxx) / 2
         self.mid_y = (self.mbr.miny + self.mbr.maxy) / 2
         self.view.centerOn(QPointF(self.mid_x / self.scale, -self.mid_y / self.scale))
-        self.view.scale(1 / self.view.show_scale, 1 / self.view.show_scale)
+        #self.view.scale(1 / self.view.show_scale, 1 / self.view.show_scale)
 
     def load_graphics(self):
         pass

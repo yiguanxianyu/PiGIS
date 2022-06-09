@@ -28,6 +28,10 @@ class PiGeometryCollection(PiGeometry.PiGeometry):
     def get_collection(self):
         return self._collection
 
+    def translate(self,dx,dy):
+        for item in self._collection:
+            item.translate(dx,dy)
+
     def update_object(self, index, object):
         self._collection[index] = object
         self._changed = True
