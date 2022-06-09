@@ -87,6 +87,7 @@ class Graph(QWidget):
             self.draw_control.visulize_layer(layer_id)
         else:
             self.draw_control.hide_layer(layer_id)
+            self.remove_annotation(layer_id)
 
     def set_zvalue(self, layer_id, z_level):
         """改变某个 layer 的 z level"""
