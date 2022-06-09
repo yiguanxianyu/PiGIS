@@ -1,8 +1,8 @@
 from PySide6.QtCore import QPointF
 from PySide6.QtGui import QPaintDevice
-from PySide6.QtWidgets import QGraphicsItemGroup, QGraphicsScene, QGraphicsItem
+from PySide6.QtWidgets import QGraphicsItemGroup, QGraphicsPathItem, QGraphicsScene, QGraphicsItem, QGraphicsTextItem
 
-from PiDrawObj.PiGraphicsItem import PiGraphicsItemGroup
+from PiDrawObj.PiGraphicsItem import PiGraphicsItemGroup, PiGraphicsTextItem
 
 
 # import pyqtgraph as pg
@@ -113,6 +113,27 @@ class PiGraphDraw(QPaintDevice):
         self.mid_y = (self.mbr.miny + self.mbr.maxy) / 2
         self.view.centerOn(QPointF(self.mid_x / self.scale, -self.mid_y / self.scale))
         #self.view.scale(1 / self.view.show_scale, 1 / self.view.show_scale)
+    
+    def visulize_text_layer(self,layer_id):
+        '''显示元素注记，默认显示第一个字段'''
+        layer = self.layers[layer_id]
+        index = layer.text_index
+        item_collection = self.item_collections[layer_id]
+        text_collection = self.text_collections[layer_id]
+        for feature in layer.features.features:
+            feature_id = feature.id
+            value = feature.attributes.attributes[index].value
+            text = str(value)
+            item = item_collection[feature_id]
+            text_item = PiGraphicsTextItem(text,item)
+            text_collection[feature_id] = text_item
+            for item in text_collection.values():
+                if item == text_item:
+                    continue
+                if text_item.collidesWithItem(item):
+                    text_collection[feature_id] = text_item
+                    return
+            self.scene.addItem(text_item)
 
     def load_graphics(self):
         pass
