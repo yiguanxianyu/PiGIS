@@ -78,6 +78,9 @@ class Graph(QWidget):
 
         self.highlighted_feature[layer_id] = _input
 
+    def set_name(self, layer_id, text):
+        self.get_layer_by_id(layer_id).name = text
+
     def set_visibility(self, layer_id, visibility):
         """改变某个 layer 的可见性"""
         if visibility:

@@ -185,8 +185,8 @@ class LayerTree(QWidget):
             def _load(arg0, arg1):
                 layer1 = PiLayer()
                 layer1.load(arg0, "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-                self.add_layer(layer1.id, f'{layer1.name}{arg1}')
                 self.graph.load_layer(layer1)
+                self.add_layer(layer1.id, f'{layer1.name}{arg1}')
 
             _load("PiMapObj/图层文件/国界线.lay", '1')
             _load("PiMapObj/图层文件/省级行政区.lay", '2')
@@ -231,6 +231,8 @@ class LayerTree(QWidget):
         current_index = index
 
     def item_changed(self, item: LayerItem):
+        self.graph.set_name(item.layer, item.text())
+
         if item.type() is QItemType.Layer:
             layer_id = item.layer
             self.graph.set_visibility(layer_id, item.visible)
@@ -264,7 +266,8 @@ class LayerTree(QWidget):
 
     def add_layer(self, layer_id, layer_name):
         item = LayerItem(QItemType.Layer, layer_id, layer_name)
-        self.sim.appendRow(item)
+        self.sim.insertRow(0, item)
+        self.item_changed(item)
 
     def add_layer_group(self):
         item = LayerItem(QItemType.LayerGroup, [], 'New Layer Group')
