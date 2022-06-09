@@ -14,6 +14,7 @@ from numpy.core.numeric import _full_like_dispatcher
 class PiLayer():
     def __init__(self):
         self.name = ""  # 名字
+        self.file_path = "" # 路径
         self.id = PiGlobal.layer_count  # 唯一id
         PiGlobal.layer_count += 1
         self.fields = PiFields()  # 字段元数据
@@ -35,6 +36,7 @@ class PiLayer():
     def load(self, file_path, proj_path=None):
         '''加载坐标信息'''
         self.change = True
+        self.file_path = file_path
         self.name = file_path[:-4]
         load_type = file_path[-3:]
         if load_type == 'lay':

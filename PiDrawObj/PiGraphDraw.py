@@ -1,5 +1,5 @@
 from PySide6.QtCore import QPointF
-from PySide6.QtGui import QPaintDevice
+from PySide6.QtGui import QPaintDevice, QPainter, QPixmap
 from PySide6.QtWidgets import QGraphicsItemGroup, QGraphicsPathItem, QGraphicsScene, QGraphicsItem, QGraphicsTextItem
 
 from PiDrawObj.PiGraphicsItem import PiGraphicsItemGroup, PiGraphicsTextItem
@@ -114,7 +114,7 @@ class PiGraphDraw(QPaintDevice):
         self.view.centerOn(QPointF(self.mid_x / self.scale, -self.mid_y / self.scale))
         #self.view.scale(1 / self.view.show_scale, 1 / self.view.show_scale)
     
-    def visulize_text_layer(self,layer_id):
+    def add_layer_text(self,layer_id):
         '''显示元素注记，默认显示第一个字段'''
         layer = self.layers[layer_id]
         index = layer.text_index
@@ -134,6 +134,21 @@ class PiGraphDraw(QPaintDevice):
                     text_collection[feature_id] = text_item
                     return
             self.scene.addItem(text_item)
+    
+    def delete_layer_text(self,layer_id):
+        '''删除元素注记，默认显示第一个字段'''
+        layer = self.layers[layer_id]
+        index = layer.text_index
+        text_collection = self.text_collections[layer_id]
+        for item in text_collection.values():
+            self.scene.removeItem(item)
+
+    def save_fig(self,file_path):
+        rect = self.view.rect()
+        pixmap = QPixmap(rect.size())
+        painter = QPainter(pixmap)
+        
+
 
     def load_graphics(self):
         pass

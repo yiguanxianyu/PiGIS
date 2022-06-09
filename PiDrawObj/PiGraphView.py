@@ -23,6 +23,7 @@ class PiGraphView(QGraphicsView):
         self.display_init()
         self.setMouseTracking(True)
         self.window = None
+        print(self.rect())
     
     def set_window(self,window):
         self.window = window
@@ -159,8 +160,11 @@ class PiGraphView(QGraphicsView):
         return map_pos
         pass
 
-    def visulize_text_layer(self,layer_id):
-        self.draw_control.visulize_text_layer(layer_id)
+    def add_layer_text(self,layer_id):
+        self.draw_control.add_layer_text(layer_id)
+    
+    def delete_layer_text(self,layer_id):
+        self.draw_control.delete_layer_text(layer_id)
 
 
 
