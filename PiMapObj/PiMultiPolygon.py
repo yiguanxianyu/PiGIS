@@ -23,12 +23,16 @@ class PiMultiPolygon(PiGeometryCollection):
     def get_mbr(self):
         return super().get_mbr()
 
+    def add_object(self,object):
+        self.count+=1
+        self._collection.append(object)
+
     def update_object(self, index, object):
         self._collection[index] = object
 
     def insert_object(self, index, object):
         self._collection.insert(index, object)
-        self._object_numm += 1
+        self._object_num += 1
 
     def delete_object(self, index):
         del (self._collection[index])

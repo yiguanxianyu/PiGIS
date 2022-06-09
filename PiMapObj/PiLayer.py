@@ -1,3 +1,4 @@
+from PiMapObj.PiAttribute import PiAttributes
 import numpy as np
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QBrush, QPen
@@ -5,7 +6,7 @@ from PySide6.QtGui import QBrush, QPen
 from PiConstant import PiGeometryTypeConstant
 from PiMapObj import PiGlobal
 from PiMapObj.BinaryReader import BinaryReader
-from PiMapObj.PiFeature import PiFeatures
+from PiMapObj.PiFeature import PiFeature, PiFeatures
 from PiMapObj.PiField import PiFields
 from PiMapObj.PiProjection import PiProjection
 from numpy.core.numeric import _full_like_dispatcher
@@ -52,6 +53,17 @@ class PiLayer():
             if features[length - index].id in ids:
                 del features[length - index]
         self.features.count -= len(ids)
+
+    def add_feature(self, geometry) -> PiFeature:
+        new_feature = PiFeature(self.geometry_type,self.fields)
+        attributes = PiAttributes(self.fields)
+        attributes.set_default()
+        new_feature.set_geometry(geometry)
+        new_feature.set_attributes(attributes)
+        self.features.features.append(new_feature)
+        self.features.count += 1
+        #print(new_feature.geometry)
+        return new_feature
 
     def get_geometry_type(self):
         return self.geometry_type

@@ -33,7 +33,6 @@ class PiAttribute():
 
     __repr__ = __str__
 
-
 class PiAttributes():
     def __init__(self, fields):
         self.attributes = []
@@ -53,5 +52,10 @@ class PiAttributes():
 
     def __str__(self):
         return str(self.attributes)
+
+    def set_default(self):
+        for value_type in self.value_type_list:
+            new_attribute = PiAttribute(value_type)
+            self.attributes.append(new_attribute)
 
     __repr__ = __str__
