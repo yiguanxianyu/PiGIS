@@ -73,7 +73,6 @@ class PiGraphAdd():
             if self.add_cache == None:
                 head = self.view.mapToScene(QPoint(event.x(),event.y()))
                 geometry_type = self.add_on.geometry_type
-                self.view.setMouseTracking(True)
                 self.add_cache = PiAddCacheItem(self.draw_control,head,geometry_type)
                 if self.add_on.geometry_type == PiGeometryTypeConstant.multipoint.value:
                     now_path = QPainterPath()
@@ -119,7 +118,6 @@ class PiGraphAdd():
                 item_collection[feature.id] = item
                 self.draw_control.scene.addItem(item)
                 self.draw_control.scene.removeItem(self.add_cache.cacheItem)
-                self.view.setMouseTracking(False)
                 self.add_cache = None
         return self.view.super_mousePressEvent(event)
 
