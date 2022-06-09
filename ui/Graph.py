@@ -159,6 +159,7 @@ class Graph(QWidget):
         # extension就是文件后缀名
         print(fp, extension)
         # put your code here
+        self.draw_control.save_fig(fp+extension)
 
     def render_label(self, layer_id):
         """添加标注（动态） TODO"""
@@ -174,6 +175,8 @@ class Graph(QWidget):
         if layer.label_status:
             self.remove_annotation(layer_id)
         # put your code here
+        self.view_control.add_layer_text(layer_id)
+        # put your code here
         layer.annotation_status = True
 
     def remove_label(self, layer_id):
@@ -186,4 +189,26 @@ class Graph(QWidget):
         """移除注记（静态） TODO"""
         layer = self.get_layer_by_id(layer_id)
         # put your code here
+        self.view_control.delete_layer_text(layer_id)
+        # put your code here
         layer.annotation_status = False
+
+    """小陈添加接口"""
+    # 从编辑的三个模式切换到移动模式再切回来，编辑进度不变，
+    # 但如果在编辑的三个模式间跳转，则会取消编辑
+
+    def graph_turn_move(self):
+        '''切换图层可移动'''
+        return self.view_control.mode_turn_move()
+    
+    def graph_turn_layer_dragable(self,layer_id):
+        '''把对应图层切换成可以拖动的模式'''
+        return self.view.mode_turn_drag_layer(layer_id)
+
+    def graph_turn_layer_editable(self,layer_id):
+        '''把对应图层切换成可以编辑的模式'''
+        return self.view.mode_turn_edit_layer(layer_id)
+
+    def graph_turn_layer_addable(self,layer_id):
+        '''把图层切换成可以增加要素的模式'''
+        return self.view.mode_turn_add_layer(layer_id)
