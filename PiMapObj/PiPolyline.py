@@ -1,3 +1,4 @@
+from PiConstant import PiGeometryTypeConstant
 from PiMapObj import PiGlobal, PiGeometry
 
 
@@ -7,7 +8,7 @@ class PiPolyline:
 
 class PiPolyline(PiGeometry.PiGeometry):
     def __init__(self):
-        super().__init__(-1)
+        super().__init__(PiGeometryTypeConstant.polyline)
         self.count = 0
         self._x = []
         self._y = []

@@ -1,3 +1,4 @@
+from PiConstant import PiGeometryTypeConstant
 from PiMapObj import PiGlobal, PiGeometry
 
 
@@ -7,9 +8,10 @@ class PiPoint():
 
 class PiPoint(PiGeometry.PiGeometry):
     def __init__(self):
-        super().__init__(1)
+        super().__init__(PiGeometryTypeConstant.point)
         self._x = 0
         self._y = 0
+        self.count = 1
 
     def load(self, reader, load_type):
         if load_type == 'lay':

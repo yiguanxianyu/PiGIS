@@ -1,10 +1,11 @@
+from PiConstant import PiGeometryTypeConstant
 from PiMapObj.PiGeometryCollection import PiGeometryCollection
 from PiMapObj.PiPolyline import PiPolyline
 
 
 class PiMultiPolyline(PiGeometryCollection):
     def __init__(self):
-        super().__init__(1)
+        super().__init__(PiGeometryTypeConstant.multipolyline)
         self.count = 0  # 折线个数
 
     def load(self, reader, load_type):

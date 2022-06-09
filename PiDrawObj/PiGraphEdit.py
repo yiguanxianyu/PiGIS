@@ -1,7 +1,8 @@
+from typing import Sequence
 from PySide6.QtCore import QPointF, Qt
-from PySide6.QtGui import QBrush, QMouseEvent, QPen
-from PySide6.QtWidgets import QGraphicsEllipseItem, QGraphicsItem, QGraphicsPathItem, QRubberBand
-from PiConstant import PiEditModeConstant
+from PySide6.QtGui import QBrush, QMouseEvent, QPainterPath, QPen
+from PySide6.QtWidgets import QGraphicsEllipseItem, QGraphicsItem, QGraphicsPathItem, QGraphicsSceneMouseEvent, QRubberBand
+from PiConstant import EDITBRUSHCOLOR, EDITPENCOLOR, PiEditModeConstant
 from PiMapObj.PiLayer import PiLayer
 from PySide6.QtWidgets import QRubberBand
 
@@ -11,10 +12,34 @@ from PiMapObj.PiLayer import PiLayer
 # import pyqtgraph as pg
 
 class PiEditCachePointItem(QGraphicsEllipseItem):
-    def __init__(self,point:QPointF):
-        super().__init__(point.x()-2,point.y()-2,4,4)
+    def __init__(self,point:QPointF,edit_cache):
+        self.init_x = point.x()
+        self.init_y = point.y()
+        super().__init__(self.init_x-0.5,self.init_y-0.5,1,1)
         super().setPen(QPen(Qt.red))
         super().setBrush(QBrush(Qt.gray))
+        self.edit_cache = edit_cache
+        self.setFlags(QGraphicsItem.ItemIsMovable)
+        self.index = self.edit_cache.count
+        self.edit_cache.count += 1
+    
+    def mousePressEvent(self, event: QGraphicsSceneMouseEvent) -> None:
+        return super().mousePressEvent(event)
+
+    def mouseMoveEvent(self, event: QGraphicsSceneMouseEvent) -> None:
+        pos = super().pos()
+        self.edit_cache.set_cache_element_at(self.index,self.init_x+pos.x(),self.init_y+pos.y())
+        self.edit_cache.add_changed_point(self)
+        return super().mouseMoveEvent(event)
+
+    def mouseReleaseEvent(self, event: QGraphicsSceneMouseEvent) -> None:
+        return super().mouseReleaseEvent(event)
+    
+    def get_x(self):
+        return self.init_x + self.pos().x()
+
+    def get_y(self):
+        return self.init_y + self.pos().y()
 
 class PiEditCacheItem():
     def __init__(self,draw_control,feature_item):
@@ -22,25 +47,53 @@ class PiEditCacheItem():
         self.view = draw_control.view
         self.feature_item = feature_item
         self.feature = self.feature_item.feature
-
-        cache =  self.feature_item.get_cache()
-        self.cacheItem = QGraphicsPathItem(cache)
-        self.cacheItem.setPen(QPen(Qt.red))
-        self.cacheItem.setBrush(QBrush(Qt.gray))
+        self.cacheItem = QGraphicsPathItem()
+        self.cacheItem.setPen(QPen(EDITPENCOLOR))
+        self.cacheItem.setBrush(QBrush(EDITBRUSHCOLOR))
         self.draw_control.scene.addItem(self.cacheItem)
-
-        self.point_lists = feature_item.get_point_lists()
-        self.points = [[PiEditCachePointItem(point) for point in point_list] for point_list in self.point_lists]
+        self.changed_point_list:Sequence[PiEditCachePointItem] = []
+        self.load()
+    
+    def load(self):
+        self.count = 0
+        self.cache:QPainterPath = self.feature_item.get_cache()
+        self.cacheItem.setPath(self.cache)
+        pos = self.feature_item.pos()
+        self.point_lists = self.feature_item.get_point_lists()
+        self.points = [[PiEditCachePointItem(point+pos,self) for point in point_list] for point_list in self.point_lists]
         for point_list in self.points:
             for point in point_list:
                 self.draw_control.scene.addItem(point)
         #print(self.point_lists)
-    
-    def draw(self):
-        self.cacheItem.setPen(Qt.red)
-        self.cacheItem.setBrush(Qt.gray)
+
+    def set_cache_element_at(self,index,x,y):
+        self.cache.setElementPositionAt(index,x,y)
+        self.cacheItem.setPath(self.cache)
+
+    def add_changed_point(self,point):
+        self.changed_point_list.append(point)
 
     def end_edit(self):
+        # 应用编辑(显示上)
+        pos = self.feature_item.pos()
+        item_list:Sequence[QGraphicsPathItem] = self.feature_item.childItems()
+        path_list = [item.path() for item in item_list]
+        for point in self.changed_point_list:
+            order = 0
+            index,x,y = point.index,point.get_x()-pos.x(),point.get_y()-pos.y()
+            while index >= path_list[order].elementCount():
+                index -= path_list[order].elementCount()
+                order += 1
+            path_list[order].setElementPositionAt(index,x,y)
+            self.point_lists[order][index]=QPointF(x,y)
+        for i in range(len(item_list)):
+            item = item_list[i]
+            item.setPath(path_list[i])
+            item.point_list = self.point_lists[i]
+        # 应用编辑（内存上）TODO
+
+
+        # 删除编辑缓冲图元
         self.draw_control.scene.removeItem(self.cacheItem)
         for point_list in self.points:
             for point in point_list:
@@ -77,16 +130,16 @@ class PiGraphEdit():
         if self.view.mouse_pressed_button == Qt.MouseButton.LeftButton:
             self.view.super_mousePressEvent(event)
         elif self.view.mouse_pressed_button == Qt.MouseButton.RightButton:
-            pass
+            self.view.super_mousePressEvent(event)
 
     def mouseMoveEvent(self,event):
         if self.view.mouse_pressed_button == Qt.MouseButton.LeftButton:
             self.view.super_mouseMoveEvent(event)
         elif self.view.mouse_pressed_button == Qt.MouseButton.RightButton:
-            pass
+            self.view.super_mouseMoveEvent(event)
 
     def mouseReleaseEvent(self,event):
         if self.view.mouse_pressed_button == Qt.MouseButton.LeftButton:
             self.view.super_mouseReleaseEvent(event)
         elif self.view.mouse_pressed_button == Qt.MouseButton.RightButton:
-            pass
+            self.view.super_mouseReleaseEvent(event)

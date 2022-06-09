@@ -47,14 +47,18 @@ class PiGraphDraw(QPaintDevice):
         del self.layers[layer_id]
 
     def visulize_layer(self, layer_id):
-        self.layers[layer_id].visibility = True
+        if self.layers[layer_id].visibility == True:
+            return
         for item in self.item_collections[layer_id].values():
             self.scene.addItem(item)
+        self.layers[layer_id].visibility = True
 
     def hide_layer(self, layer_id):
-        self.layers[layer_id].visibility = False
+        if self.layers[layer_id].visibility == False:
+            return
         for item in self.item_collections[layer_id].values():
             self.scene.removeItem(item)
+        self.layers[layer_id].visibility = False
 
     def set_zvalue_layer(self, layer_id, zvalue):
         for item in self.item_collections[layer_id].values():
@@ -76,11 +80,9 @@ class PiGraphDraw(QPaintDevice):
         layer_id = layer.id
         item_collection = self.item_collections[layer_id]
         for feature in layer.features.features:
-            item = PiGraphicsItemGroup(layer_id,feature,self.item_box,self)
+            item = PiGraphicsItemGroup(layer_id,feature,self.item_box,self,pen,brush)
             item.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemClipsToShape)  # 给图元设置标志
             item_collection[feature.id] = item
-            item.setPen(pen)
-            item.setBrush(brush)
         self.visulize_layer(layer_id)
 
     def reset_draw_attr(self):
