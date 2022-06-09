@@ -56,17 +56,18 @@ class Ui_Symbology(object):
 
         self.horizontalLayout.addWidget(self.label)
 
-        self.fieldsComboBox = QComboBox(self.uniqueValue0)
-        self.fieldsComboBox.setObjectName(u"fieldsComboBox")
-        self.fieldsComboBox.setMaximumSize(QSize(16777215, 20))
+        self.fieldsComboBox_0 = QComboBox(self.uniqueValue0)
+        self.fieldsComboBox_0.setObjectName(u"fieldsComboBox_0")
+        self.fieldsComboBox_0.setMinimumSize(QSize(80, 0))
+        self.fieldsComboBox_0.setMaximumSize(QSize(16777215, 20))
 
-        self.horizontalLayout.addWidget(self.fieldsComboBox)
+        self.horizontalLayout.addWidget(self.fieldsComboBox_0)
 
-        self.levelNumberLabel = QLabel(self.uniqueValue0)
-        self.levelNumberLabel.setObjectName(u"levelNumberLabel")
-        self.levelNumberLabel.setMaximumSize(QSize(16777215, 20))
+        self.levelNumberLabel_0 = QLabel(self.uniqueValue0)
+        self.levelNumberLabel_0.setObjectName(u"levelNumberLabel_0")
+        self.levelNumberLabel_0.setMaximumSize(QSize(16777215, 20))
 
-        self.horizontalLayout.addWidget(self.levelNumberLabel)
+        self.horizontalLayout.addWidget(self.levelNumberLabel_0)
 
 
         self.verticalLayout_2.addLayout(self.horizontalLayout)
@@ -175,12 +176,40 @@ class Ui_Symbology(object):
         self.byLevel1.setObjectName(u"byLevel1")
         self.verticalLayout_3 = QVBoxLayout(self.byLevel1)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.label_11 = QLabel(self.byLevel1)
-        self.label_11.setObjectName(u"label_11")
-        self.label_11.setMaximumSize(QSize(16777215, 20))
-        self.label_11.setFont(font)
+        self.horizontalLayout_3 = QHBoxLayout()
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.label_25 = QLabel(self.byLevel1)
+        self.label_25.setObjectName(u"label_25")
+        self.label_25.setMaximumSize(QSize(16777215, 20))
+        self.label_25.setFont(font)
 
-        self.verticalLayout_3.addWidget(self.label_11)
+        self.horizontalLayout_3.addWidget(self.label_25)
+
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_3.addItem(self.horizontalSpacer_2)
+
+        self.label_2 = QLabel(self.byLevel1)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setMaximumSize(QSize(16777215, 20))
+
+        self.horizontalLayout_3.addWidget(self.label_2)
+
+        self.fieldsComboBox_1 = QComboBox(self.byLevel1)
+        self.fieldsComboBox_1.setObjectName(u"fieldsComboBox_1")
+        self.fieldsComboBox_1.setMinimumSize(QSize(80, 0))
+        self.fieldsComboBox_1.setMaximumSize(QSize(16777215, 20))
+
+        self.horizontalLayout_3.addWidget(self.fieldsComboBox_1)
+
+        self.levelNumberLabel_1 = QLabel(self.byLevel1)
+        self.levelNumberLabel_1.setObjectName(u"levelNumberLabel_1")
+        self.levelNumberLabel_1.setMaximumSize(QSize(16777215, 20))
+
+        self.horizontalLayout_3.addWidget(self.levelNumberLabel_1)
+
+
+        self.verticalLayout_3.addLayout(self.horizontalLayout_3)
 
         self.horizontalLayout_12 = QHBoxLayout()
         self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
@@ -191,6 +220,7 @@ class Ui_Symbology(object):
 
         self.borderWidth_1 = QLineEdit(self.byLevel1)
         self.borderWidth_1.setObjectName(u"borderWidth_1")
+        self.borderWidth_1.setMinimumSize(QSize(100, 0))
         self.borderWidth_1.setMaximumSize(QSize(100, 16777215))
 
         self.horizontalLayout_12.addWidget(self.borderWidth_1)
@@ -446,10 +476,10 @@ class Ui_Symbology(object):
         self.blLevelCombo.currentIndexChanged.connect(Symbology.set_bl_level_size)
         self.buttonBox.accepted.connect(Symbology.dialog_accept)
         self.buttonBox.rejected.connect(Symbology.dialog_reject)
-        self.tabWidget.currentChanged.connect(Symbology.index_changed)
-        self.fieldsComboBox.currentIndexChanged.connect(Symbology.field_id_changed)
+        self.fieldsComboBox_0.currentIndexChanged.connect(Symbology.field_id_changed)
+        self.fieldsComboBox_1.currentIndexChanged.connect(Symbology.field_id_changed)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(Symbology)
@@ -459,7 +489,7 @@ class Ui_Symbology(object):
         Symbology.setWindowTitle(QCoreApplication.translate("Symbology", u"Symbology", None))
         self.label_12.setText(QCoreApplication.translate("Symbology", u"Border Settings", None))
         self.label.setText(QCoreApplication.translate("Symbology", u"Choose Field", None))
-        self.levelNumberLabel.setText(QCoreApplication.translate("Symbology", u"levels:", None))
+        self.levelNumberLabel_0.setText(QCoreApplication.translate("Symbology", u"levels:", None))
         self.label_18.setText(QCoreApplication.translate("Symbology", u"Border Width", None))
         self.borderWidth_0.setText(QCoreApplication.translate("Symbology", u"1", None))
         self.label_19.setText(QCoreApplication.translate("Symbology", u"Border Type", None))
@@ -482,7 +512,9 @@ class Ui_Symbology(object):
         self.beginColor_1.setText(QCoreApplication.translate("Symbology", u"Begin Color", None))
         self.endColor_2.setText(QCoreApplication.translate("Symbology", u"End Color", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.uniqueValue0), QCoreApplication.translate("Symbology", u"Unique Value", None))
-        self.label_11.setText(QCoreApplication.translate("Symbology", u"Border Settings", None))
+        self.label_25.setText(QCoreApplication.translate("Symbology", u"Border Settings", None))
+        self.label_2.setText(QCoreApplication.translate("Symbology", u"Choose Field", None))
+        self.levelNumberLabel_1.setText(QCoreApplication.translate("Symbology", u"levels:", None))
         self.label_16.setText(QCoreApplication.translate("Symbology", u"Border Width", None))
         self.borderWidth_1.setText(QCoreApplication.translate("Symbology", u"1", None))
         self.label_17.setText(QCoreApplication.translate("Symbology", u"Border Type", None))

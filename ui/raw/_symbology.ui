@@ -26,7 +26,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="uniqueValue0">
       <attribute name="title">
@@ -80,7 +80,13 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="fieldsComboBox">
+          <widget class="QComboBox" name="fieldsComboBox_0">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="maximumSize">
             <size>
              <width>16777215</width>
@@ -90,7 +96,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="levelNumberLabel">
+          <widget class="QLabel" name="levelNumberLabel_0">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
@@ -303,22 +309,81 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QLabel" name="label_11">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Border Settings</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="label_25">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Border Settings</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Choose Field</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="fieldsComboBox_1">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>20</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="levelNumberLabel_1">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>levels:</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_12">
@@ -331,6 +396,12 @@
          </item>
          <item>
           <widget class="QLineEdit" name="borderWidth_1">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="maximumSize">
             <size>
              <width>100</width>
@@ -1151,14 +1222,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>tabWidget</sender>
-   <signal>currentChanged(int)</signal>
+   <sender>fieldsComboBox_0</sender>
+   <signal>currentIndexChanged(int)</signal>
    <receiver>Symbology</receiver>
-   <slot>index_changed()</slot>
+   <slot>field_id_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>236</x>
-     <y>134</y>
+     <x>375</x>
+     <y>62</y>
     </hint>
     <hint type="destinationlabel">
      <x>236</x>
@@ -1167,14 +1238,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>fieldsComboBox</sender>
+   <sender>fieldsComboBox_1</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>Symbology</receiver>
    <slot>field_id_changed()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>375</x>
-     <y>62</y>
+     <y>61</y>
     </hint>
     <hint type="destinationlabel">
      <x>236</x>

@@ -194,7 +194,6 @@ class AttributesTable(QWidget):
 
     def highlight_feature(self):
         s = self.get_selected_features()
-        print(s)
         self.graph.highlight_feature(self.layer_id, s)
 
     def add_row(self):

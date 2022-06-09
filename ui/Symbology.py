@@ -14,10 +14,9 @@ class SymbologyPage(QDialog):
     def __init__(self, parent, levels, fields):
         super().__init__(parent)
         self.unique_level = levels
-        # self.fields = fields
+        self.chosen_field_index = 0
         self.ui = Ui_Symbology()
         self.ui.setupUi(self)
-        self.current_index = 0
         self.border_width = '1'
         self.border_join = 0
         self.border_type = 0
@@ -31,11 +30,16 @@ class SymbologyPage(QDialog):
         self.border_color_buttons = [self.ui.borderColor_0, self.ui.borderColor_1, self.ui.borderColor_2]
         self.border_join_combobox = [self.ui.borderJoinCombo_0, self.ui.borderJoinCombo_1, self.ui.borderJoinCombo_2]
         self.border_type_combobox = [self.ui.borderTypeCombo_0, self.ui.borderTypeCombo_1, self.ui.borderTypeCombo_2]
+
         self.begin_color_buttons = [self.ui.beginColor_1, self.ui.beginColor_2]
         self.end_color_buttons = [self.ui.endColor_1, self.ui.endColor_2]
         self.single_color_buttons = [self.ui.singleColor]
 
-        self.ui.fieldsComboBox.addItems(fields)
+        self.level_number_labels = [self.ui.levelNumberLabel_0, self.ui.levelNumberLabel_1]
+
+        fields_comboboxes = [self.ui.fieldsComboBox_0, self.ui.fieldsComboBox_1]
+        for cb in fields_comboboxes:
+            cb.addItems(fields)
 
     @staticmethod
     def set_button_color(button: QPushButton, color: QColor):
@@ -43,11 +47,14 @@ class SymbologyPage(QDialog):
         style_sheet = f'background:rgb({br},{bg},{bb});color:rgb({255 - br},{255 - bg},{255 - bb})'
         button.setStyleSheet(style_sheet)
 
-    def index_changed(self, index):
-        self.current_index = index
+    @property
+    def current_index(self):
+        return self.ui.tabWidget.currentIndex()
 
     def field_id_changed(self, index):
-        self.ui.levelNumberLabel.setText(f'levels: {self.unique_level[index]}')
+        self.chosen_field_index = index
+        for label in self.level_number_labels:
+            label.setText(f'levels: {self.unique_level[index]}')
 
     def get_gradient_colors(self, num: int) -> list[QColor]:
         br, bg, bb, _ = self.begin_color.getRgbF()
@@ -55,7 +62,7 @@ class SymbologyPage(QDialog):
         red = linspace(br, er, num)
         green = linspace(bg, eg, num)
         blue = linspace(bb, eb, num)
-        return [QColor.fromRgbF(red[i], green[i], blue[i]) for i in range(num)]
+        return [QBrush(QColor.fromRgbF(red[i], green[i], blue[i])) for i in range(num)]
 
     def set_begin_color(self):
         color = QColorDialog.getColor()
@@ -99,11 +106,11 @@ class SymbologyPage(QDialog):
     def set_bl_level_size(self, index):
         self.level_size = index + 2
 
-    def dialog_accept(self, *args):
-        print('acc')
+    def dialog_accept(self):
+        self.accept()
 
-    def dialog_reject(self, *args):
-        print('rej')
+    def dialog_reject(self):
+        self.reject()
 
     def result(self):
         width = float(self.border_width)
@@ -112,10 +119,11 @@ class SymbologyPage(QDialog):
 
         match self.current_index:
             case 0:  # 唯一值
-                return pen, self.get_gradient_colors(self.unique_level)
+                levels = self.unique_level[self.chosen_field_index]
+                return 0, pen, self.get_gradient_colors(levels), self.chosen_field_index
             case 1:  # 分级
-                return pen, self.get_gradient_colors(self.level_size)
+                return 1, pen, self.get_gradient_colors(self.level_size), self.level_size
             case 2:  # 单值
-                return pen, QBrush(self.single_color)
+                return 2, pen, QBrush(self.single_color)
             case _:
                 raise ValueError('Page does not exist.')
