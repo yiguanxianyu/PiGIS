@@ -27,6 +27,11 @@ class PiPoint(PiGeometry.PiGeometry):
             return True
         else:
             return False
+        
+    def translate(self, dx, dy):
+        self._x += dx
+        self._y += dy
+        self._changed = True
 
     def update(self, x, y):
         self._x = x

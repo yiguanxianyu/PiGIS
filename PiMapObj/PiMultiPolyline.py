@@ -32,3 +32,6 @@ class PiMultiPolyline(PiGeometryCollection):
     def delete_object(self, index):
         del (self._collection[index])
         self._object_num -= 1
+    
+    def translate(self, dx, dy):
+        return super().translate(dx, dy)

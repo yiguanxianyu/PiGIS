@@ -105,6 +105,7 @@ class PiLinearUnitConstant():  # 线性单位常数
 class PiGraphModeConstant(Enum):
     editable = 0
     moveable = 1
+    dragable = 2
 
 class PiLayerStatusConstant(Enum):
     normal = 0
@@ -112,5 +113,9 @@ class PiLayerStatusConstant(Enum):
     hidden = 2
     visiable = 3
     deleted = 4
+
+class PiEditModeConstant(Enum):
+    newable = 0
+    addable = 1
 
 HIGHLIGHTCOLOR = QColor(144,238,144)

@@ -33,6 +33,12 @@ class PiPolyline(PiGeometry.PiGeometry):
 
     def clone(self) -> PiPolyline:
         return PiPolyline(self._x, self._y)
+    
+    def translate(self, dx, dy):
+        for i in range(self.count):
+            self._x[i] += dx
+            self._y[i] += dy
+        self._changed = True
 
     def delete_point(self, index):
         del (self._x[index])

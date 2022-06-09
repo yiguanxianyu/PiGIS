@@ -15,6 +15,7 @@ class PiGeometry():
         self.id = PiGlobal.id_count
         PiGlobal.id_count += 1
         self.type = type  # 元素的类别
+        self._changed = True
 
     def load(self, reader):
         pass
