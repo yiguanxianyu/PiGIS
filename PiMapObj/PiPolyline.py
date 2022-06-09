@@ -41,6 +41,10 @@ class PiPolyline(PiGeometry.PiGeometry):
             self._y[i] += dy
         self._changed = True
 
+    def set_point(self,index,x,y):
+        self._x[index] = x
+        self._y[index] = y
+
     def delete_point(self, index):
         del (self._x[index])
         del (self._y[index])

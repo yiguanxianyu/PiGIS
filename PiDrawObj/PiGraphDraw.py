@@ -63,6 +63,18 @@ class PiGraphDraw(QPaintDevice):
     def set_zvalue_layer(self, layer_id, zvalue):
         for item in self.item_collections[layer_id].values():
             item.setZValue(zvalue)
+    
+    def set_features_visibility(self,layer_id,ids,visibility):
+        if visibility == False:
+            for feature_id in ids:
+                item = self.item_collections[layer_id][feature_id]
+                self.scene.removeItem(item)
+        elif visibility == True:
+            for feature_id in ids:
+                item = self.item_collections[layer_id][feature_id]
+                self.scene.addItem(item)
+              
+
 
     def remove_features(self, layer_id, ids):
         layer = self.layers[layer_id]

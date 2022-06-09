@@ -39,7 +39,7 @@ class PiGraphicsItem(QGraphicsPathItem):
             case PiGeometryTypeConstant.point:
                 self.point_list = [QPointF(x / self.draw.scale,y / self.draw.scale)]
                 path = QPainterPath()
-                path.addEllipse(self.point_list[0],0.5,0.5)
+                path.addEllipse(center = self.point_list[0],rx = 0.5,ry = 0.5)
                 self.setPath(path)
                 self.setPen(pen)
                 self.setBrush(brush)
@@ -68,6 +68,9 @@ class PiGraphicsItem(QGraphicsPathItem):
     
     def get_point_list(self):
         return [point for point in self.point_list]
+    
+    def set_geometry_at(self,index,x,y):
+        self.geometry.set_point(index,x,y)
 
 class PiGraphicsItemGroup(QGraphicsItemGroup):
     def __init__(self, layer_id, feature: PiFeature, parent: QGraphicsItem, draw_control, pen, brush):
@@ -83,7 +86,6 @@ class PiGraphicsItemGroup(QGraphicsItemGroup):
         for geometry in collection:
             item = PiGraphicsItem(geometry,parent,draw_control,pen,brush)
             self.addToGroup(item)
-        self.path = QPainterPath()
         self.accept_edit = False
         self.edit_cache = None
     
