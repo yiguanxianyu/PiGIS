@@ -99,7 +99,7 @@ class Graph(QWidget):
         for feature_id, pen in _dict.items():
             pass
 
-    def set_symbology_poltgon(self, layer_id, _dict):
+    def set_symbology_polygon(self, layer_id, _dict):
         """设定符号化方式，还没太想明白 TODO"""
         for feature_id, value in _dict.items():
             pen, brush = value
