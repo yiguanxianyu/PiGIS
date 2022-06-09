@@ -156,6 +156,10 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionAddLayer"/>
+   <addaction name="actionDragMap"/>
+   <addaction name="actionDragFeature"/>
+   <addaction name="actionAdd"/>
+   <addaction name="actionEdit"/>
   </widget>
   <action name="actionProjectNew">
    <property name="text">
@@ -283,6 +287,26 @@
   <action name="actionNew_MultiPolygon_Layer">
    <property name="text">
     <string>New MultiPolygon Layer</string>
+   </property>
+  </action>
+  <action name="actionDragFeature">
+   <property name="text">
+    <string>DragFeature</string>
+   </property>
+  </action>
+  <action name="actionAdd">
+   <property name="text">
+    <string>Add</string>
+   </property>
+  </action>
+  <action name="actionEdit">
+   <property name="text">
+    <string>Edit</string>
+   </property>
+  </action>
+  <action name="actionDragMap">
+   <property name="text">
+    <string>DragMap</string>
    </property>
   </action>
  </widget>
@@ -480,6 +504,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionDragMap</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>enable_drag_map()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>409</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDragFeature</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>enable_drag_feature()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>409</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAdd</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>enable_add_feature()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>409</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionEdit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>enable_edit_feature()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>409</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>open_project()</slot>
@@ -494,5 +582,9 @@
   <slot>switch_editing()</slot>
   <slot>copy_layer()</slot>
   <slot>save_image()</slot>
+  <slot>enable_drag_map()</slot>
+  <slot>enable_drag_feature()</slot>
+  <slot>enable_add_feature()</slot>
+  <slot>enable_edit_feature()</slot>
  </slots>
 </ui>

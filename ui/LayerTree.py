@@ -88,8 +88,10 @@ class LayerTree(QWidget):
     def focusOutEvent(self, e) -> None:
         self.releaseKeyboard()
 
-    def get_current_item(self) -> LayerItem:
-        return self.sim.itemFromIndex(current_index)
+    def get_current_item(self):
+        if current_index:
+            return self.sim.itemFromIndex(current_index)
+        return None
 
     def create_layer_menu(self):
         """创建图层的右键菜单"""
@@ -142,12 +144,16 @@ class LayerTree(QWidget):
         show_symbology_page_act.setText('Symbology')
         show_symbology_page_act.triggered.connect(show_symbology_page)
 
-        def show_label():
-            self.graph.render_label(self.get_current_item().layer)
+        def toggle_annotation():
+            layer: PiLayer = self.graph.get_layer_by_id(self.get_current_item().layer)
+            if layer.annotation_status:
+                self.graph.remove_annotation(layer.id)
+            else:
+                self.graph.render_annotation(layer.id)
 
-        show_label_act = QAction(self)
-        show_label_act.setText('Show Label')
-        show_label_act.triggered.connect(show_label)
+        toggle_anno_act = QAction(self)
+        toggle_anno_act.setText('Toggle Annotation')
+        toggle_anno_act.triggered.connect(toggle_annotation)
 
         # 删除 Action
         remove_layer_act = QAction(self)
@@ -155,8 +161,8 @@ class LayerTree(QWidget):
         remove_layer_act.triggered.connect(self.sim.remove_layer)
 
         self.layerContextMenu.addAction(u'This is Layer')
-        self.layerContextMenu.addAction(show_label_act)
         self.layerContextMenu.addAction(remove_layer_act)
+        self.layerContextMenu.addAction(toggle_anno_act)
         self.layerContextMenu.addAction(show_attributes_table_act)
         self.layerContextMenu.addAction(show_symbology_page_act)
 
@@ -181,8 +187,8 @@ class LayerTree(QWidget):
             def _load(arg0, arg1):
                 layer1 = PiLayer()
                 layer1.load(arg0, "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-                self.add_layer(layer1.id, f'{layer1.name}{arg1}')
                 self.graph.load_layer(layer1)
+                self.add_layer(layer1.id, f'{layer1.name}{arg1}')
 
             _load("PiMapObj/图层文件/国界线.lay", '1')
             _load("PiMapObj/图层文件/省级行政区.lay", '2')
@@ -227,15 +233,14 @@ class LayerTree(QWidget):
         current_index = index
 
     def item_changed(self, item: LayerItem):
+        self.graph.set_name(item.layer, item.text())
+
         if item.type() is QItemType.Layer:
             layer_id = item.layer
             self.graph.set_visibility(layer_id, item.visible)
-        else:
-            all_children = item.get_all_children(item)
-            print(all_children)
-            if all_children:
-                for _item in all_children:
-                    self.graph.set_visibility(_item.layer, _item.visible)
+        elif all_children := item.get_all_children(item):
+            for _item in all_children:
+                self.graph.set_visibility(_item.layer, _item.visible)
 
         new_v = self.get_visible_layers(item)
         for i in range(len(new_v) - 1, -1, -1):
@@ -263,7 +268,8 @@ class LayerTree(QWidget):
 
     def add_layer(self, layer_id, layer_name):
         item = LayerItem(QItemType.Layer, layer_id, layer_name)
-        self.sim.appendRow(item)
+        self.sim.insertRow(0, item)
+        self.item_changed(item)
 
     def add_layer_group(self):
         item = LayerItem(QItemType.LayerGroup, [], 'New Layer Group')

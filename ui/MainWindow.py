@@ -1,5 +1,4 @@
-from PySide6.QtCore import QPoint, QPointF, Qt
-from PySide6.QtGui import QMouseEvent
+from PySide6.QtCore import QPoint, Qt
 from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter, QSizePolicy
 
 from project import PiGISProjectController
@@ -33,10 +32,10 @@ class MainWindow(QMainWindow):
         main_horizontal_splitter.addWidget(graph_widget)
         # 把这个 splitter 放在一个布局里才能显示出来
         self.ui.mainLayout.addWidget(main_horizontal_splitter)
-        
+
         self.graphWidget.view_control.set_window(self)
         self.setMouseTracking(True)
-        self.setAttribute(Qt.WA_Hover,True)
+        self.setAttribute(Qt.WA_Hover, True)
 
     def update_scale(self, scale):
         self.statusBar.update_scale(scale)
@@ -44,11 +43,39 @@ class MainWindow(QMainWindow):
     def update_coord(self, x, y):
         self.update_coord(x, y)
 
+    def enable_drag_map(self):
+        self.graphWidget.graph_turn_move()
+        self.statusBar.update_edit_status('Dragging map')
+
+    def enable_drag_feature(self):
+        curr_layer = self.layerTree.get_current_item()
+        if curr_layer:
+            self.graphWidget.graph_turn_layer_dragable(curr_layer.layer)
+            self.statusBar.update_edit_status('Dragging feature')
+        else:
+            self.statusBar.update_edit_status('Layer not selected')
+
+    def enable_add_feature(self):
+        curr_layer = self.layerTree.get_current_item()
+        if curr_layer:
+            self.graphWidget.graph_turn_layer_addable(curr_layer.layer)
+            self.statusBar.update_edit_status('Adding feature')
+        else:
+            self.statusBar.update_edit_status('Layer not selected')
+
+    def enable_edit_feature(self):
+        curr_layer = self.layerTree.get_current_item()
+        if curr_layer:
+            self.graphWidget.graph_turn_layer_editable(curr_layer.layer)
+            self.statusBar.update_edit_status('Editing feature')
+        else:
+            self.statusBar.update_edit_status('Layer not selected')
+
     # For test only
     def mouseMoveEvent(self, event) -> None:
         print(event)
         window_pos = QPoint(event.x(), event.y())
-        map_pos = self.graphWidget.view_control.window_to_map(self,window_pos)
+        map_pos = self.graphWidget.view_control.window_to_map(self, window_pos)
         self.statusBar.update_coord(map_pos.x(), map_pos.y())
         return super().mouseMoveEvent(event)
 

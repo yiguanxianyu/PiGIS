@@ -11,10 +11,11 @@ from constants import class_type
 
 class PiGISProject:
 
-    def __init__(self):
+    def __init__(self,mw):
         self.path = None
         self.layer = []
         self.layerBin = []
+        self.mainWindow = mw
 
     def parse(self, path: str):
         """
@@ -69,6 +70,7 @@ class PiGISProject:
         Save current project to file
         """
 
+        # part 1 overall metadata
         config = {
             'Application': {
                 'app_name':
@@ -78,19 +80,38 @@ class PiGISProject:
             }
         }
 
+
+        # part 2 Layer Tree Info
+
+        tree_config = self.mainWindow.layerTree.get_layer_tree()
+        config['tree_config']=tree_config
+
+        # part 3 Layer Info
         layer_config = []
-        for curr_layer in self.layer:
+        for curr_layer_id in tree_config:
+            curr_layer=self.mainWindow.graphWidget.get_layer_by_id(curr_layer_id)
             layer_info = {
                 'layer_name': curr_layer.name,
                 'metadata': {
-                    'path': curr_layer.path,
-                    'prj': curr_layer.projection,
-                    'type': curr_layer.type_as_str
+                    'id': curr_layer_id,
+                    'path': curr_layer.file_path,
+                    'prj': curr_layer.proj._PiProjection__proj_name,
+                    'type': int(curr_layer.geometry_type)
                 },
-                'style': curr_layer.style
+                'style':{
+                    'pen_style':int(curr_layer.pen.style()),
+                    'pen_width':curr_layer.pen.width(),
+                    'pen_color':curr_layer.pen.color().getRgbF(),
+                    'brush':curr_layer.brush.color().getRgbF(),
+                    'visibility':curr_layer.visibility,
+                    'change':curr_layer.change,
+                    'label_status':curr_layer.label_status,
+                    'annotation_status':curr_layer.annotation_status
+                }
             }
 
             layer_config.append(layer_info)
+            print(curr_layer_id)
 
         config['layer'] = layer_config
         with open(self.path, 'w', encoding='utf-8') as f:
@@ -126,7 +147,7 @@ class PiGISProjectController:
     def __init__(self, mw):
         self.mainWindow = mw
         self.currentLayer = None
-        self.__project = PiGISProject()
+        self.__project = PiGISProject(mw)
 
     def new_project(self):
         self.__project = PiGISProject()
@@ -185,8 +206,8 @@ class PiGISProjectController:
         if file_type == all_types[2]:
             new_layer = PiLayer()
             new_layer.load(file_path)
-            self.mainWindow.layerTree.add_layer(new_layer.id, new_layer.name)
             self.mainWindow.graphWidget.load_layer(new_layer)
+            self.mainWindow.layerTree.add_layer(new_layer.id, new_layer.name)
 
         # TODO: parse selected layer file
         self.__project.add_layer(None)

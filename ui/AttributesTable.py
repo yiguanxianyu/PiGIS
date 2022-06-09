@@ -4,7 +4,34 @@ from PySide6.QtCore import QAbstractTableModel, Qt, QModelIndex
 from PySide6.QtWidgets import QWidget, QAbstractItemView, QDialog, QHeaderView, QMessageBox, QInputDialog
 
 from PiMapObj.PiLayer import PiLayer
-from ui.raw import Ui_AttributesTable, Ui_RemoveField
+from ui.raw import Ui_AttributesTable, Ui_RemoveField, Ui_AddFieldDialog
+
+data_type = [np.int16, np.int32, np.int64, np.float32, np.unicode_]
+data_type_str = ['int16', 'int32', 'int64', 'float32', 'float64', 'string']
+
+
+class AddFieldDialog(QDialog):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.ui = Ui_AddFieldDialog()
+        self.ui.setupUi(self)
+        self.ui.labelMaxLength.setVisible(False)
+        self.ui.maxLengthEdit.setVisible(False)
+
+        self.ui.comboBox.addItems(data_type_str)
+
+    def index_changed(self, index):
+        if index == 5:
+            self.ui.labelMaxLength.setVisible(True)
+            self.ui.maxLengthEdit.setVisible(True)
+        else:
+            self.ui.labelMaxLength.setVisible(False)
+            self.ui.maxLengthEdit.setVisible(False)
+
+    def result(self):
+        if self.ui.comboBox.currentIndex() == 5:
+            return self.ui.fieldNameEdit.text(), np.dtype(f'U{self.ui.maxLengthEdit.text()}')
+        return self.ui.fieldNameEdit.text(), np.dtype(data_type_str[self.ui.comboBox.currentIndex()])
 
 
 class RemoveFieldDialog(QDialog):
@@ -72,6 +99,10 @@ class TableModel(QAbstractTableModel):
     def columnCount(self, index=...):
         return self.__column_count
 
+    def add_field(self, field):
+        self._dtype.append(field)
+        self.insertColumn(self.rowCount())
+
     def insertRows(self, begin: int, count: int, parent=...) -> bool:
         """考虑到使用场景，这里就只考虑添加一行了"""
         self.beginInsertRows(QModelIndex(), begin, begin + count - 1)
@@ -102,7 +133,8 @@ class TableModel(QAbstractTableModel):
 
     def insertColumns(self, begin: int, count: int, parent=...) -> bool:
         self.beginInsertColumns(QModelIndex(), begin, begin + count - 1)
-        # TODO
+        type_ = self._dtype[-1][1].type
+        self.data_[self._dtype[-1][0]] = '' if np.issubdtype(type_, np.unicode_) else type_(0)
         self.__column_count += count
         self.endInsertColumns()
         self.changed = True
@@ -217,7 +249,9 @@ class AttributesTable(QWidget):
             self.graph.hide_features(self.layer_id, ids)
 
     def add_field(self):
-        pass
+        s = AddFieldDialog(self)
+        if s.exec():
+            self.tableModel.add_field(s.result())
 
     def remove_field(self):
         s = RemoveFieldDialog(self, self.tableModel.get_columns())
