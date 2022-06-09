@@ -7,7 +7,6 @@ from PiDrawObj.PiGraphicsItem import PiGraphicsItemGroup
 
 # import pyqtgraph as pg
 
-
 class PiGraphDraw(QPaintDevice):
     def __init__(self, view=None):
         super().__init__()
@@ -24,10 +23,17 @@ class PiGraphDraw(QPaintDevice):
         self.item_box = QGraphicsItemGroup(None)
         self.item_box.setPos(0, 0)
         self.item_collections = {}
+        self.text_collections = {
+            #{
+                # layer.id:{
+                #      feature.id:textitem
+                # }
+            # },
+        }
         self.layer_added = False
         self.width = 1000
 
-        self.scale = None
+        self.scale = 1000
         self.scale_before = None
         # 0:no change 1:changed -1:deleted
 
@@ -48,6 +54,7 @@ class PiGraphDraw(QPaintDevice):
 
     def visulize_layer(self, layer_id):
         if self.layers[layer_id].visibility == True:
+            #print(self.layers[layer_id].geometry_type)
             return
         for item in self.item_collections[layer_id].values():
             self.scene.addItem(item)
@@ -73,8 +80,6 @@ class PiGraphDraw(QPaintDevice):
             for feature_id in ids:
                 item = self.item_collections[layer_id][feature_id]
                 self.scene.addItem(item)
-              
-
 
     def remove_features(self, layer_id, ids):
         layer = self.layers[layer_id]
@@ -109,7 +114,7 @@ class PiGraphDraw(QPaintDevice):
         xdis = self.mbr.maxx - self.mbr.minx
         # self.scale = max(xdis, ydis) / 400
         self.scale = 1000
-        self.view.set_show_scale(1 / 10)
+        self.view.set_show_scale(self.scale / 10000)
         self.mid_x = (self.mbr.minx + self.mbr.maxx) / 2
         self.mid_y = (self.mbr.miny + self.mbr.maxy) / 2
         self.view.centerOn(QPointF(self.mid_x / self.scale, -self.mid_y / self.scale))

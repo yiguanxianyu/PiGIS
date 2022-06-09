@@ -94,9 +94,9 @@ class PiGraphView(QGraphicsView):
         if event.text() == "c":
             self.mode_turn_move()
         elif event.text() == "d":
-            self.mode_turn_drag_layer(1)
+            self.mode_turn_drag_layer(2)
         elif event.text() == "e":
-            self.mode_turn_edit_layer(1)
+            self.mode_turn_edit_layer(2)
 
         # return super().keyReleaseEvent(event)
 

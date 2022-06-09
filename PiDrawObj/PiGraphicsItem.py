@@ -9,19 +9,7 @@ from PiMapObj.PiPoint import PiPoint
 from PiMapObj.PiPolygon import PiPolygon
 from PiMapObj.PiPolyline import PiPolyline
 from PiConstant import PiGeometryTypeConstant, PiGraphModeConstant
-
-class PiPainterPath(QPainterPath):
-    def __init__(self):
-        super().__init__()
-    
-    def addPath(self, path) -> None:
-        return super().addPath(path)
-    def addPolygon(self, polygon) -> None:
-        return super().addPolygon(polygon)
-    def addEllipse(self,ellipse) -> None:
-        return super().addEllipse(ellipse)
         
-
 class PiGraphicsItem(QGraphicsPathItem):
     def __init__(self, geometry: PiPolyline|PiPolygon|PiPoint, parent: QGraphicsItem, draw_control,pen:QPen,brush:QBrush):
         super().__init__(parent = parent)
@@ -30,6 +18,7 @@ class PiGraphicsItem(QGraphicsPathItem):
         self.draw = draw_control
         self.last_pos = QPointF(0, 0)
         self.load(pen,brush)
+        self.setFlags(QGraphicsItem.ItemClipsToShape)
     
     def load(self,pen,brush):
         x = self.geometry.get_x()
@@ -37,10 +26,12 @@ class PiGraphicsItem(QGraphicsPathItem):
         count = self.geometry.count
         match self.geometry.type:
             case PiGeometryTypeConstant.point:
-                self.point_list = [QPointF(x / self.draw.scale,y / self.draw.scale)]
+                point = QPointF(x / self.draw.scale,-y / self.draw.scale)
+                self.point_list = [point]
                 path = QPainterPath()
-                path.addEllipse(center = self.point_list[0],rx = 0.5,ry = 0.5)
+                path.addEllipse(point.x()-10,point.y()-10,20,20)
                 self.setPath(path)
+                #self.draw.scene.addItem(self)
                 self.setPen(pen)
                 self.setBrush(brush)
             case PiGeometryTypeConstant.polyline:
@@ -85,6 +76,7 @@ class PiGraphicsItemGroup(QGraphicsItemGroup):
         collection = feature.geometry._collection
         for geometry in collection:
             item = PiGraphicsItem(geometry,parent,draw_control,pen,brush)
+            #print(item.shape())
             self.addToGroup(item)
         self.accept_edit = False
         self.edit_cache = None
