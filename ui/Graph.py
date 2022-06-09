@@ -98,10 +98,10 @@ class Graph(QWidget):
         怎么方便怎么来吧，可以直接用当前中心点什么的 TODO"""
         pass
 
-    def hide_features(self, layer_id, ids: list[int]):
+    def set_features_visibility(self, layer_id, ids: list[int],visibility:bool):
         """隐藏指定的要素 TODO"""
         # 暂时先用删除顶一下
-        self.remove_features(layer_id, ids)
+        self.draw_control.set_features_visibility(layer_id, ids,visibility)
 
     def add_empty_features(self, layer_id, ids: list[int]):
         """添加空要素，id已经被给定了,目前的 feature_id
