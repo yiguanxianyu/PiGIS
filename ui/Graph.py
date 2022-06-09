@@ -102,6 +102,15 @@ class Graph(QWidget):
         self.cancel_highlight_feature(layer_id, ids)
         self.draw_control.remove_features(layer_id, ids)
 
+    def save_attr_table(self, layer_id, new_attr_data):
+        """保存修改后的属性表，数据格式和传进来的一样，
+        为元组组成的ndarray，第一位是隐藏的 feature_id
+        注意：因为可能会在属性表内新增要素，所以不是所有的 feature_id
+        都存在图里，需要判断一下。目前的feature_id生成方式是最大的
+        feature_id + 2 TODO"""
+        print('saving...')
+        pass
+
     def render_label(self, layer_id):
         """添加标注（动态） TODO"""
         layer = self.get_layer_by_id(layer_id)

@@ -29,7 +29,7 @@ class TableModel(QAbstractTableModel):
     def __init__(self, parent, data):
         super(TableModel, self).__init__(parent)
         self.data_ = pd.DataFrame(data)
-
+        self.fid_dtype = (data.dtype.names[0], data.dtype[0])
         self._dtype = [(data.dtype.names[i], data.dtype[i]) for i in range(1, len(data.dtype))]
         self.__row_count = len(data)
         self.__column_count = len(data[0]) - 1
@@ -75,8 +75,17 @@ class TableModel(QAbstractTableModel):
     def insertRows(self, begin: int, count: int, parent=...) -> bool:
         """考虑到使用场景，这里就只考虑添加一行了"""
         self.beginInsertRows(QModelIndex(), begin, begin + count - 1)
-        data_to_insert = np.array([[10000] + [self._dtype[i][1].type(0) for i in range(len(self._dtype))]])
-        self.data_ = pd.DataFrame(np.concatenate([self.data_.values, data_to_insert]))
+
+        data_to_insert = [np.max(np.array(self.data_.iloc[:, 0]).astype(self.fid_dtype[1], copy=False)) + 2]  # new fid
+
+        for i in range(len(self._dtype)):
+            temp_dtype = self._dtype[i][1]
+            if np.issubdtype(temp_dtype, np.unicode_):
+                data_to_insert.append(temp_dtype.type(''))
+            else:
+                data_to_insert.append(temp_dtype.type(0))
+
+        self.data_ = pd.DataFrame(np.concatenate([self.data_.values, np.array([data_to_insert])]))
         self.__row_count += count
         self.endInsertRows()
         self.changed = True
@@ -133,7 +142,6 @@ class TableModel(QAbstractTableModel):
                 return False
         else:
             self.data_ = self.original_data
-
             changed = True
 
         if changed:
@@ -144,9 +152,9 @@ class TableModel(QAbstractTableModel):
         return True
 
     def save(self):
-        print('saving...')
-        self.changed = True
-        ...
+        self.changed = False
+        data_type = np.dtype([self.fid_dtype] + self._dtype)
+        return np.array([tuple(row) for _, row in self.data_.iterrows()], dtype=data_type)
 
 
 class AttributesTable(QWidget):
@@ -172,6 +180,10 @@ class AttributesTable(QWidget):
     def focusOutEvent(self, e) -> None:
         self.releaseKeyboard()
 
+    def save(self):
+        new_data = self.tableModel.save()
+        self.graph.save_attr_table(self.layer_id, new_data)
+
     def get_selected_features(self):
         data = self.tableModel.data_
         return [data.iloc[i.row(), 0] for i in self.tableView.selectionModel().selectedRows()]
@@ -188,7 +200,7 @@ class AttributesTable(QWidget):
     def remove_row(self):
         rows = sorted(list({i.row() for i in self.tableView.selectedIndexes()}), reverse=True)
         ids = [self.tableModel.data_.iloc[i, 0] for i in rows]
-        
+
         if rows:
             length = len(rows)
             if length == 1:
@@ -213,9 +225,8 @@ class AttributesTable(QWidget):
     def filter_data(self):
         text, flag = QInputDialog.getText(self, 'Input Filter', 'Example: F1 > 800',
                                           text=self.filter_text)
-        if flag:
-            if self.tableModel.filter(text):
-                self.filter_text = text
+        if flag and self.tableModel.filter(text):
+            self.filter_text = text
 
     def toggle_editing_changed(self, flag):
         if flag:

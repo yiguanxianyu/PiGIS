@@ -156,20 +156,14 @@ class LayerTree(QWidget):
 
         # For test only
         def load_test_layers():
-            layer1 = PiLayer()
-            layer1.load("PiMapObj/图层文件/国界线.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-            self.add_layer(layer1.id, layer1.name + '1')
-            self.graph.load_layer(layer1)
-
-            layer2 = PiLayer()
-            layer2.load("PiMapObj/图层文件/省级行政区.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-            self.add_layer(layer2.id, layer2.name + '2')
-            self.graph.load_layer(layer2)
-
-            layer3 = PiLayer()
-            layer3.load("PiMapObj/图层文件/省会城市.lay", "PiMapObj/图层文件/图层文件坐标系统说明.txt")
-            self.add_layer(layer3.id, layer3.name + '3')
-            self.graph.load_layer(layer3)
+            def _load(arg0, arg1):
+                layer1 = PiLayer()
+                layer1.load(arg0, "PiMapObj/图层文件/图层文件坐标系统说明.txt")
+                self.add_layer(layer1.id, f'{layer1.name}{arg1}')
+                self.graph.load_layer(layer1)
+            _load("PiMapObj/图层文件/国界线.lay", '1')
+            _load("PiMapObj/图层文件/省级行政区.lay", '2')
+            _load("PiMapObj/图层文件/省会城市.lay", '3')
 
         # test loading layers
         load_layer_act = QAction(self)
