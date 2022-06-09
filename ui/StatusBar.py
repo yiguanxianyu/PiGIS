@@ -57,8 +57,14 @@ class PiStatusBar(QStatusBar):
         self.qcb = PiComboBox(self, main_window.graphWidget.set_scale)
         self.addWidget(self.qcb)
 
+        self.action_status = QLabel()
+        self.addWidget(self.action_status)
+
     def update_coord(self, x, y):
         self.loc_label.setText(f'X:{int(x)}  Y:{int(y)}\t')
 
     def update_scale(self, scale):
         self.qcb.update_scale(scale)
+
+    def update_edit_status(self, text):
+        self.action_status.setText(text)
