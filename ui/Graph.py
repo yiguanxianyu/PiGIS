@@ -9,6 +9,7 @@ from ui.raw import Ui_Graph
 
 
 class Graph(QWidget):
+
     def __init__(self, mw):
         super().__init__(mw)
         self.layerTree = None
@@ -40,13 +41,13 @@ class Graph(QWidget):
 
     def cancel_highlight_feature(self, layer_id: int, ids=None):
         """取消高亮指定的要素"""
-        if ids is None:
-            if layer_id in self.highlighted_feature:
-                ids = self.highlighted_feature[layer_id]
-            else:
-                return
+        highlighted = self.highlighted_feature[layer_id]
+        if ids:
+            ids = {i for i in ids if i in highlighted}
+        elif layer_id in self.highlighted_feature:
+            ids = highlighted
         else:
-            ids = {i for i in ids if i in self.highlighted_feature[layer_id]}
+            return
 
         layer = self.get_layer_by_id(layer_id)
         for feature_id in ids:
@@ -54,7 +55,7 @@ class Graph(QWidget):
             feature_item.setPen(layer.pen)
             feature_item.setBrush(layer.brush)
 
-        self.highlighted_feature[layer_id] -= ids
+        highlighted -= ids
 
     def highlight_feature(self, layer_id: int, ids: list[int]):
         """高亮指定的要素"""
@@ -76,7 +77,6 @@ class Graph(QWidget):
 
     def set_visibility(self, layer_id, visibility):
         """改变某个 layer 的可见性"""
-        # print('vis,', layer_id, layer_visibility)
         if visibility:
             self.draw_control.visulize_layer(layer_id)
         else:
@@ -100,7 +100,7 @@ class Graph(QWidget):
         layer = self.get_layer_by_id(layer_id)
         if layer.annotation_status:
             layer.remove_annotation()
-        ...
+        # put your code here
         layer.label_status = True
 
     def render_annotation(self, layer_id):
@@ -108,17 +108,17 @@ class Graph(QWidget):
         layer = self.get_layer_by_id(layer_id)
         if layer.label_status:
             layer.remove_annotation()
-        ...
+        # put your code here
         layer.annotation_status = True
 
     def remove_label(self, layer_id):
         """移除标注（动态） TODO"""
         layer = self.get_layer_by_id(layer_id)
-        ...
+        # put your code here
         layer.label_status = False
 
     def remove_annotation(self, layer_id):
         """移除注记（静态） TODO"""
         layer = self.get_layer_by_id(layer_id)
-        ...
+        # put your code here
         layer.annotation_status = False
