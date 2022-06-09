@@ -1,8 +1,9 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter
+from PySide6.QtWidgets import QMainWindow, QApplication, QSplitter, QSizePolicy
 
 from project import PiGISProjectController
 from ui import LayerTree, Graph, AboutPage
+from ui.StatusBar import PiStatusBar
 from ui.raw import Ui_MainWindow
 
 
@@ -12,6 +13,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.add_status_bar()
 
         self.__aboutPage = None
         self.project = PiGISProjectController(self)
@@ -34,7 +36,7 @@ class MainWindow(QMainWindow):
 
     # For test only
     def mousePressEvent(self, event) -> None:
-        self.ui.statusBar.update_mouse_loc(event.x(), event.y())
+        self.statusBar.update_mouse_loc(event.x(), event.y())
 
     def draw_layers(self):
         pass
@@ -80,3 +82,13 @@ class MainWindow(QMainWindow):
     @staticmethod
     def exit_app():
         QApplication.instance().quit()
+
+    def add_status_bar(self):
+        self.statusBar = PiStatusBar(self)
+        self.statusBar.setObjectName(u"statusBar")
+        size_policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        size_policy.setHorizontalStretch(0)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(self.statusBar.sizePolicy().hasHeightForWidth())
+        self.statusBar.setSizePolicy(size_policy)
+        self.setStatusBar(self.statusBar)
