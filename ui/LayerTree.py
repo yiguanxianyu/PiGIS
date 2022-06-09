@@ -198,7 +198,7 @@ class LayerTree(QWidget):
                 self.layerGroupContextMenu.move(QCursor().pos())
                 self.layerGroupContextMenu.show()
             else:
-                raise Exception('Some error occurred')
+                raise TypeError('Some error occurred')
         else:
             # 未选中项目
             self.emptyContextMenu.move(QCursor().pos())
@@ -251,16 +251,3 @@ class LayerTree(QWidget):
     def add_layer_group(self):
         item = LayerItem(QItemType.LayerGroup, [], 'New Layer Group')
         self.sim.appendRow(item)
-
-    # # for test only
-    # def add_layer_test(self):
-    #
-    #     item1 = LayerItem(QItemType.LayerGroup, [], '图层组1')
-    #     item2 = LayerItem(QItemType.LayerGroup, [], '图层组2')
-    #
-    #     for i in range(5):
-    #         temp = LayerItem(QItemType.Layer, i + 100, f'图层{i}')
-    #         item1.appendRow(temp)
-    #
-    #     self.sim.insertRow(0, item1)
-    #     self.sim.insertRow(1, item2)

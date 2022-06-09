@@ -186,10 +186,11 @@ class AttributesTable(QWidget):
         self.tableView.scrollToBottom()
 
     def remove_row(self):
-        rows = sorted(list(set(i.row() for i in self.tableView.selectedIndexes())), reverse=True)
+        rows = sorted(list({i.row() for i in self.tableView.selectedIndexes()}), reverse=True)
         ids = [self.tableModel.data_.iloc[i, 0] for i in rows]
-        length = len(rows)
+        
         if rows:
+            length = len(rows)
             if length == 1:
                 self.tableModel.removeRow(rows[0])
             elif length == rows[0] - rows[-1] + 1:
@@ -253,24 +254,3 @@ class PiAttrHeader(QHeaderView):
     def mouseReleaseEvent(self, e) -> None:
         self.table_widget.highlight_feature()
         super(PiAttrHeader, self).mouseReleaseEvent(e)
-
-# def gen_test_data():
-#     test_dtype = np.dtype(
-#         [('fid', np.int32), ('A', np.int32), ('B', np.int32), ('C', np.int32), ('D', np.dtype('U20'))])
-#     data0 = [(i, i + 1, i + 2, i + 3, 'i') for i in range(500)]
-#     return np.array(data0, dtype=test_dtype)
-#
-# class FilterDialog(QDialog):
-#     def __init__(self, parent):
-#         super().__init__(parent)
-#         self.ui = Ui_inputFilterDialog()
-#         self.ui.setupUi(self)
-#
-#     def accept(self) -> None:
-#         super(FilterDialog, self).accept()
-#
-#     def done(self, arg__1: int) -> None:
-#         super(FilterDialog, self).done()
-#
-#     def reject(self) -> None:
-#         super(FilterDialog, self).reject()
