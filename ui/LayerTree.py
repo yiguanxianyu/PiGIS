@@ -210,20 +210,19 @@ class LayerTree(QWidget):
         current_index = index
 
     def item_changed(self, item: LayerItem):
-        print(item.index())
-        new_v = self.get_visible_layers(item)
-        print(new_v)
-
         if item.type() is QItemType.Layer:
             layer_id = item.layer
             self.graph.set_visibility(layer_id, item.visible)
-            for i in range(len(new_v) - 1, -1, -1):
-                self.graph.set_zvalue(new_v[i], 10000 - i)
         else:
             all_children = item.get_all_children(item)
+            print(all_children)
             if all_children:
                 for _item in all_children:
                     self.graph.set_visibility(_item.layer, _item.visible)
+
+        new_v = self.get_visible_layers(item)
+        for i in range(len(new_v) - 1, -1, -1):
+            self.graph.set_zvalue(new_v[i], 10000 - i)
 
     def get_layer_tree(self):
         """获取递归图层树，为嵌套列表"""

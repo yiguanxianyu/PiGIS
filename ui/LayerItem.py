@@ -1,3 +1,5 @@
+from random import random
+
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QStandardItem
 
@@ -5,7 +7,6 @@ from constants import QItemType, QUserRole
 
 
 class LayerItem(QStandardItem):
-
     def __init__(self, _type, _layer, *args):
         super(LayerItem, self).__init__(*args)
         self.setCheckable(True)
@@ -18,7 +19,13 @@ class LayerItem(QStandardItem):
 
         self.setData(_layer, QUserRole.Layer)
         self.setData(_type, QUserRole.ItemType)
-        self.setData(id(self), QUserRole.UniqueID)
+        self.setData(random(), QUserRole.UniqueID)
+
+    def row_total(self):
+        if self.parent():
+            return self.parent().row() + 1
+        else:
+            return self.row()
 
     def clone(self):
         """
@@ -59,30 +66,28 @@ class LayerItem(QStandardItem):
             return self.layer
 
     def get_all_children(self, item):
-        if item.id() == self.id() and item.index() != self.index():
-            return
+        if item.id() == self.id() and id(item) != id(self):
+            return []
         elif self.type() == QItemType.LayerGroup:
             lrs = []
-            for item in self.layers:
-                lrs += item.get_all_children(item)
+            for iter_item in self.layers:
+                lrs += iter_item.get_all_children(item)
             return lrs
         else:
             return [self]
 
     def get_visible_layers(self, item):
-        if item.id() == self.id() and item.index() != self.index():
-            return []
-
-        if not self.self_visible:
+        if (item.id() == self.id() and id(item) != id(self)) or not self.self_visible:
+            # if item.parent() != self.parent() or item.row() != self.row():
             return []
 
         if self.type() == QItemType.LayerGroup:
             lrs = []
-            for item in self.layers:
-                lrs += item.get_visible_layers(item)
+            for iter_item in self.layers:
+                lrs += iter_item.get_visible_layers(item)
             return lrs
         else:
-            return [self.layer] if self.self_visible else []
+            return [self.layer]
 
     @property
     def self_visible(self):
