@@ -51,6 +51,9 @@ class MainWindow(QMainWindow):
     def save_project_as(self):
         self.project.save_project_as()
 
+    def save_image(self):
+        self.graphWidget.save_image()
+
     def add_layer(self):
         self.project.add_layer()
 

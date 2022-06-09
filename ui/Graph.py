@@ -1,6 +1,6 @@
 from PySide6.QtCore import QMetaObject
 from PySide6.QtGui import QBrush, QPen
-from PySide6.QtWidgets import QFrame, QWidget
+from PySide6.QtWidgets import QFrame, QWidget, QFileDialog
 
 from PiConstant import HIGHLIGHTCOLOR
 from PiDrawObj.PiGraphView import PiGraphView
@@ -110,6 +110,21 @@ class Graph(QWidget):
         feature_id + 2 TODO"""
         print('saving...')
         pass
+
+    def save_image(self):
+        all_types = ['png (*.png)', 'jpg (*.jpg, *.jpeg)', '*.*']
+        fp, ft = QFileDialog.getSaveFileName(QWidget(), "Save As...", filter=';;'.join(all_types))
+        # fp -> file path,ft -> file extension
+        match all_types.index(ft):
+            case 0:
+                extension = '.png'
+            case 1:
+                extension = '.jpg'
+            case 2 | _:
+                pass
+        # extension就是文件后缀名
+        print(fp, ft)
+        # put your code here
 
     def render_label(self, layer_id):
         """添加标注（动态） TODO"""
