@@ -210,22 +210,20 @@ class LayerTree(QWidget):
         current_index = index
 
     def item_changed(self, item: LayerItem):
+        print(item.index())
+        new_v = self.get_visible_layers(item)
+        print(new_v)
+
         if item.type() is QItemType.Layer:
             layer_id = item.layer
             self.graph.set_visibility(layer_id, item.visible)
-            new_v = self.get_visible_layers()
-
-            if new_v.count(layer_id) == 2:
-                indices = [i for i, x in enumerate(new_v) if x == layer_id]
-                new_v.pop(indices[item.row() == indices[0]])
-
             for i in range(len(new_v) - 1, -1, -1):
                 self.graph.set_zvalue(new_v[i], 10000 - i)
         else:
-            new_v = self.get_visible_layers()
-            print(new_v, item.row())
-            for _item in item.get_all_children():
-                self.graph.set_visibility(_item.layer, _item.visible)
+            all_children = item.get_all_children(item)
+            if all_children:
+                for _item in all_children:
+                    self.graph.set_visibility(_item.layer, _item.visible)
 
     def get_layer_tree(self):
         """获取递归图层树，为嵌套列表"""
@@ -239,11 +237,11 @@ class LayerTree(QWidget):
             else:
                 self.add_layer(layer.id, layer.name)
 
-    def get_visible_layers(self):
+    def get_visible_layers(self, item):
         """获取需要被渲染的图层"""
         lrs = []
         for i in range(self.sim.rowCount()):
-            lrs += self.sim.item(i).get_visible_layers()
+            lrs += self.sim.item(i).get_visible_layers(item)
 
         return lrs
 
