@@ -196,7 +196,7 @@ class LayerTree(QWidget):
 
         # test loading layers
         load_layer_act = QAction(self)
-        load_layer_act.setText(u'Load test layer')
+        load_layer_act.setText(u'Load file')
         load_layer_act.triggered.connect(load_test_layers)
 
         self.emptyContextMenu.addAction(self.ui.action_add_layer_group)
@@ -233,11 +233,10 @@ class LayerTree(QWidget):
         current_index = index
 
     def item_changed(self, item: LayerItem):
-        self.graph.set_name(item.layer, item.text())
-
         if item.type() is QItemType.Layer:
             layer_id = item.layer
             self.graph.set_visibility(layer_id, item.visible)
+            self.graph.set_name(layer_id, item.text())
         elif all_children := item.get_all_children(item):
             for _item in all_children:
                 self.graph.set_visibility(_item.layer, _item.visible)
