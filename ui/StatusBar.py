@@ -39,7 +39,7 @@ class PiComboBox(QComboBox):
         self.set_scale(scales_num[index])
 
     def update_scale(self, scale) -> None:
-        self.lineEdit().setText(str(scale))
+        self.lineEdit().setText(f'1:{int(scale)}')
 
 
 class PiStatusBar(QStatusBar):

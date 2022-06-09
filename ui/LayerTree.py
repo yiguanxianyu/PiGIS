@@ -1,6 +1,7 @@
 from PySide6.QtCore import QModelIndex
 from PySide6.QtGui import QStandardItemModel, QStandardItem, QCursor, QAction
-from PySide6.QtWidgets import QWidget, QMenu, QColorDialog
+from PySide6.QtWidgets import QWidget, QMenu
+from pandas import DataFrame
 
 from PiMapObj.PiLayer import PiLayer
 from constants import QItemType
@@ -92,16 +93,6 @@ class LayerTree(QWidget):
     def create_layer_menu(self):
         """创建图层的右键菜单"""
 
-        def show_color_dialog():
-            s = QColorDialog.getColor()
-            print(s)
-            # TODO: 设置颜色
-            self.get_current_item().set_color(s)
-
-        choose_color_act = QAction(self)
-        choose_color_act.setText('Choose color')
-        choose_color_act.triggered.connect(show_color_dialog)
-
         def show_attributes_table():
             layer = self.graph.get_layer_by_id(self.get_current_item().layer)
             self.ab = AttributesTable(self.graph, layer)
@@ -112,8 +103,13 @@ class LayerTree(QWidget):
         show_attributes_table_act.triggered.connect(show_attributes_table)
 
         def show_symbology_page():
-            self.sp = SymbologyPage(None)
-            self.sp.show()
+            layer: PiLayer = self.graph.get_layer_by_id(self.get_current_item().layer)
+            attr_table = layer.get_attr_table()
+            df = DataFrame(attr_table)
+            fields = layer.get_attr_table().dtype.names[1:]
+            nums = [len(set(df.iloc[:, i + 1])) for i in range(len(fields))]
+            self.sp = SymbologyPage(self, nums, fields)
+            self.sp.open()
 
         show_symbology_page_act = QAction(self)
         show_symbology_page_act.setText('Symbology')
@@ -134,7 +130,6 @@ class LayerTree(QWidget):
         self.layerContextMenu.addAction(u'This is Layer')
         self.layerContextMenu.addAction(show_label_act)
         self.layerContextMenu.addAction(remove_layer_act)
-        self.layerContextMenu.addAction(choose_color_act)
         self.layerContextMenu.addAction(show_attributes_table_act)
         self.layerContextMenu.addAction(show_symbology_page_act)
 
@@ -161,6 +156,7 @@ class LayerTree(QWidget):
                 layer1.load(arg0, "PiMapObj/图层文件/图层文件坐标系统说明.txt")
                 self.add_layer(layer1.id, f'{layer1.name}{arg1}')
                 self.graph.load_layer(layer1)
+
             _load("PiMapObj/图层文件/国界线.lay", '1')
             _load("PiMapObj/图层文件/省级行政区.lay", '2')
             _load("PiMapObj/图层文件/省会城市.lay", '3')
