@@ -10,6 +10,8 @@ from PiMapObj.PiPolygon import PiPolygon
 from PiMapObj.PiPolyline import PiPolyline
 from PiConstant import PiGeometryTypeConstant, PiGraphModeConstant
         
+import math
+
 class PiGraphicsItem(QGraphicsPathItem):
     def __init__(self, geometry: PiPolyline|PiPolygon|PiPoint, parent: QGraphicsItem, draw_control,pen:QPen,brush:QBrush):
         super().__init__(parent = parent)
@@ -159,4 +161,5 @@ class PiGraphicsTextItem(QGraphicsTextItem):
         font.setPointSizeF(50)
         self.setFont(font)
         self.setDefaultTextColor(Qt.blue)
+        self.setZValue( math.inf )
 

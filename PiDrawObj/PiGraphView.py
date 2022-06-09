@@ -121,6 +121,8 @@ class PiGraphView(QGraphicsView):
             self.mode_turn_add_layer(test_layer_id)
         elif event.text() == "s":
             self.visulize_text_layer(test_layer_id)
+        elif event.text() == "l":
+            self.draw_control.save_fig('lalala.bmp')
 
         # return super().keyReleaseEvent(event)
 
