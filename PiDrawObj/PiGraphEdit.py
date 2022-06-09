@@ -2,7 +2,7 @@ from typing import Sequence
 from PySide6.QtCore import QPointF, Qt
 from PySide6.QtGui import QBrush, QMouseEvent, QPainterPath, QPen
 from PySide6.QtWidgets import QGraphicsEllipseItem, QGraphicsItem, QGraphicsPathItem, QGraphicsSceneMouseEvent, QRubberBand
-from PiConstant import EDITBRUSHCOLOR, EDITPENCOLOR, PiEditModeConstant, PiGeometryTypeConstant
+from PiConstant import DEFAULT_POINT_RADIUS, EDITBRUSHCOLOR, EDITPENCOLOR, PiEditModeConstant, PiGeometryTypeConstant
 from PiMapObj.PiLayer import PiLayer
 from PySide6.QtWidgets import QRubberBand
 
@@ -15,24 +15,40 @@ class PiEditCachePointItem(QGraphicsEllipseItem):
     def __init__(self,point:QPointF,edit_cache):
         self.init_x = point.x()
         self.init_y = point.y()
-        super().__init__(self.init_x-0.5,self.init_y-0.5,1,1)
+        self.edit_cache = edit_cache
+        if edit_cache.feature.geometry_type == PiGeometryTypeConstant.multipoint.value:
+            r = DEFAULT_POINT_RADIUS
+            super().__init__(self.init_x-r,self.init_y-r ,2 * r ,2 * r)
+        else:
+            super().__init__(self.init_x-0.5,self.init_y-0.5 ,1 ,1)
         super().setPen(QPen(Qt.red))
         super().setBrush(QBrush(Qt.gray))
-        self.edit_cache = edit_cache
         self.setFlags(QGraphicsItem.ItemIsMovable)
         self.index = self.edit_cache.count
+        self.start_pos = None
         self.edit_cache.count += 1
     
     def mousePressEvent(self, event: QGraphicsSceneMouseEvent) -> None:
+        if self.start_pos == None:
+            self.start_pos = QPointF(self.get_x(),self.get_y())
+        else:
+            pass
         return super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event: QGraphicsSceneMouseEvent) -> None:
         pos = super().pos()
-        self.edit_cache.set_cache_element_at(self.index,self.init_x+pos.x(),self.init_y+pos.y())
+        if self.edit_cache.feature.geometry_type == PiGeometryTypeConstant.multipoint.value:
+            path = QPainterPath(QPointF(self.init_x,self.init_y))
+            path.lineTo(QPointF(self.get_x(),self.get_y()))
+            self.edit_cache.cacheItem.setPath(path)
+            pass
+        else:
+            self.edit_cache.set_cache_element_at(self.index,self.init_x+pos.x(),self.init_y+pos.y())
         self.edit_cache.add_changed_point(self)
         return super().mouseMoveEvent(event)
 
     def mouseReleaseEvent(self, event: QGraphicsSceneMouseEvent) -> None:
+        self.start_pos = None
         return super().mouseReleaseEvent(event)
     
     def get_x(self):
@@ -49,7 +65,11 @@ class PiEditCacheItem():
         self.feature = self.feature_item.feature
         self.cacheItem = QGraphicsPathItem()
         self.cacheItem.setPen(QPen(EDITPENCOLOR))
-        self.cacheItem.setBrush(QBrush(EDITBRUSHCOLOR))
+        if self.feature.geometry_type == PiGeometryTypeConstant.multipolygon.value:
+            self.cacheItem.setBrush(QBrush(EDITBRUSHCOLOR))
+        else:
+            self.cacheItem.setBrush(QBrush(Qt.transparent))
+        self.cacheItem.setZValue(9999)
         self.draw_control.scene.addItem(self.cacheItem)
         self.changed_point_list:Sequence[PiEditCachePointItem] = []
         self.load()
@@ -63,6 +83,7 @@ class PiEditCacheItem():
         self.points = [[PiEditCachePointItem(point+pos,self) for point in point_list] for point_list in self.point_lists]
         for point_list in self.points:
             for point in point_list:
+                point.setZValue(9999)
                 self.draw_control.scene.addItem(point)
         #print(self.point_lists)
 
@@ -88,7 +109,7 @@ class PiEditCacheItem():
             # 应用编辑(显示上)
             if item_list[order].geometry.type == PiGeometryTypeConstant.point:
                 path_list[order] = QPainterPath()
-                path_list[order].addEllipse(x,y,0.5,0.5)
+                path_list[order].addEllipse(QPointF(x,y),DEFAULT_POINT_RADIUS,DEFAULT_POINT_RADIUS)
             else:
                 path_list[order].setElementPositionAt(index,x,y)
             self.point_lists[order][index] = QPointF(x,y)

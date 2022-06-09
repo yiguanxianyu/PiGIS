@@ -31,7 +31,6 @@ class PiLayer():
 
     def load(self, file_path, proj_path=None):
         '''加载坐标信息'''
-        print(self.id)
         self.change = True
         self.name = file_path[:-4]
         load_type = file_path[-3:]

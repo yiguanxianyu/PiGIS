@@ -17,8 +17,8 @@ class Graph(QWidget):
         self.layerTree = None
         self.ui = Ui_Graph()
         self.ui.setupUi(self)
-
-        self.ui.graphicsView = PiGraphView(self)
+        self.view_control = PiGraphView(self)
+        self.ui.graphicsView = self.view_control
         self.ui.graphicsView.grabKeyboard()
         self.ui.graphicsView.setFrameShape(QFrame.NoFrame)
         self.ui.graphicsView.setLineWidth(0)
@@ -106,13 +106,11 @@ class Graph(QWidget):
 
     def set_scale(self, scale):
         """设置比例尺，传入的是1:x的那个x缩放点就
-        怎么方便怎么来吧，可以直接用当前中心点什么的 TODO"""
-        print('setting scale', scale)
-        pass
+        怎么方便怎么来吧，可以直接用当前中心点什么的"""
+        self.view_control.set_show_scale(self.draw_control.scale / scale)
 
     def set_features_visibility(self, layer_id, ids: list[int], visibility: bool):
         """隐藏指定的要素 TODO"""
-        # 暂时先用删除顶一下
         self.draw_control.set_features_visibility(layer_id, ids, visibility)
 
     def add_empty_features(self, layer_id, ids: list[int]):

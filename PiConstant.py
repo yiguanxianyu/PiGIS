@@ -1,6 +1,7 @@
 from enum import Enum
+from PySide6.QtCore import Qt
 
-from PySide6.QtGui import QColor
+from PySide6.QtGui import QBrush, QColor
 
 class PiValueTypeConstant(): # 属性值类型参数
     def __init__(self):
@@ -109,6 +110,7 @@ class PiGraphModeConstant(Enum):
     editable = 0
     moveable = 1
     dragable = 2
+    addable = 3
 
 class PiLayerStatusConstant(Enum):
     normal = 0
@@ -124,3 +126,4 @@ class PiEditModeConstant(Enum):
 HIGHLIGHTCOLOR = QColor(144,238,144)
 EDITPENCOLOR = QColor(255,0,0,100)
 EDITBRUSHCOLOR = QColor(0,0,0,100)
+DEFAULT_POINT_RADIUS = 10
