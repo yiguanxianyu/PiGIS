@@ -142,12 +142,16 @@ class LayerTree(QWidget):
         show_symbology_page_act.setText('Symbology')
         show_symbology_page_act.triggered.connect(show_symbology_page)
 
-        def show_label():
-            self.graph.render_label(self.get_current_item().layer)
+        def toggle_annotation():
+            layer: PiLayer = self.graph.get_layer_by_id(self.get_current_item().layer)
+            if layer.annotation_status:
+                self.graph.remove_annotation(layer.id)
+            else:
+                self.graph.render_annotation(layer.id)
 
-        show_label_act = QAction(self)
-        show_label_act.setText('Show Label')
-        show_label_act.triggered.connect(show_label)
+        toggle_anno_act = QAction(self)
+        toggle_anno_act.setText('Toggle Annotation')
+        toggle_anno_act.triggered.connect(toggle_annotation)
 
         # 删除 Action
         remove_layer_act = QAction(self)
@@ -155,8 +159,8 @@ class LayerTree(QWidget):
         remove_layer_act.triggered.connect(self.sim.remove_layer)
 
         self.layerContextMenu.addAction(u'This is Layer')
-        self.layerContextMenu.addAction(show_label_act)
         self.layerContextMenu.addAction(remove_layer_act)
+        self.layerContextMenu.addAction(toggle_anno_act)
         self.layerContextMenu.addAction(show_attributes_table_act)
         self.layerContextMenu.addAction(show_symbology_page_act)
 
