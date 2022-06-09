@@ -92,21 +92,25 @@ class Graph(QWidget):
     def set_symbology_unique_value(self, layer_id, pen, brush_dict):
         """唯一值渲染 TODO"""
         print(len(brush_dict), brush_dict)
-        layer = self.get_layer_by_id(layer_id)
+        item_collection = self.draw_control.item_collections[layer_id]
         for feature_id, brush in brush_dict.items():
-            ...
+            item_collection[feature_id].setPen(pen)
+            item_collection[feature_id].setBrush(brush)
 
     def set_symbology_single_value(self, layer_id, pen, brush):
         """单一值渲染，不需要feature_id了，直接渲染就可以 TODO"""
-        layer = self.get_layer_by_id(layer_id)
-        ...
+        item_collection = self.draw_control.item_collections[layer_id]
+        for item in item_collection.values():
+            item.setPen(pen)
+            item.setBrush(brush)
 
     def set_symbology_by_level(self, layer_id, pen, brush_dict):
         """分级渲染 TODO"""
         print(len(brush_dict), brush_dict)
-        layer = self.get_layer_by_id(layer_id)
+        item_collection = self.draw_control.item_collections[layer_id]
         for feature_id, brush in brush_dict.items():
-            ...
+            item_collection[feature_id].setPen(pen)
+            item_collection[feature_id].setBrush(brush)
 
     def set_scale(self, scale):
         """设置比例尺，传入的是1:x的那个x缩放点就
