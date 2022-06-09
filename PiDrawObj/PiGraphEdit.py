@@ -12,7 +12,7 @@ from PiMapObj.PiLayer import PiLayer
 
 class PiEditCachePointItem(QGraphicsEllipseItem):
     def __init__(self,point:QPointF):
-        super().__init__(point.x()-1,point.y()-1,2,2)
+        super().__init__(point.x()-2,point.y()-2,4,4)
         super().setPen(QPen(Qt.red))
         super().setBrush(QBrush(Qt.gray))
 
@@ -23,14 +23,17 @@ class PiEditCacheItem():
         self.feature_item = feature_item
         self.feature = self.feature_item.feature
 
-        cache =  self.feature_item.shape()
+        cache =  self.feature_item.get_cache()
         self.cacheItem = QGraphicsPathItem(cache)
         self.cacheItem.setPen(QPen(Qt.red))
         self.cacheItem.setBrush(QBrush(Qt.gray))
         self.draw_control.scene.addItem(self.cacheItem)
 
-        self.points = []
         self.point_lists = feature_item.get_point_lists()
+        self.points = [[PiEditCachePointItem(point) for point in point_list] for point_list in self.point_lists]
+        for point_list in self.points:
+            for point in point_list:
+                self.draw_control.scene.addItem(point)
         #print(self.point_lists)
     
     def draw(self):
@@ -39,6 +42,9 @@ class PiEditCacheItem():
 
     def end_edit(self):
         self.draw_control.scene.removeItem(self.cacheItem)
+        for point_list in self.points:
+            for point in point_list:
+                self.draw_control.scene.removeItem(point)
         
 
 class PiGraphEdit():
@@ -62,6 +68,9 @@ class PiGraphEdit():
         layer_id = self.edit_on.id
         for item in self.draw_control.item_collections[layer_id].values():
             item.accept_edit = False
+            if item.edit_cache != None:
+                item.edit_cache.end_edit()
+                item.edit_cache = None
         self.edit_on = None
     
     def mousePressEvent(self,event:QMouseEvent):

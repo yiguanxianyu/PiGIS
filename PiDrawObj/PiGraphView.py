@@ -105,17 +105,17 @@ class PiGraphView(QGraphicsView):
 
     def mode_turn_move(self):
         if self.mode != PiGraphModeConstant.moveable:
-            self.drag_control.end_drag()
-            self.edit_control.end_edit()
             self.mode = PiGraphModeConstant.moveable
 
     def mode_turn_drag_layer(self,layer_id):
         if self.mode != PiGraphModeConstant.dragable:
+            self.edit_control.end_edit()
             self.drag_control.start_drag_on(layer_id)
             self.mode = PiGraphModeConstant.dragable
 
     def mode_turn_edit_layer(self,layer_id):
         if self.mode != PiGraphModeConstant.editable:
+            self.drag_control.end_drag()
             self.edit_control.start_edit_on(layer_id)
             self.mode = PiGraphModeConstant.editable
 

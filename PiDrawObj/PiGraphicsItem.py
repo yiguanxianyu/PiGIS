@@ -77,9 +77,14 @@ class PiGraphicsItemGroup(QGraphicsItemGroup):
         for item in self.childItems():
             path.addPath(item.shape())
         return path
-    
+
+    def get_cache(self):
+        pos = super().pos() - self.draw.expand_pos
+        return self.shape().translated(pos)
+
     def get_point_lists(self):
-        return [item.get_point_list() for item in self.childItems()]
+        pos = super().pos() - self.draw.expand_pos
+        return [[point+pos for point in item.get_point_list()] for item in self.childItems()]
 
     def setZValue(self, z: float) -> None:
         return super().setZValue(z)
@@ -91,13 +96,14 @@ class PiGraphicsItemGroup(QGraphicsItemGroup):
                 self.edit_cache = PiEditCacheItem(self.draw,self)
             elif event.button() == Qt.MouseButton.RightButton and self.edit_cache != None:
                 self.edit_cache.end_edit()
+                self.edit_cache = None
                 print("end edit feature %d" % self.id)
         else:
             super().mouseDoubleClickEvent(event)
 
     def mouseReleaseEvent(self, event: QGraphicsSceneMouseEvent) -> None:
         super().mouseReleaseEvent(event)
-        if self.draw.view.mode == PiGraphModeConstant.moveable:
+        if self.draw.view.mode == PiGraphModeConstant.dragable:
             now_pos = super().pos()
             delta_pos = now_pos - self.last_pos
             self.feature.translate(delta_pos.x() * self.draw.scale, - delta_pos.y() * self.draw.scale)
