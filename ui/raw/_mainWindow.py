@@ -17,8 +17,7 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QMainWindow, QMenu,
-    QMenuBar, QSizePolicy, QStatusBar, QToolBar,
-    QWidget)
+    QMenuBar, QSizePolicy, QToolBar, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -113,14 +112,6 @@ class Ui_MainWindow(object):
         self.menuProject = QMenu(self.menuBar)
         self.menuProject.setObjectName(u"menuProject")
         MainWindow.setMenuBar(self.menuBar)
-        self.statusBar = QStatusBar(MainWindow)
-        self.statusBar.setObjectName(u"statusBar")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.statusBar.sizePolicy().hasHeightForWidth())
-        self.statusBar.setSizePolicy(sizePolicy1)
-        MainWindow.setStatusBar(self.statusBar)
         self.toolBar = QToolBar(MainWindow)
         self.toolBar.setObjectName(u"toolBar")
         self.toolBar.setAllowedAreas(Qt.BottomToolBarArea|Qt.TopToolBarArea)
