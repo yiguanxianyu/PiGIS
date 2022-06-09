@@ -23,13 +23,7 @@ class PiGraphDraw(QPaintDevice):
         self.item_box = QGraphicsItemGroup(None)
         self.item_box.setPos(0, 0)
         self.item_collections = {}
-        self.text_collections = {
-            #{
-                # layer.id:{
-                #      feature.id:textitem
-                # }
-            # },
-        }
+        self.text_collections = {}
         self.layer_added = False
         self.width = 1000
 
@@ -41,6 +35,7 @@ class PiGraphDraw(QPaintDevice):
         id = layer.id
         self.layers[id] = layer
         self.item_collections[id] = {}
+        self.text_collections[id] = {}
         # self.item_groups[id] = QGraphicsItemGroup()
         self.reset_draw_attr()
         self.load_layer_data(layer)
@@ -50,11 +45,11 @@ class PiGraphDraw(QPaintDevice):
         if self.layers[layer_id].visibility is True:
             self.hide_layer(layer_id)
         del self.item_collections[layer_id]
+        del self.text_collections[layer_id]
         del self.layers[layer_id]
 
     def visulize_layer(self, layer_id):
         if self.layers[layer_id].visibility == True:
-            #print(self.layers[layer_id].geometry_type)
             return
         for item in self.item_collections[layer_id].values():
             self.scene.addItem(item)

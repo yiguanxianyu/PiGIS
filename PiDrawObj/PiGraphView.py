@@ -21,6 +21,10 @@ class PiGraphView(QGraphicsView):
         self.show_scale = 1
         self.ui_init()
         self.display_init()
+        self.window = None
+    
+    def set_window(self,window):
+        self.window = window
 
     def ui_init(self):
         # 绘画控制类
@@ -42,6 +46,7 @@ class PiGraphView(QGraphicsView):
         ratio = show_scale / self.show_scale
         self.scale(ratio, ratio)
         self.show_scale = show_scale
+        self.window.update_scale(self.draw_control.scale / self.show_scale)
 
     def centerOn(self, pos: QPointF | QPoint):
         super().centerOn(pos)
@@ -51,9 +56,7 @@ class PiGraphView(QGraphicsView):
         if self.mode == PiGraphModeConstant.moveable:
             wheelValue = event.angleDelta().y()
             ratio = wheelValue / 1200 + 1
-            self.scale(ratio, ratio)
-            self.show_scale *= ratio
-            self.centerOn(self.center)
+            self.set_show_scale(self.show_scale*ratio)
 
     def super_mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
         return super().mouseMoveEvent(event)
