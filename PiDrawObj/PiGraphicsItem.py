@@ -149,9 +149,9 @@ class PiGraphicsItemGroup(QGraphicsItemGroup):
         QMessageBox.about(self.draw.view.window,'识别要素',message)
 
     def get_text_pos(self):
+        rect = self.boundingRect()
         match self.geometry_type:
             case PiGeometryTypeConstant.multipolygon.value:
-                rect = self.boundingRect()
                 point = rect.center()
                 if self.contains(point):
                     return point
@@ -162,6 +162,11 @@ class PiGraphicsItemGroup(QGraphicsItemGroup):
                         if self.contains(np):
                             return np
                 return point
+            case PiGeometryTypeConstant.multipoint.value:
+                return rect.topRight()
+            case PiGeometryTypeConstant.multipolyline.value:
+                path = self.shape()
+                return path.pointAtPercent(0.5)
 
 class PiGraphicsTextItem(QGraphicsTextItem):
     def __init__(self,text, parent:PiGraphicsItemGroup = None):
