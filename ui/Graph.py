@@ -89,20 +89,24 @@ class Graph(QWidget):
         """改变某个 layer 的 z level"""
         self.draw_control.set_zvalue_layer(layer_id, z_level)
 
-    def set_symbology_point(self, layer_id, _dict):
-        """设定符号化方式，还没太想明白 TODO"""
-        for feature_id, value in _dict.items():
-            pen, brush = value
+    def set_symbology_unique_value(self, layer_id, pen, brush_dict):
+        """唯一值渲染 TODO"""
+        print(len(brush_dict), brush_dict)
+        layer = self.get_layer_by_id(layer_id)
+        for feature_id, brush in brush_dict.items():
+            ...
 
-    def set_symbology_polyline(self, layer_id, _dict):
-        """设定符号化方式，还没太想明白 TODO"""
-        for feature_id, pen in _dict.items():
-            pass
+    def set_symbology_single_value(self, layer_id, pen, brush):
+        """单一值渲染，不需要feature_id了，直接渲染就可以 TODO"""
+        layer = self.get_layer_by_id(layer_id)
+        ...
 
-    def set_symbology_polygon(self, layer_id, _dict):
-        """设定符号化方式，还没太想明白 TODO"""
-        for feature_id, value in _dict.items():
-            pen, brush = value
+    def set_symbology_by_level(self, layer_id, pen, brush_dict):
+        """分级渲染 TODO"""
+        print(len(brush_dict), brush_dict)
+        layer = self.get_layer_by_id(layer_id)
+        for feature_id, brush in brush_dict.items():
+            ...
 
     def set_scale(self, scale):
         """设置比例尺，传入的是1:x的那个x缩放点就

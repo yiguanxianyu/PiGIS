@@ -1,3 +1,4 @@
+import numpy as np
 from PySide6.QtCore import QModelIndex
 from PySide6.QtGui import QStandardItemModel, QStandardItem, QCursor, QAction
 from PySide6.QtWidgets import QWidget, QMenu
@@ -108,8 +109,34 @@ class LayerTree(QWidget):
             df = DataFrame(attr_table)
             fields = layer.get_attr_table().dtype.names[1:]
             nums = [len(set(df.iloc[:, i + 1])) for i in range(len(fields))]
-            self.sp = SymbologyPage(self, nums, fields)
-            self.sp.open()
+            sp = SymbologyPage(self, nums, fields)
+            if sp.exec():
+                type_, pen, brush, *args = sp.result()
+                if type_ == 0:  # 唯一值
+                    data = np.array(df.iloc[:, [0, args[0] + 1]])
+                    sorted_data = data[np.argsort(data[:, 1])]
+                    brush_dict, i = {}, 0
+                    for item in sorted_data:
+                        fid, value = item
+                        brush_dict[fid] = brush[i]
+                        if value not in brush_dict:
+                            i += 1
+                    self.graph.set_symbology_unique_value(layer.id, pen, brush_dict)
+
+                elif type_ == 1:  # 分级
+                    data = np.array(df.iloc[:, [0, args[0] + 1]])
+                    sorted_data = data[np.argsort(data[:, 1])]
+                    sorted_fids = sorted_data[:, 0]
+                    levels = np.linspace(0, len(sorted_fids), len(brush) + 1)
+                    levels = np.round(levels).astype(int)
+                    brush_dict = {}
+                    for i in range(len(levels) - 1):
+                        for fid in sorted_fids[levels[i]:levels[i + 1]]:
+                            brush_dict[fid] = brush[i]
+                    self.graph.set_symbology_by_level(layer.id, pen, brush_dict)
+
+                else:  # 单值
+                    self.graph.set_symbology_single_value(layer.id, pen, brush)
 
         show_symbology_page_act = QAction(self)
         show_symbology_page_act.setText('Symbology')
