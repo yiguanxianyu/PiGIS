@@ -21,6 +21,7 @@ class PiGraphView(QGraphicsView):
         self.show_scale = 1
         self.ui_init()
         self.display_init()
+        self.setMouseTracking(True)
         self.window = None
     
     def set_window(self,window):
@@ -79,6 +80,10 @@ class PiGraphView(QGraphicsView):
                 self.add_control.mousePressEvent(event)
 
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
+        view_pos = QPoint(event.x(),event.y())
+        scene_pos = self.mapToScene(view_pos)
+        scale = self.draw_control.scale
+        self.window.statusBar.update_coord(scene_pos.x()*scale, scene_pos.y()*scale)
         match self.mode:
             case PiGraphModeConstant.dragable:
                 self.drag_control.mouseMoveEvent(event)
@@ -145,7 +150,7 @@ class PiGraphView(QGraphicsView):
             self.edit_control.end_edit()
             self.drag_control.end_drag()
             self.mode = PiGraphModeConstant.addable
-        
+
     def window_to_map(self,window,window_pos:QPoint) -> QPointF:
         view_pos = self.mapFrom(window,window_pos)
         scene_pos = self.mapToScene(view_pos)
