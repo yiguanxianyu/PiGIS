@@ -94,7 +94,18 @@ class Graph(QWidget):
         pass
 
     def set_scale(self, scale):
-        """设置比例尺，传入的是1:x的那个x TODO"""
+        """设置比例尺，传入的是1:x的那个x缩放点就
+        怎么方便怎么来吧，可以直接用当前中心点什么的 TODO"""
+        pass
+
+    def hide_features(self, layer_id, ids: list[int]):
+        """隐藏指定的要素 TODO"""
+        # 暂时先用删除顶一下
+        self.remove_features(layer_id, ids)
+
+    def add_empty_features(self, layer_id, ids: list[int]):
+        """添加空要素，id已经被给定了,目前的 feature_id
+        生成方式是最大的 feature_id + 2 TODO"""
         pass
 
     def remove_features(self, layer_id, ids: list[int]):
@@ -102,14 +113,17 @@ class Graph(QWidget):
         self.cancel_highlight_feature(layer_id, ids)
         self.draw_control.remove_features(layer_id, ids)
 
-    def save_attr_table(self, layer_id, new_attr_data):
-        """保存修改后的属性表，数据格式和传进来的一样，
+    def edit_feature_attr(self, layer_id, added, edited, removed):
+        """保存修改后的属性表，数据格式为 list[tuple]，每个tuple
         为元组组成的ndarray，第一位是隐藏的 feature_id
         注意：因为可能会在属性表内新增要素，所以不是所有的 feature_id
         都存在图里，需要判断一下。目前的feature_id生成方式是最大的
         feature_id + 2 TODO"""
-        print('saving...')
-        pass
+        dtypes = [added.dtype[i] for i in range(1, len(added.dtype))]
+        fields = [added.dtype.names[i] for i in range(1, len(added.dtype))]
+        for i in added:
+            # i[0]  feature_id
+            pass
 
     def save_image(self):
         """根据文件路径和后缀名将地图保存成图片"""
@@ -121,12 +135,10 @@ class Graph(QWidget):
                 extension = '.png'
             case 1:
                 extension = '.jpg'
-            case 2:
+            case 2 | _:
                 extension = '.bmp'
-            case _:
-                pass
         # extension就是文件后缀名
-        print(fp, ft)
+        print(fp, extension)
         # put your code here
 
     def render_label(self, layer_id):

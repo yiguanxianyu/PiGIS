@@ -174,6 +174,10 @@ class AttributesTable(QWidget):
         self.tableModel = TableModel(self, layer.get_attr_table())
         self.tableView.setModel(self.tableModel)
 
+        self.edited = []
+        self.added = []
+        self.removed = []
+
     def focusInEvent(self, e) -> None:
         self.grabKeyboard()
 
@@ -182,7 +186,7 @@ class AttributesTable(QWidget):
 
     def save(self):
         new_data = self.tableModel.save()
-        self.graph.save_attr_table(self.layer_id, new_data)
+        self.graph.edit_feature_attr(self.layer_id, new_data)
 
     def get_selected_features(self):
         data = self.tableModel.data_
@@ -211,7 +215,7 @@ class AttributesTable(QWidget):
                 for row in rows:
                     self.tableModel.removeRow(row)
 
-            self.graph.remove_features(self.layer_id, ids)
+            self.graph.hide_features(self.layer_id, ids)
 
     def add_field(self):
         pass
