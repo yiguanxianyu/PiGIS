@@ -99,7 +99,7 @@ class Graph(QWidget):
         for feature_id, pen in _dict.items():
             pass
 
-    def set_symbology_poltgon(self, layer_id, _dict):
+    def set_symbology_polygon(self, layer_id, _dict):
         """设定符号化方式，还没太想明白 TODO"""
         for feature_id, value in _dict.items():
             pen, brush = value
@@ -108,11 +108,9 @@ class Graph(QWidget):
         """设置比例尺，传入的是1:x的那个x缩放点就
         怎么方便怎么来吧，可以直接用当前中心点什么的"""
         self.view_control.set_show_scale(self.draw_control.scale / scale)
-        pass
 
-    def set_features_visibility(self, layer_id, ids: list[int],visibility:bool):
-        """隐藏指定的要素"""
-        # 暂时先用删除顶一下
+    def set_features_visibility(self, layer_id, ids: list[int], visibility: bool):
+        """隐藏指定的要素 TODO"""
         self.draw_control.set_features_visibility(layer_id, ids, visibility)
 
     def add_empty_features(self, layer_id, ids: list[int]):
