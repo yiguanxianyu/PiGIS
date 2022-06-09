@@ -2,7 +2,7 @@ from typing import Sequence
 from PySide6.QtCore import QPointF, Qt
 from PySide6.QtGui import QBrush, QMouseEvent, QPainterPath, QPen
 from PySide6.QtWidgets import QGraphicsEllipseItem, QGraphicsItem, QGraphicsPathItem, QGraphicsSceneMouseEvent, QRubberBand
-from PiConstant import EDITBRUSHCOLOR, EDITPENCOLOR, PiEditModeConstant
+from PiConstant import EDITBRUSHCOLOR, EDITPENCOLOR, PiEditModeConstant, PiGeometryTypeConstant
 from PiMapObj.PiLayer import PiLayer
 from PySide6.QtWidgets import QRubberBand
 
@@ -74,24 +74,30 @@ class PiEditCacheItem():
         self.changed_point_list.append(point)
 
     def end_edit(self):
-        # 应用编辑(显示上)
         pos = self.feature_item.pos()
-        item_list:Sequence[QGraphicsPathItem] = self.feature_item.childItems()
+        item_list = self.feature_item.childItems()
         path_list = [item.path() for item in item_list]
         for point in self.changed_point_list:
             order = 0
             index,x,y = point.index,point.get_x()-pos.x(),point.get_y()-pos.y()
-            while index >= path_list[order].elementCount():
-                index -= path_list[order].elementCount()
+            while index >= len(self.point_lists[order]):
+                index -= len(self.point_lists[order])
                 order += 1
-            path_list[order].setElementPositionAt(index,x,y)
-            self.point_lists[order][index]=QPointF(x,y)
+            # 应用编辑(内存上)
+            item_list[order].set_geometry_at(index,x,y)
+            # 应用编辑(显示上)
+            if item_list[order].geometry.type == PiGeometryTypeConstant.point:
+                path_list[order] = QPainterPath()
+                path_list[order].addEllipse(x,y,0.5,0.5)
+            else:
+                path_list[order].setElementPositionAt(index,x,y)
+            self.point_lists[order][index] = QPointF(x,y)
         for i in range(len(item_list)):
-            item = item_list[i]
-            item.setPath(path_list[i])
-            item.point_list = self.point_lists[i]
+            item = item_list[i] 
+            item.setPath(path_list[i]) # 更新图像
+            item.point_list = self.point_lists[i] # 更新点集合
         # 应用编辑（内存上）TODO
-
+        
 
         # 删除编辑缓冲图元
         self.draw_control.scene.removeItem(self.cacheItem)

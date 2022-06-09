@@ -39,6 +39,10 @@ class PiPolygon(PiGeometry.PiGeometry):
             self._x[i] += dx
             self._y[i] += dy
         self._changed = True
+    
+    def set_point(self,index,x,y):
+        self._x[index] = x
+        self._y[index] = y
 
     def clone(self) -> PiPolygon:
         return PiPolygon(self._x, self._y, self._innerx, self._innery)

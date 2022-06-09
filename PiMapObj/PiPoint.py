@@ -34,6 +34,10 @@ class PiPoint(PiGeometry.PiGeometry):
         self._x += dx
         self._y += dy
         self._changed = True
+    
+    def set_point(self,index,x,y):
+        self._x = x
+        self._y = y
 
     def update(self, x, y):
         self._x = x
