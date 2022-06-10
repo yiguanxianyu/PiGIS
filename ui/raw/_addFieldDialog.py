@@ -8,16 +8,10 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractButton, QApplication, QComboBox, QDialog,
-    QDialogButtonBox, QHBoxLayout, QLabel, QLineEdit,
-    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize, Qt)
+from PySide6.QtWidgets import (QComboBox, QDialogButtonBox, QHBoxLayout, QLabel, QLineEdit,
+                               QSizePolicy, QSpacerItem, QVBoxLayout)
+
 
 class Ui_AddFieldDialog(object):
     def setupUi(self, AddFieldDialog):
@@ -58,7 +52,6 @@ class Ui_AddFieldDialog(object):
 
         self.verticalLayout.addWidget(self.maxLengthEdit)
 
-
         self.horizontalLayout.addLayout(self.verticalLayout)
 
         self.verticalLayout_3 = QVBoxLayout()
@@ -75,9 +68,7 @@ class Ui_AddFieldDialog(object):
 
         self.verticalLayout_3.addWidget(self.comboBox)
 
-
         self.horizontalLayout.addLayout(self.verticalLayout_3)
-
 
         self.verticalLayout_2.addLayout(self.horizontalLayout)
 
@@ -88,10 +79,9 @@ class Ui_AddFieldDialog(object):
         self.buttonBox = QDialogButtonBox(AddFieldDialog)
         self.buttonBox.setObjectName(u"buttonBox")
         self.buttonBox.setOrientation(Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
+        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
 
         self.verticalLayout_2.addWidget(self.buttonBox)
-
 
         self.retranslateUi(AddFieldDialog)
         self.buttonBox.accepted.connect(AddFieldDialog.accept)
@@ -99,6 +89,7 @@ class Ui_AddFieldDialog(object):
         self.comboBox.currentIndexChanged.connect(AddFieldDialog.index_changed)
 
         QMetaObject.connectSlotsByName(AddFieldDialog)
+
     # setupUi
 
     def retranslateUi(self, AddFieldDialog):
@@ -107,4 +98,3 @@ class Ui_AddFieldDialog(object):
         self.labelMaxLength.setText(QCoreApplication.translate("AddFieldDialog", u"Max Length", None))
         self.label_2.setText(QCoreApplication.translate("AddFieldDialog", u"Field Type", None))
     # retranslateUi
-

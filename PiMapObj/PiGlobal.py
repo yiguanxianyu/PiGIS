@@ -1,17 +1,17 @@
 import math
 
-'''公共常量
-'''
+"""公共常量
+"""
 
 TYPENAME = ["Pi", "Point", "Polyline", "Polygon", "MultiPoint", "MultiPolyline", "MultiPolygon"]
 
-'''公共变量
-'''
+"""公共变量
+"""
 layer_count = 0
 id_count = 0
 
-'''公用类型
-'''
+"""公用类型
+"""
 
 
 class PiMbr():
@@ -38,8 +38,8 @@ class PiMbr():
     __repr__ = __str__
 
 
-'''公用函数
-'''
+"""公用函数
+"""
 
 
 def calculate_length(x: list, y: list) -> float:

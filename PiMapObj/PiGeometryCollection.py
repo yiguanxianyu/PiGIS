@@ -1,13 +1,13 @@
 from PiMapObj import PiGeometry
 
-'''类别标识
+"""类别标识
 1 PiPoint
 2 PiPolyline
 3 PiPolygon
 4 PiMultiPoint
 5 PiMultiPolyline
 6 PiMultiPolygon
-'''
+"""
 
 
 class PiGeometryCollection(PiGeometry.PiGeometry):
@@ -28,9 +28,9 @@ class PiGeometryCollection(PiGeometry.PiGeometry):
     def get_collection(self):
         return self._collection
 
-    def translate(self,dx,dy):
+    def translate(self, dx, dy):
         for item in self._collection:
-            item.translate(dx,dy)
+            item.translate(dx, dy)
 
     def update_object(self, index, object):
         self._collection[index] = object

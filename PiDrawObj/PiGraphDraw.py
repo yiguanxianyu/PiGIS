@@ -1,6 +1,6 @@
 from PySide6.QtCore import QPointF, QRectF
 from PySide6.QtGui import QPaintDevice, QPainter, QPixmap
-from PySide6.QtWidgets import QGraphicsItemGroup, QGraphicsPathItem, QGraphicsScene, QGraphicsItem, QGraphicsTextItem, QGraphicsView
+from PySide6.QtWidgets import QGraphicsItemGroup, QGraphicsScene, QGraphicsView
 
 from PiDrawObj.PiGraphicsItem import PiGraphicsItemGroup, PiGraphicsTextItem
 
@@ -40,7 +40,7 @@ class PiGraphDraw(QPaintDevice):
         self.reset_draw_attr()
         self.load_layer_data(layer)
         # print(layer.id,layer.geometry_type)
-        
+
     def delete_layer(self, layer_id):
         if self.layers[layer_id].visibility is True:
             self.hide_layer(layer_id)
@@ -65,13 +65,13 @@ class PiGraphDraw(QPaintDevice):
     def set_zvalue_layer(self, layer_id, zvalue):
         for item in self.item_collections[layer_id].values():
             item.setZValue(zvalue)
-    
-    def set_features_visibility(self,layer_id,ids,visibility):
-        if visibility == False:
+
+    def set_features_visibility(self, layer_id, ids, visibility):
+        if visibility is False:
             for feature_id in ids:
                 item = self.item_collections[layer_id][feature_id]
                 self.scene.removeItem(item)
-        elif visibility == True:
+        elif visibility is True:
             for feature_id in ids:
                 item = self.item_collections[layer_id][feature_id]
                 self.scene.addItem(item)
@@ -92,15 +92,15 @@ class PiGraphDraw(QPaintDevice):
         layer_id = layer.id
         item_collection = self.item_collections[layer_id]
         for feature in layer.features.features:
-            item = PiGraphicsItemGroup(layer_id,feature,self.item_box,self,pen,brush)
+            item = PiGraphicsItemGroup(layer_id, feature, self.item_box, self, pen, brush)
             item_collection[feature.id] = item
         self.visulize_layer(layer_id)
 
     def reset_draw_attr(self):
-        '''当添加新图层时刷新绘图参数'''
+        """当添加新图层时刷新绘图参数"""
         self.mbr = None
         for layer in self.layers.values():
-            if self.mbr == None:
+            if self.mbr is None:
                 self.mbr = layer.features.get_mbr()
             else:
                 self.mbr.union(layer.features.get_mbr())
@@ -112,10 +112,10 @@ class PiGraphDraw(QPaintDevice):
         self.mid_x = (self.mbr.minx + self.mbr.maxx) / 2
         self.mid_y = (self.mbr.miny + self.mbr.maxy) / 2
         self.view.centerOn(QPointF(self.mid_x / self.scale, -self.mid_y / self.scale))
-        #self.view.scale(1 / self.view.show_scale, 1 / self.view.show_scale)
-    
-    def add_layer_text(self,layer_id):
-        '''显示元素注记，默认显示第一个字段'''
+        # self.view.scale(1 / self.view.show_scale, 1 / self.view.show_scale)
+
+    def add_layer_text(self, layer_id):
+        """显示元素注记，默认显示第一个字段"""
         layer = self.layers[layer_id]
         index = layer.text_index
         item_collection = self.item_collections[layer_id]
@@ -125,7 +125,7 @@ class PiGraphDraw(QPaintDevice):
             value = feature.attributes.attributes[index].value
             text = str(value)
             item = item_collection[feature_id]
-            text_item = PiGraphicsTextItem(text,item)
+            text_item = PiGraphicsTextItem(text, item)
             text_collection[feature_id] = text_item
             for item in text_collection.values():
                 if item == text_item:
@@ -136,21 +136,21 @@ class PiGraphDraw(QPaintDevice):
                     break
             if text_item != None:
                 self.scene.addItem(text_item)
-    
-    def delete_layer_text(self,layer_id):
-        '''删除元素注记，默认显示第一个字段'''
+
+    def delete_layer_text(self, layer_id):
+        """删除元素注记，默认显示第一个字段"""
         layer = self.layers[layer_id]
         index = layer.text_index
         text_collection = self.text_collections[layer_id]
         for item in text_collection.values():
             self.scene.removeItem(item)
 
-    def save_fig(self,file_path):
+    def save_fig(self, file_path):
         rect = QGraphicsView.viewport(self.view).rect()
         pixmap = QPixmap(rect.size())
         painter = QPainter(pixmap)
         painter.begin(pixmap)
-        self.view.render(painter,QRectF(pixmap.rect()),rect)
+        self.view.render(painter, QRectF(pixmap.rect()), rect)
         painter.end()
         pixmap.save(file_path)
 

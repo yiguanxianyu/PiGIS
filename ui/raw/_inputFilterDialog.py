@@ -8,11 +8,10 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-                            QMetaObject, QObject, QPoint, QRect, QSize, QTime,
-                            QUrl, Qt)
-from PySide6.QtWidgets import (QApplication, QDialog, QLineEdit, QSizePolicy,
-                               QToolButton, QWidget)
+from PySide6.QtCore import (QCoreApplication, QLocale,
+                            QMetaObject, QRect, Qt)
+from PySide6.QtWidgets import (QLineEdit, QSizePolicy,
+                               QToolButton)
 
 
 class Ui_inputFilterDialog(object):

@@ -8,16 +8,9 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractButton, QAbstractItemView, QApplication, QDialog,
-    QDialogButtonBox, QGridLayout, QListWidget, QListWidgetItem,
-    QSizePolicy, QWidget)
+from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt)
+from PySide6.QtWidgets import (QAbstractItemView, QDialogButtonBox, QGridLayout, QListWidget)
+
 
 class Ui_RemoveField(object):
     def setupUi(self, RemoveField):
@@ -36,19 +29,18 @@ class Ui_RemoveField(object):
 
         self.buttonBox = QDialogButtonBox(RemoveField)
         self.buttonBox.setObjectName(u"buttonBox")
-        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
+        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
 
         self.gridLayout.addWidget(self.buttonBox, 1, 0, 1, 1)
-
 
         self.retranslateUi(RemoveField)
         self.buttonBox.rejected.connect(RemoveField.reject)
         self.buttonBox.accepted.connect(RemoveField.field_chosen)
 
         QMetaObject.connectSlotsByName(RemoveField)
+
     # setupUi
 
     def retranslateUi(self, RemoveField):
         RemoveField.setWindowTitle(QCoreApplication.translate("RemoveField", u"Remove Field", None))
     # retranslateUi
-

@@ -8,17 +8,14 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractButton, QApplication, QComboBox, QDialogButtonBox,
-    QHBoxLayout, QLabel, QLineEdit, QPushButton,
-    QSizePolicy, QSpacerItem, QTabWidget, QVBoxLayout,
-    QWidget)
+from PySide6.QtCore import (QCoreApplication, QLocale,
+                            QMetaObject, QSize)
+from PySide6.QtGui import (QFont)
+from PySide6.QtWidgets import (QComboBox, QDialogButtonBox,
+                               QHBoxLayout, QLabel, QLineEdit, QPushButton,
+                               QSizePolicy, QSpacerItem, QTabWidget, QVBoxLayout,
+                               QWidget)
+
 
 class Ui_Symbology(object):
     def setupUi(self, Symbology):
@@ -69,7 +66,6 @@ class Ui_Symbology(object):
 
         self.horizontalLayout.addWidget(self.levelNumberLabel_0)
 
-
         self.verticalLayout_2.addLayout(self.horizontalLayout)
 
         self.horizontalLayout_11 = QHBoxLayout()
@@ -105,7 +101,6 @@ class Ui_Symbology(object):
 
         self.horizontalLayout_11.addItem(self.horizontalSpacer_8)
 
-
         self.verticalLayout_2.addLayout(self.horizontalLayout_11)
 
         self.horizontalLayout_7 = QHBoxLayout()
@@ -137,7 +132,6 @@ class Ui_Symbology(object):
 
         self.horizontalLayout_7.addItem(self.horizontalSpacer_9)
 
-
         self.verticalLayout_2.addLayout(self.horizontalLayout_7)
 
         self.label_14 = QLabel(self.uniqueValue0)
@@ -167,7 +161,6 @@ class Ui_Symbology(object):
         self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer_3)
-
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
 
@@ -208,7 +201,6 @@ class Ui_Symbology(object):
 
         self.horizontalLayout_3.addWidget(self.levelNumberLabel_1)
 
-
         self.verticalLayout_3.addLayout(self.horizontalLayout_3)
 
         self.horizontalLayout_12 = QHBoxLayout()
@@ -245,7 +237,6 @@ class Ui_Symbology(object):
 
         self.horizontalLayout_12.addItem(self.horizontalSpacer_5)
 
-
         self.verticalLayout_3.addLayout(self.horizontalLayout_12)
 
         self.horizontalLayout_5 = QHBoxLayout()
@@ -276,7 +267,6 @@ class Ui_Symbology(object):
         self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_5.addItem(self.horizontalSpacer_10)
-
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_5)
 
@@ -335,7 +325,6 @@ class Ui_Symbology(object):
 
         self.horizontalLayout_13.addItem(self.horizontalSpacer_11)
 
-
         self.verticalLayout_3.addLayout(self.horizontalLayout_13)
 
         self.tabWidget.addTab(self.byLevel1, "")
@@ -383,7 +372,6 @@ class Ui_Symbology(object):
 
         self.horizontalLayout_9.addItem(self.horizontalSpacer_4)
 
-
         self.verticalLayout_5.addLayout(self.horizontalLayout_9)
 
         self.horizontalLayout_4 = QHBoxLayout()
@@ -415,7 +403,6 @@ class Ui_Symbology(object):
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer_6)
 
-
         self.verticalLayout_5.addLayout(self.horizontalLayout_4)
 
         self.label_10 = QLabel(self.singleValue2)
@@ -441,7 +428,6 @@ class Ui_Symbology(object):
 
         self.horizontalLayout_10.addItem(self.horizontalSpacer_7)
 
-
         self.verticalLayout_5.addLayout(self.horizontalLayout_10)
 
         self.tabWidget.addTab(self.singleValue2, "")
@@ -450,10 +436,9 @@ class Ui_Symbology(object):
 
         self.buttonBox = QDialogButtonBox(Symbology)
         self.buttonBox.setObjectName(u"buttonBox")
-        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
+        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
 
         self.verticalLayout.addWidget(self.buttonBox)
-
 
         self.retranslateUi(Symbology)
         self.beginColor_1.clicked.connect(Symbology.set_begin_color)
@@ -481,8 +466,8 @@ class Ui_Symbology(object):
 
         self.tabWidget.setCurrentIndex(1)
 
-
         QMetaObject.connectSlotsByName(Symbology)
+
     # setupUi
 
     def retranslateUi(self, Symbology):
@@ -511,7 +496,8 @@ class Ui_Symbology(object):
         self.label_3.setText(QCoreApplication.translate("Symbology", u"Fill Color", None))
         self.beginColor_1.setText(QCoreApplication.translate("Symbology", u"Begin Color", None))
         self.endColor_2.setText(QCoreApplication.translate("Symbology", u"End Color", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.uniqueValue0), QCoreApplication.translate("Symbology", u"Unique Value", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.uniqueValue0),
+                                  QCoreApplication.translate("Symbology", u"Unique Value", None))
         self.label_25.setText(QCoreApplication.translate("Symbology", u"Border Settings", None))
         self.label_2.setText(QCoreApplication.translate("Symbology", u"Choose Field", None))
         self.levelNumberLabel_1.setText(QCoreApplication.translate("Symbology", u"levels:", None))
@@ -553,7 +539,8 @@ class Ui_Symbology(object):
         self.label_24.setText(QCoreApplication.translate("Symbology", u"Fill Color", None))
         self.beginColor_2.setText(QCoreApplication.translate("Symbology", u"Begin Color", None))
         self.endColor_1.setText(QCoreApplication.translate("Symbology", u"End Color", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.byLevel1), QCoreApplication.translate("Symbology", u"By Level", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.byLevel1),
+                                  QCoreApplication.translate("Symbology", u"By Level", None))
         self.label_4.setText(QCoreApplication.translate("Symbology", u"Border Settings", None))
         self.label_6.setText(QCoreApplication.translate("Symbology", u"Border Width", None))
         self.borderWidth_2.setText(QCoreApplication.translate("Symbology", u"1", None))
@@ -575,6 +562,6 @@ class Ui_Symbology(object):
         self.label_10.setText(QCoreApplication.translate("Symbology", u"Fill Settings (Ignored for Polylines)", None))
         self.label_8.setText(QCoreApplication.translate("Symbology", u"Fill Color", None))
         self.singleColor.setText(QCoreApplication.translate("Symbology", u"Choose Color", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.singleValue2), QCoreApplication.translate("Symbology", u"Single", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.singleValue2),
+                                  QCoreApplication.translate("Symbology", u"Single", None))
     # retranslateUi
-

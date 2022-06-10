@@ -1,16 +1,16 @@
 from PiMapObj import PiGlobal
 
-'''类别标识
+"""类别标识
 0 piPoint
 - piPolyline
 - piPolygon
 - PiMultiPoint
 1 PiMultiPolyline
 2 PiMultiPolygon
-'''
+"""
 
 
-class PiGeometry():
+class PiGeometry:
     def __init__(self, type: int = -1):
         self.id = PiGlobal.id_count
         PiGlobal.id_count += 1
@@ -21,7 +21,7 @@ class PiGeometry():
         pass
 
     def get_type_name(self) -> str:
-        return PiGlobal.TYPENAME[self._type]
+        return PiGlobal.TYPENAME[self.type]
 
     def get_length(self) -> float:
         return 0
@@ -29,5 +29,5 @@ class PiGeometry():
     def get_area(self) -> float:
         return 0
 
-    def get_mbr(self) -> float:
+    def get_mbr(self):
         return None

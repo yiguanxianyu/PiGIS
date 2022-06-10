@@ -25,8 +25,8 @@ class PiGraphView(QGraphicsView):
         self.setMouseTracking(True)
         self.window = None
         print(self.rect())
-    
-    def set_window(self,window):
+
+    def set_window(self, window):
         self.window = window
 
     def ui_init(self):
@@ -60,7 +60,7 @@ class PiGraphView(QGraphicsView):
         if self.mode == PiGraphModeConstant.moveable:
             wheelValue = event.angleDelta().y()
             ratio = wheelValue / 1200 + 1
-            self.set_show_scale(self.show_scale*ratio)
+            self.set_show_scale(self.show_scale * ratio)
 
     def super_mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
         return super().mouseMoveEvent(event)
@@ -70,7 +70,7 @@ class PiGraphView(QGraphicsView):
 
     def super_mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
         return super().mouseReleaseEvent(event)
-    # '''
+
     def mousePressEvent(self, event: QtGui.QMouseEvent) -> None:
         match self.mode:
             case PiGraphModeConstant.dragable:
@@ -85,10 +85,10 @@ class PiGraphView(QGraphicsView):
                 self.realize_control.mousePressEvent(event)
 
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
-        view_pos = QPoint(event.x(),event.y())
+        view_pos = QPoint(event.x(), event.y())
         scene_pos = self.mapToScene(view_pos)
         scale = self.draw_control.scale
-        self.window.statusBar.update_coord(scene_pos.x()*scale, scene_pos.y()*scale)
+        self.window.statusBar.update_coord(scene_pos.x() * scale, scene_pos.y() * scale)
         match self.mode:
             case PiGraphModeConstant.dragable:
                 self.drag_control.mouseMoveEvent(event)
@@ -100,7 +100,6 @@ class PiGraphView(QGraphicsView):
                 self.add_control.mouseMoveEvent(event)
             case PiGraphModeConstant.realizable:
                 self.realize_control.mouseMoveEvent(event)
-            
 
     def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
         self.mouse_pressed_button = event.button()
@@ -138,13 +137,13 @@ class PiGraphView(QGraphicsView):
 
         # return super().keyReleaseEvent(event)
 
-    def get_layer_by_id(self,layer_id) -> PiLayer:
+    def get_layer_by_id(self, layer_id) -> PiLayer:
         return self.drag_control.layers[layer_id]
 
     def mode_turn_move(self):
         if self.mode != PiGraphModeConstant.moveable:
             self.mode = PiGraphModeConstant.moveable
-    
+
     def mode_turn_realize(self):
         if self.mode != PiGraphModeConstant.realizable:
             self.mode = PiGraphModeConstant.realizable
@@ -156,40 +155,37 @@ class PiGraphView(QGraphicsView):
             self.drag_control.end_drag()
             self.mode = PiGraphModeConstant.moveable
 
-    def mode_turn_drag_layer(self,layer_id):
+    def mode_turn_drag_layer(self, layer_id):
         if self.mode != PiGraphModeConstant.dragable:
             self.add_control.end_add()
             self.edit_control.end_edit()
             self.drag_control.start_drag_on(layer_id)
             self.mode = PiGraphModeConstant.dragable
 
-    def mode_turn_edit_layer(self,layer_id):
+    def mode_turn_edit_layer(self, layer_id):
         if self.mode != PiGraphModeConstant.editable:
             self.add_control.end_add()
             self.edit_control.start_edit_on(layer_id)
             self.drag_control.end_drag()
             self.mode = PiGraphModeConstant.editable
-    
-    def mode_turn_add_layer(self,layer_id):
+
+    def mode_turn_add_layer(self, layer_id):
         if self.mode != PiGraphModeConstant.addable:
             self.add_control.start_add_on(layer_id)
             self.edit_control.end_edit()
             self.drag_control.end_drag()
             self.mode = PiGraphModeConstant.addable
 
-    def window_to_map(self,window,window_pos:QPoint) -> QPointF:
-        view_pos = self.mapFrom(window,window_pos)
+    def window_to_map(self, window, window_pos: QPoint) -> QPointF:
+        view_pos = self.mapFrom(window, window_pos)
         scene_pos = self.mapToScene(view_pos)
         draw_scale = self.draw_control.scale
-        map_pos = QPointF(scene_pos.x()*draw_scale,scene_pos.y()*draw_scale)
+        map_pos = QPointF(scene_pos.x() * draw_scale, scene_pos.y() * draw_scale)
         return map_pos
         pass
 
-    def add_layer_text(self,layer_id):
+    def add_layer_text(self, layer_id):
         self.draw_control.add_layer_text(layer_id)
-    
-    def delete_layer_text(self,layer_id):
+
+    def delete_layer_text(self, layer_id):
         self.draw_control.delete_layer_text(layer_id)
-
-
-

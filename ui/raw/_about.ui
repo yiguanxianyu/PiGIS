@@ -1,76 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AboutPage</class>
- <widget class="QWidget" name="AboutPage">
-  <property name="windowModality">
-   <enum>Qt::NonModal</enum>
-  </property>
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>320</width>
-    <height>270</height>
-   </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>320</width>
-    <height>270</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>320</width>
-    <height>240</height>
-   </size>
-  </property>
-  <property name="windowTitle">
-   <string>About</string>
-  </property>
-  <property name="locale">
-   <locale language="English" country="UnitedStates"/>
-  </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QLabel" name="label">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>30</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>17</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>About</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignHCenter|Qt::AlignTop</set>
-     </property>
+    <class>AboutPage</class>
+    <widget class="QWidget" name="AboutPage">
+        <property name="windowModality">
+            <enum>Qt::NonModal</enum>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>320</width>
+                <height>270</height>
+            </rect>
+        </property>
+        <property name="minimumSize">
+            <size>
+                <width>320</width>
+                <height>270</height>
+            </size>
+        </property>
+        <property name="maximumSize">
+            <size>
+                <width>320</width>
+                <height>240</height>
+            </size>
+        </property>
+        <property name="windowTitle">
+            <string>About</string>
+        </property>
+        <property name="locale">
+            <locale language="English" country="UnitedStates"/>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+                <widget class="QLabel" name="label">
+                    <property name="maximumSize">
+                        <size>
+                            <width>16777215</width>
+                            <height>30</height>
+                        </size>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>17</pointsize>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>About</string>
+                    </property>
+                    <property name="alignment">
+                        <set>Qt::AlignHCenter|Qt::AlignTop</set>
+                    </property>
+                </widget>
+            </item>
+            <item>
+                <widget class="QLabel" name="label_2">
+                    <property name="font">
+                        <font>
+                            <family>Arial</family>
+                            <pointsize>10</pointsize>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot;
+                            font-size:12pt; font-weight:700;&quot;&gt;πGIS v0.1.0 &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span
+                            style=&quot; font-size:11pt;&quot;&gt;Made By: &lt;/span&gt;&lt;br/&gt;Chi Zhang &lt;br/&gt;Kaihao
+                            Zheng &lt;br/&gt;Haoliang Chen &lt;br/&gt;❤️ &lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span
+                            style=&quot; font-size:11pt;&quot;&gt;Powered by open-source software: &lt;/span&gt;&lt;br/&gt;PySide6
+                            &lt;br/&gt;pyinstaller &lt;br/&gt;PyYAML &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+                        </string>
+                    </property>
+                    <property name="textFormat">
+                        <enum>Qt::RichText</enum>
+                    </property>
+                </widget>
+            </item>
+        </layout>
     </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_2">
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;πGIS v0.1.0 &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Made By: &lt;/span&gt;&lt;br/&gt;Chi Zhang &lt;br/&gt;Kaihao Zheng &lt;br/&gt;Haoliang Chen &lt;br/&gt;❤️ &lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Powered by open-source software: &lt;/span&gt;&lt;br/&gt;PySide6 &lt;br/&gt;pyinstaller &lt;br/&gt;PyYAML &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="textFormat">
-      <enum>Qt::RichText</enum>
-     </property>
-    </widget>
-   </item>
-  </layout>
- </widget>
- <resources/>
- <connections/>
+    <resources/>
+    <connections/>
 </ui>

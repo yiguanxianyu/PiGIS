@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 import yaml
 from PySide6.QtWidgets import QFileDialog, QWidget
 
@@ -11,7 +9,7 @@ from constants import class_type
 
 class PiGISProject:
 
-    def __init__(self,mw):
+    def __init__(self, mw):
         self.path = None
         self.layer = []
         self.layerBin = []
@@ -80,16 +78,15 @@ class PiGISProject:
             }
         }
 
-
         # part 2 Layer Tree Info
 
         tree_config = self.mainWindow.layerTree.get_layer_tree()
-        config['tree_config']=tree_config
+        config['tree_config'] = tree_config
 
         # part 3 Layer Info
         layer_config = []
         for curr_layer_id in tree_config:
-            curr_layer=self.mainWindow.graphWidget.get_layer_by_id(curr_layer_id)
+            curr_layer = self.mainWindow.graphWidget.get_layer_by_id(curr_layer_id)
             layer_info = {
                 'layer_name': curr_layer.name,
                 'metadata': {
@@ -98,15 +95,15 @@ class PiGISProject:
                     'prj': curr_layer.proj._PiProjection__proj_name,
                     'type': int(curr_layer.geometry_type)
                 },
-                'style':{
-                    'pen_style':int(curr_layer.pen.style()),
-                    'pen_width':curr_layer.pen.width(),
-                    'pen_color':curr_layer.pen.color().getRgbF(),
-                    'brush':curr_layer.brush.color().getRgbF(),
-                    'visibility':curr_layer.visibility,
-                    'change':curr_layer.change,
-                    'label_status':curr_layer.label_status,
-                    'annotation_status':curr_layer.annotation_status
+                'style': {
+                    'pen_style': int(curr_layer.pen.style()),
+                    'pen_width': curr_layer.pen.width(),
+                    'pen_color': curr_layer.pen.color().getRgbF(),
+                    'brush': curr_layer.brush.color().getRgbF(),
+                    'visibility': curr_layer.visibility,
+                    'change': curr_layer.change,
+                    'label_status': curr_layer.label_status,
+                    'annotation_status': curr_layer.annotation_status
                 }
             }
 
@@ -207,9 +204,6 @@ class PiGISProjectController:
             new_layer.load(file_path)
             self.mainWindow.graphWidget.load_layer(new_layer)
             self.mainWindow.layerTree.add_layer(new_layer.id, new_layer.name)
-
-        # TODO: parse selected layer file
-        self.__project.add_layer(None)
 
     def copy_current_layer(self):
         """

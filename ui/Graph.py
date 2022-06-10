@@ -8,8 +8,6 @@ from PiMapObj.PiLayer import PiLayer
 from ui.raw import Ui_Graph
 
 
-# TODO 更新比例尺和鼠标坐标
-
 class Graph(QWidget):
 
     def __init__(self, mw):
@@ -114,17 +112,15 @@ class Graph(QWidget):
             item_collection[feature_id].setPen(pen)
             item_collection[feature_id].setBrush(brush)
 
-    def point_feature_turn_circ(self,layer_id, ids: list[int]):
+    def point_feature_turn_circ(self, layer_id, ids: list[int]):
         item_collection = self.draw_control.item_collections[layer_id]
         for feature_id in ids:
             item = item_collection[feature_id]
             pen = item.pen()
             brush = item.brush()
-        pass
 
-    def point_feature_turn_rect(self,layer_id, ids: list[int]):
+    def point_feature_turn_rect(self, layer_id, ids: list[int]):
         item_collection = self.draw_control.item_collections[layer_id]
-        pass
 
     def set_scale(self, scale):
         """设置比例尺，传入的是1:x的那个x缩放点就
@@ -133,7 +129,7 @@ class Graph(QWidget):
         self.view_control.set_show_scale(self.draw_control.scale / scale)
 
     def set_features_visibility(self, layer_id, ids: list[int], visibility: bool):
-        """隐藏指定的要素 TODO"""
+        """隐藏指定的要素"""
         self.draw_control.set_features_visibility(layer_id, ids, visibility)
 
     def add_empty_features(self, layer_id, ids: list[int]):
@@ -184,7 +180,7 @@ class Graph(QWidget):
         layer.label_status = True
 
     def render_annotation(self, layer_id):
-        """添加注记（静态） TODO"""
+        """添加注记（静态）"""
         layer = self.get_layer_by_id(layer_id)
         if layer.label_status:
             self.remove_annotation(layer_id)
@@ -194,15 +190,14 @@ class Graph(QWidget):
         layer.annotation_status = True
 
     def remove_label(self, layer_id):
+        """移除标注（动态） TODO"""
         layer = self.get_layer_by_id(layer_id)
         layer.label_status = False
 
     def remove_annotation(self, layer_id):
-        """移除注记（静态） TODO"""
+        """移除注记（静态）"""
         layer = self.get_layer_by_id(layer_id)
-        # put your code here
         self.view_control.delete_layer_text(layer_id)
-        # put your code here
         layer.annotation_status = False
 
     """小陈添加接口"""
@@ -211,7 +206,7 @@ class Graph(QWidget):
     # 但如果在编辑的三个模式间跳转，则会取消编辑
 
     def graph_turn_move(self):
-        '''切换图层可移动'''
+        """切换图层可移动"""
         self.view_control.mode_turn_move()
 
     def graph_turn_realize(self):
@@ -219,15 +214,15 @@ class Graph(QWidget):
 
     def graph_turn_unable(self):
         self.view_control.mode_turn_unable()
-    
-    def graph_turn_layer_dragable(self,layer_id):
-        '''把对应图层切换成可以拖动的模式'''
+
+    def graph_turn_layer_dragable(self, layer_id):
+        """把对应图层切换成可以拖动的模式"""
         self.view_control.mode_turn_drag_layer(layer_id)
 
-    def graph_turn_layer_editable(self,layer_id):
-        '''把对应图层切换成可以编辑的模式'''
+    def graph_turn_layer_editable(self, layer_id):
+        """把对应图层切换成可以编辑的模式"""
         self.view_control.mode_turn_edit_layer(layer_id)
 
-    def graph_turn_layer_addable(self,layer_id):
-        '''把图层切换成可以增加要素的模式'''
+    def graph_turn_layer_addable(self, layer_id):
+        """把图层切换成可以增加要素的模式"""
         self.view_control.mode_turn_add_layer(layer_id)

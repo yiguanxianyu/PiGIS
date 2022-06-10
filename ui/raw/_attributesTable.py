@@ -8,16 +8,11 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QCheckBox, QHBoxLayout,
-    QHeaderView, QSizePolicy, QSpacerItem, QTableView,
-    QToolButton, QVBoxLayout, QWidget)
+from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt)
+from PySide6.QtWidgets import (QAbstractItemView, QCheckBox, QHBoxLayout,
+                               QSizePolicy, QSpacerItem, QTableView,
+                               QToolButton, QVBoxLayout)
+
 
 class Ui_AttributesTable(object):
     def setupUi(self, AttributesTable):
@@ -71,7 +66,6 @@ class Ui_AttributesTable(object):
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
-
         self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.tableView = QTableView(AttributesTable)
@@ -81,7 +75,6 @@ class Ui_AttributesTable(object):
         self.tableView.setSortingEnabled(True)
 
         self.verticalLayout.addWidget(self.tableView)
-
 
         self.retranslateUi(AttributesTable)
         self.addRowButton.clicked.connect(AttributesTable.add_row)
@@ -93,6 +86,7 @@ class Ui_AttributesTable(object):
         self.saveButton.clicked.connect(AttributesTable.save)
 
         QMetaObject.connectSlotsByName(AttributesTable)
+
     # setupUi
 
     def retranslateUi(self, AttributesTable):
@@ -105,4 +99,3 @@ class Ui_AttributesTable(object):
         self.saveButton.setText(QCoreApplication.translate("AttributesTable", u"Save", None))
         self.toggleEditingCheckBox.setText(QCoreApplication.translate("AttributesTable", u"Edit", None))
     # retranslateUi
-

@@ -1,192 +1,192 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LayerTree</class>
- <widget class="QWidget" name="LayerTree">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>200</width>
-    <height>300</height>
-   </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>100</width>
-    <height>0</height>
-   </size>
-  </property>
-  <property name="contextMenuPolicy">
-   <enum>Qt::CustomContextMenu</enum>
-  </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
-  <property name="locale">
-   <locale language="English" country="UnitedStates"/>
-  </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>0</number>
-   </property>
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
-   <item>
-    <widget class="QTreeView" name="treeView">
-     <property name="locale">
-      <locale language="English" country="UnitedStates"/>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
-     </property>
-     <property name="lineWidth">
-      <number>0</number>
-     </property>
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAsNeeded</enum>
-     </property>
-     <property name="dragEnabled">
-      <bool>true</bool>
-     </property>
-     <property name="dragDropMode">
-      <enum>QAbstractItemView::InternalMove</enum>
-     </property>
-     <property name="defaultDropAction">
-      <enum>Qt::MoveAction</enum>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-     <attribute name="headerVisible">
-      <bool>true</bool>
-     </attribute>
+    <class>LayerTree</class>
+    <widget class="QWidget" name="LayerTree">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>200</width>
+                <height>300</height>
+            </rect>
+        </property>
+        <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+            </sizepolicy>
+        </property>
+        <property name="minimumSize">
+            <size>
+                <width>100</width>
+                <height>0</height>
+            </size>
+        </property>
+        <property name="contextMenuPolicy">
+            <enum>Qt::CustomContextMenu</enum>
+        </property>
+        <property name="windowTitle">
+            <string>Form</string>
+        </property>
+        <property name="locale">
+            <locale language="English" country="UnitedStates"/>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+            <property name="spacing">
+                <number>0</number>
+            </property>
+            <property name="leftMargin">
+                <number>0</number>
+            </property>
+            <property name="topMargin">
+                <number>0</number>
+            </property>
+            <property name="rightMargin">
+                <number>0</number>
+            </property>
+            <property name="bottomMargin">
+                <number>0</number>
+            </property>
+            <item>
+                <widget class="QTreeView" name="treeView">
+                    <property name="locale">
+                        <locale language="English" country="UnitedStates"/>
+                    </property>
+                    <property name="frameShape">
+                        <enum>QFrame::NoFrame</enum>
+                    </property>
+                    <property name="lineWidth">
+                        <number>0</number>
+                    </property>
+                    <property name="verticalScrollBarPolicy">
+                        <enum>Qt::ScrollBarAsNeeded</enum>
+                    </property>
+                    <property name="dragEnabled">
+                        <bool>true</bool>
+                    </property>
+                    <property name="dragDropMode">
+                        <enum>QAbstractItemView::InternalMove</enum>
+                    </property>
+                    <property name="defaultDropAction">
+                        <enum>Qt::MoveAction</enum>
+                    </property>
+                    <property name="alternatingRowColors">
+                        <bool>true</bool>
+                    </property>
+                    <attribute name="headerVisible">
+                        <bool>true</bool>
+                    </attribute>
+                </widget>
+            </item>
+        </layout>
+        <action name="action_expand_all">
+            <property name="text">
+                <string>Expand All</string>
+            </property>
+            <property name="toolTip">
+                <string>Expand All Layers</string>
+            </property>
+        </action>
+        <action name="action_collapse_all">
+            <property name="text">
+                <string>Collapse All</string>
+            </property>
+            <property name="toolTip">
+                <string>Collapse All Layers</string>
+            </property>
+        </action>
+        <action name="action_add_layer_group">
+            <property name="text">
+                <string>Add Layer Group</string>
+            </property>
+        </action>
     </widget>
-   </item>
-  </layout>
-  <action name="action_expand_all">
-   <property name="text">
-    <string>Expand All</string>
-   </property>
-   <property name="toolTip">
-    <string>Expand All Layers</string>
-   </property>
-  </action>
-  <action name="action_collapse_all">
-   <property name="text">
-    <string>Collapse All</string>
-   </property>
-   <property name="toolTip">
-    <string>Collapse All Layers</string>
-   </property>
-  </action>
-  <action name="action_add_layer_group">
-   <property name="text">
-    <string>Add Layer Group</string>
-   </property>
-  </action>
- </widget>
- <resources/>
- <connections>
-  <connection>
-   <sender>LayerTree</sender>
-   <signal>customContextMenuRequested(QPoint)</signal>
-   <receiver>LayerTree</receiver>
-   <slot>show_context_menu()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>99</x>
-     <y>149</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>99</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>treeView</sender>
-   <signal>pressed(QModelIndex)</signal>
-   <receiver>LayerTree</receiver>
-   <slot>clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>99</x>
-     <y>150</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>99</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_add_layer_group</sender>
-   <signal>triggered()</signal>
-   <receiver>LayerTree</receiver>
-   <slot>add_layer_group()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>99</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_collapse_all</sender>
-   <signal>triggered()</signal>
-   <receiver>treeView</receiver>
-   <slot>collapseAll()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>99</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_expand_all</sender>
-   <signal>triggered()</signal>
-   <receiver>treeView</receiver>
-   <slot>expandAll()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>99</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
- <slots>
-  <slot>show_context_menu()</slot>
-  <slot>clicked()</slot>
-  <slot>add_layer_group()</slot>
- </slots>
+    <resources/>
+    <connections>
+        <connection>
+            <sender>LayerTree</sender>
+            <signal>customContextMenuRequested(QPoint)</signal>
+            <receiver>LayerTree</receiver>
+            <slot>show_context_menu()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>99</x>
+                    <y>149</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>99</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>treeView</sender>
+            <signal>pressed(QModelIndex)</signal>
+            <receiver>LayerTree</receiver>
+            <slot>clicked()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>99</x>
+                    <y>150</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>99</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>action_add_layer_group</sender>
+            <signal>triggered()</signal>
+            <receiver>LayerTree</receiver>
+            <slot>add_layer_group()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>99</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>action_collapse_all</sender>
+            <signal>triggered()</signal>
+            <receiver>treeView</receiver>
+            <slot>collapseAll()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>99</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>action_expand_all</sender>
+            <signal>triggered()</signal>
+            <receiver>treeView</receiver>
+            <slot>expandAll()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>99</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+    </connections>
+    <slots>
+        <slot>show_context_menu()</slot>
+        <slot>clicked()</slot>
+        <slot>add_layer_group()</slot>
+    </slots>
 </ui>

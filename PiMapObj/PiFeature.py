@@ -1,4 +1,3 @@
-from PiMapObj.PiMultiPoint import PiMultiPoint
 from PiMapObj.PiAttribute import PiAttributes
 from PiMapObj.PiMultiPoint import PiMultiPoint
 from PiMapObj.PiMultiPolygon import PiMultiPolygon
@@ -26,18 +25,18 @@ class PiFeature():
             self.attributes.load(reader, load_type)
         elif type == 'shp':
             pass
-    
-    def translate(self,dx,dy):
-        self.geometry.translate(dx,dy)
+
+    def translate(self, dx, dy):
+        self.geometry.translate(dx, dy)
 
     def get_mbr(self):
         return self.geometry.get_mbr()
 
-    def set_geometry(self,geometry):
+    def set_geometry(self, geometry):
         self.geometry = geometry
         self.id = geometry.id
-    
-    def set_attributes(self,attributes):
+
+    def set_attributes(self, attributes):
         self.attributes = attributes
 
     def __str__(self):

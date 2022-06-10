@@ -22,8 +22,8 @@ class PiMultiPoint(PiGeometryCollection):
 
     def get_mbr(self):
         return super().get_mbr()
-    
-    def add_object(self,object):
+
+    def add_object(self, object):
         self._collection.append(object)
         self.count += 1
 

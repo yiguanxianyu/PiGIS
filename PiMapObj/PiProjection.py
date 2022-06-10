@@ -15,7 +15,7 @@ PROJCONS = PiProjectionTypeConstant()
 class PiProjection():
     def __init__(self):
         self.__proj_name = ""  # 投影坐标系名称
-        '''地理坐标系参数'''
+        """地理坐标系参数"""
         self.__geo_name = ""  # 地理坐标系名称
         self.__datum_name = ""  # 大地坐标系名称
         self.__spheroid_Name = ""  # 椭球体名称
@@ -23,7 +23,7 @@ class PiProjection():
         self.__semi_minor = 0  # 地理坐标系短半轴
         self.__inverse_flattening = 0  # 扁率倒数
         self.__PrimeMeridian = ""  # 本初子午线名称
-        '''投影参数'''
+        """投影参数"""
         self.__proj_type = 0  # 投影类型
         self.__proj_name = ""  # 投影名称
         self.__central_meridian = 0  # 中央经线（度）
@@ -34,7 +34,7 @@ class PiProjection():
         self.__false_easting = 0  # 东伪偏移值
         self.__false_northing = 0  # 北伪偏移值
         self.__linear_unit = 0  # 投影后的长度单位类型
-        '''计算参数'''
+        """计算参数"""
         self.a, self.b, self.alpha = 0, 0, 0  # 长半轴，短半轴，扁率
         self.e, self.e2, self.e4, self.e6, self.e8 = 0, 0, 0, 0, 0  # 第一偏心率及其幂值
         self.ep, self.ep2 = 0, 0  # 第二偏心率，第二偏心率的平方
@@ -57,7 +57,7 @@ class PiProjection():
                     attr[temp[0]] = temp[1]
             # print(attr)
         self.__proj_name = attr["投影坐标系统"]  # 投影坐标系名称
-        '''地理坐标系参数'''
+        """地理坐标系参数"""
         self.__geo_name = attr["地理坐标系统"]  # 地理坐标系名称
         self.__datum_name = attr["大地坐标系"]  # 大地坐标系名称
         self.__spheroid_Name = attr["椭球体"]  # 椭球体名称
@@ -65,7 +65,7 @@ class PiProjection():
         self.__semi_minor = eval(attr["短半轴"])  # 地理坐标系短半轴
         self.__inverse_flattening = eval(attr["扁率倒数"])  # 扁率倒数
         self.__PrimeMeridian = attr["主经线"]  # 本初子午线名称
-        '''投影参数'''
+        """投影参数"""
         self.__proj_name = attr["投影"]  # 投影名称
         self.__proj_type = PROJCONS.get_type(self.__proj_name.replace(' ', '_').lower())  # 投影类型
         self.__central_meridian = eval(attr["中央经线"])  # 中央经线（度）
@@ -81,7 +81,7 @@ class PiProjection():
         self.calculate_attr()
 
     def calculate_attr(self):
-        '''通用变量计算'''
+        """通用变量计算"""
         self.lambda0 = self.to_radian(self.__central_meridian)
         self.phi0 = self.to_radian(self.__origin_latitude)
         self.a = self.__semi_major
@@ -94,7 +94,7 @@ class PiProjection():
         self.e8 = self.e ** 8
         self.ep = math.sqrt((self.a / self.b) ** 2 - 1)
         self.ep2 = self.ep ** 2
-        '''各投影参数计算'''
+        """各投影参数计算"""
         if self.__proj_type == PROJCONS.none:
             pass
         elif self.__proj_type == PROJCONS.mercator:

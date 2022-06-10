@@ -1,641 +1,641 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>820</width>
-    <height>597</height>
-   </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>600</width>
-    <height>400</height>
-   </size>
-  </property>
-  <property name="windowTitle">
-   <string>πGIS</string>
-  </property>
-  <property name="locale">
-   <locale language="English" country="UnitedStates"/>
-  </property>
-  <property name="animated">
-   <bool>true</bool>
-  </property>
-  <widget class="QWidget" name="centralwidget">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
-    <item>
-     <layout class="QHBoxLayout" name="mainLayout"/>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>820</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuLayer">
-    <property name="title">
-     <string>Layer</string>
-    </property>
-    <widget class="QMenu" name="menuCreateLayer">
-     <property name="title">
-      <string>Create Layer</string>
-     </property>
-     <addaction name="actionNewShapefileLayer"/>
-     <addaction name="actionNew_MultiPoint_Layer"/>
-     <addaction name="actionNew_Polyline_Layer"/>
-     <addaction name="actionNew_MultiPolyline_Layer"/>
-     <addaction name="actionNew_Polygon_Layer"/>
-     <addaction name="actionNew_MultiPolygon_Layer"/>
+    <class>MainWindow</class>
+    <widget class="QMainWindow" name="MainWindow">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>820</width>
+                <height>597</height>
+            </rect>
+        </property>
+        <property name="minimumSize">
+            <size>
+                <width>600</width>
+                <height>400</height>
+            </size>
+        </property>
+        <property name="windowTitle">
+            <string>πGIS</string>
+        </property>
+        <property name="locale">
+            <locale language="English" country="UnitedStates"/>
+        </property>
+        <property name="animated">
+            <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="centralwidget">
+            <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <property name="leftMargin">
+                    <number>0</number>
+                </property>
+                <property name="topMargin">
+                    <number>0</number>
+                </property>
+                <property name="rightMargin">
+                    <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                    <number>0</number>
+                </property>
+                <item>
+                    <layout class="QHBoxLayout" name="mainLayout"/>
+                </item>
+            </layout>
+        </widget>
+        <widget class="QMenuBar" name="menuBar">
+            <property name="geometry">
+                <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>820</width>
+                    <height>22</height>
+                </rect>
+            </property>
+            <widget class="QMenu" name="menuLayer">
+                <property name="title">
+                    <string>Layer</string>
+                </property>
+                <widget class="QMenu" name="menuCreateLayer">
+                    <property name="title">
+                        <string>Create Layer</string>
+                    </property>
+                    <addaction name="actionNewShapefileLayer"/>
+                    <addaction name="actionNew_MultiPoint_Layer"/>
+                    <addaction name="actionNew_Polyline_Layer"/>
+                    <addaction name="actionNew_MultiPolyline_Layer"/>
+                    <addaction name="actionNew_Polygon_Layer"/>
+                    <addaction name="actionNew_MultiPolygon_Layer"/>
+                </widget>
+                <addaction name="menuCreateLayer"/>
+                <addaction name="actionAddLayer"/>
+                <addaction name="actionCopyLayer"/>
+                <addaction name="separator"/>
+                <addaction name="actionEnableEditing"/>
+            </widget>
+            <widget class="QMenu" name="menuSettings">
+                <property name="title">
+                    <string>Settings</string>
+                </property>
+                <addaction name="actionOptions"/>
+            </widget>
+            <widget class="QMenu" name="menuHelp">
+                <property name="title">
+                    <string>Help</string>
+                </property>
+                <addaction name="actionAbout"/>
+            </widget>
+            <widget class="QMenu" name="menuView">
+                <property name="title">
+                    <string>View</string>
+                </property>
+                <addaction name="actionShowToolBar"/>
+            </widget>
+            <widget class="QMenu" name="menuEdit">
+                <property name="title">
+                    <string>Edit</string>
+                </property>
+                <addaction name="actionCut"/>
+                <addaction name="actionCopy"/>
+                <addaction name="separator"/>
+                <addaction name="actionPaste"/>
+                <addaction name="actionPasteAs"/>
+                <addaction name="separator"/>
+            </widget>
+            <widget class="QMenu" name="menuProject">
+                <property name="title">
+                    <string>Project</string>
+                </property>
+                <addaction name="actionProjectNew"/>
+                <addaction name="separator"/>
+                <addaction name="actionProjectOpen"/>
+                <addaction name="separator"/>
+                <addaction name="actionProjectSave"/>
+                <addaction name="actionProjectSaveAs"/>
+                <addaction name="actionSaveImage"/>
+                <addaction name="separator"/>
+                <addaction name="actionExit"/>
+            </widget>
+            <addaction name="menuProject"/>
+            <addaction name="menuEdit"/>
+            <addaction name="menuView"/>
+            <addaction name="menuLayer"/>
+            <addaction name="menuSettings"/>
+            <addaction name="menuHelp"/>
+        </widget>
+        <widget class="QToolBar" name="toolBar">
+            <property name="windowTitle">
+                <string>toolBar</string>
+            </property>
+            <property name="allowedAreas">
+                <set>Qt::BottomToolBarArea|Qt::TopToolBarArea</set>
+            </property>
+            <attribute name="toolBarArea">
+                <enum>TopToolBarArea</enum>
+            </attribute>
+            <attribute name="toolBarBreak">
+                <bool>false</bool>
+            </attribute>
+            <addaction name="actionBrowsing"/>
+            <addaction name="actionFeatureDragging"/>
+            <addaction name="actionAdding"/>
+            <addaction name="actionEditing"/>
+            <addaction name="actionExitEditing"/>
+            <addaction name="actionIdentifying"/>
+        </widget>
+        <action name="actionProjectNew">
+            <property name="text">
+                <string>New</string>
+            </property>
+        </action>
+        <action name="actionProjectOpen">
+            <property name="text">
+                <string>Open</string>
+            </property>
+            <property name="shortcut">
+                <string>Ctrl+O</string>
+            </property>
+        </action>
+        <action name="actionProjectSave">
+            <property name="text">
+                <string>Save</string>
+            </property>
+            <property name="shortcut">
+                <string>Ctrl+S</string>
+            </property>
+        </action>
+        <action name="actionExit">
+            <property name="text">
+                <string>Exit πGIS</string>
+            </property>
+        </action>
+        <action name="actionAbout">
+            <property name="text">
+                <string>About</string>
+            </property>
+        </action>
+        <action name="actionCut">
+            <property name="text">
+                <string>Cut Features</string>
+            </property>
+        </action>
+        <action name="actionCopy">
+            <property name="text">
+                <string>Copy Features</string>
+            </property>
+        </action>
+        <action name="actionPaste">
+            <property name="text">
+                <string>Paste Features</string>
+            </property>
+        </action>
+        <action name="actionPasteAs">
+            <property name="text">
+                <string>Paste As</string>
+            </property>
+        </action>
+        <action name="actionCopyLayer">
+            <property name="text">
+                <string>Copy Layer</string>
+            </property>
+        </action>
+        <action name="actionEnableEditing">
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <property name="text">
+                <string>Enable Editing</string>
+            </property>
+        </action>
+        <action name="actionShowToolBar">
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <property name="checked">
+                <bool>true</bool>
+            </property>
+            <property name="text">
+                <string>Show Tool Bar</string>
+            </property>
+        </action>
+        <action name="actionSaveImage">
+            <property name="text">
+                <string>Save Map As Image</string>
+            </property>
+        </action>
+        <action name="actionProjectSaveAs">
+            <property name="text">
+                <string>Save As</string>
+            </property>
+            <property name="shortcut">
+                <string>Ctrl+Shift+S</string>
+            </property>
+        </action>
+        <action name="actionNewShapefileLayer">
+            <property name="text">
+                <string>New Point Layer</string>
+            </property>
+        </action>
+        <action name="actionOptions">
+            <property name="text">
+                <string>Options</string>
+            </property>
+        </action>
+        <action name="actionAddLayer">
+            <property name="text">
+                <string>Add Layer</string>
+            </property>
+        </action>
+        <action name="actionNew_MultiPoint_Layer">
+            <property name="text">
+                <string>New MultiPoint Layer</string>
+            </property>
+        </action>
+        <action name="actionNew_Polyline_Layer">
+            <property name="text">
+                <string>New Polyline Layer</string>
+            </property>
+        </action>
+        <action name="actionNew_MultiPolyline_Layer">
+            <property name="text">
+                <string>New MultiPolyline Layer</string>
+            </property>
+        </action>
+        <action name="actionNew_Polygon_Layer">
+            <property name="text">
+                <string>New Polygon Layer</string>
+            </property>
+        </action>
+        <action name="actionNew_MultiPolygon_Layer">
+            <property name="text">
+                <string>New MultiPolygon Layer</string>
+            </property>
+        </action>
+        <action name="actionFeatureDragging">
+            <property name="text">
+                <string>Feature Dragging</string>
+            </property>
+            <property name="toolTip">
+                <string>Feature Dragging</string>
+            </property>
+        </action>
+        <action name="actionAdding">
+            <property name="text">
+                <string>Adding</string>
+            </property>
+            <property name="toolTip">
+                <string>Adding</string>
+            </property>
+        </action>
+        <action name="actionEditing">
+            <property name="text">
+                <string>Editing</string>
+            </property>
+            <property name="toolTip">
+                <string>Editing</string>
+            </property>
+        </action>
+        <action name="actionBrowsing">
+            <property name="text">
+                <string>Browsing</string>
+            </property>
+            <property name="toolTip">
+                <string>Browsing</string>
+            </property>
+        </action>
+        <action name="actionIdentifying">
+            <property name="text">
+                <string>Identifying</string>
+            </property>
+            <property name="toolTip">
+                <string>Identifying</string>
+            </property>
+        </action>
+        <action name="actionExitEditing">
+            <property name="text">
+                <string>Exit Editing</string>
+            </property>
+            <property name="toolTip">
+                <string>Exit Editing</string>
+            </property>
+        </action>
     </widget>
-    <addaction name="menuCreateLayer"/>
-    <addaction name="actionAddLayer"/>
-    <addaction name="actionCopyLayer"/>
-    <addaction name="separator"/>
-    <addaction name="actionEnableEditing"/>
-   </widget>
-   <widget class="QMenu" name="menuSettings">
-    <property name="title">
-     <string>Settings</string>
-    </property>
-    <addaction name="actionOptions"/>
-   </widget>
-   <widget class="QMenu" name="menuHelp">
-    <property name="title">
-     <string>Help</string>
-    </property>
-    <addaction name="actionAbout"/>
-   </widget>
-   <widget class="QMenu" name="menuView">
-    <property name="title">
-     <string>View</string>
-    </property>
-    <addaction name="actionShowToolBar"/>
-   </widget>
-   <widget class="QMenu" name="menuEdit">
-    <property name="title">
-     <string>Edit</string>
-    </property>
-    <addaction name="actionCut"/>
-    <addaction name="actionCopy"/>
-    <addaction name="separator"/>
-    <addaction name="actionPaste"/>
-    <addaction name="actionPasteAs"/>
-    <addaction name="separator"/>
-   </widget>
-   <widget class="QMenu" name="menuProject">
-    <property name="title">
-     <string>Project</string>
-    </property>
-    <addaction name="actionProjectNew"/>
-    <addaction name="separator"/>
-    <addaction name="actionProjectOpen"/>
-    <addaction name="separator"/>
-    <addaction name="actionProjectSave"/>
-    <addaction name="actionProjectSaveAs"/>
-    <addaction name="actionSaveImage"/>
-    <addaction name="separator"/>
-    <addaction name="actionExit"/>
-   </widget>
-   <addaction name="menuProject"/>
-   <addaction name="menuEdit"/>
-   <addaction name="menuView"/>
-   <addaction name="menuLayer"/>
-   <addaction name="menuSettings"/>
-   <addaction name="menuHelp"/>
-  </widget>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <property name="allowedAreas">
-    <set>Qt::BottomToolBarArea|Qt::TopToolBarArea</set>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="actionBrowsing"/>
-   <addaction name="actionFeatureDragging"/>
-   <addaction name="actionAdding"/>
-   <addaction name="actionEditing"/>
-   <addaction name="actionExitEditing"/>
-   <addaction name="actionIdentifying"/>
-  </widget>
-  <action name="actionProjectNew">
-   <property name="text">
-    <string>New</string>
-   </property>
-  </action>
-  <action name="actionProjectOpen">
-   <property name="text">
-    <string>Open</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+O</string>
-   </property>
-  </action>
-  <action name="actionProjectSave">
-   <property name="text">
-    <string>Save</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+S</string>
-   </property>
-  </action>
-  <action name="actionExit">
-   <property name="text">
-    <string>Exit πGIS</string>
-   </property>
-  </action>
-  <action name="actionAbout">
-   <property name="text">
-    <string>About</string>
-   </property>
-  </action>
-  <action name="actionCut">
-   <property name="text">
-    <string>Cut Features</string>
-   </property>
-  </action>
-  <action name="actionCopy">
-   <property name="text">
-    <string>Copy Features</string>
-   </property>
-  </action>
-  <action name="actionPaste">
-   <property name="text">
-    <string>Paste Features</string>
-   </property>
-  </action>
-  <action name="actionPasteAs">
-   <property name="text">
-    <string>Paste As</string>
-   </property>
-  </action>
-  <action name="actionCopyLayer">
-   <property name="text">
-    <string>Copy Layer</string>
-   </property>
-  </action>
-  <action name="actionEnableEditing">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Enable Editing</string>
-   </property>
-  </action>
-  <action name="actionShowToolBar">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Show Tool Bar</string>
-   </property>
-  </action>
-  <action name="actionSaveImage">
-   <property name="text">
-    <string>Save Map As Image</string>
-   </property>
-  </action>
-  <action name="actionProjectSaveAs">
-   <property name="text">
-    <string>Save As</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Shift+S</string>
-   </property>
-  </action>
-  <action name="actionNewShapefileLayer">
-   <property name="text">
-    <string>New Point Layer</string>
-   </property>
-  </action>
-  <action name="actionOptions">
-   <property name="text">
-    <string>Options</string>
-   </property>
-  </action>
-  <action name="actionAddLayer">
-   <property name="text">
-    <string>Add Layer</string>
-   </property>
-  </action>
-  <action name="actionNew_MultiPoint_Layer">
-   <property name="text">
-    <string>New MultiPoint Layer</string>
-   </property>
-  </action>
-  <action name="actionNew_Polyline_Layer">
-   <property name="text">
-    <string>New Polyline Layer</string>
-   </property>
-  </action>
-  <action name="actionNew_MultiPolyline_Layer">
-   <property name="text">
-    <string>New MultiPolyline Layer</string>
-   </property>
-  </action>
-  <action name="actionNew_Polygon_Layer">
-   <property name="text">
-    <string>New Polygon Layer</string>
-   </property>
-  </action>
-  <action name="actionNew_MultiPolygon_Layer">
-   <property name="text">
-    <string>New MultiPolygon Layer</string>
-   </property>
-  </action>
-  <action name="actionFeatureDragging">
-   <property name="text">
-    <string>Feature Dragging</string>
-   </property>
-   <property name="toolTip">
-    <string>Feature Dragging</string>
-   </property>
-  </action>
-  <action name="actionAdding">
-   <property name="text">
-    <string>Adding</string>
-   </property>
-   <property name="toolTip">
-    <string>Adding</string>
-   </property>
-  </action>
-  <action name="actionEditing">
-   <property name="text">
-    <string>Editing</string>
-   </property>
-   <property name="toolTip">
-    <string>Editing</string>
-   </property>
-  </action>
-  <action name="actionBrowsing">
-   <property name="text">
-    <string>Browsing</string>
-   </property>
-   <property name="toolTip">
-    <string>Browsing</string>
-   </property>
-  </action>
-  <action name="actionIdentifying">
-   <property name="text">
-    <string>Identifying</string>
-   </property>
-   <property name="toolTip">
-    <string>Identifying</string>
-   </property>
-  </action>
-  <action name="actionExitEditing">
-   <property name="text">
-    <string>Exit Editing</string>
-   </property>
-   <property name="toolTip">
-    <string>Exit Editing</string>
-   </property>
-  </action>
- </widget>
- <resources/>
- <connections>
-  <connection>
-   <sender>actionProjectNew</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>new_project()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>380</x>
-     <y>323</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionProjectOpen</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>open_project()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>380</x>
-     <y>323</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionProjectSave</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>save_project()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>380</x>
-     <y>323</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionProjectSaveAs</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>save_project_as()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>380</x>
-     <y>323</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionExit</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>exit_app()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>380</x>
-     <y>323</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionAbout</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>show_about_page()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>380</x>
-     <y>323</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionAddLayer</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>add_layer()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>380</x>
-     <y>323</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionOptions</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>show_options_page()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>380</x>
-     <y>323</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionShowToolBar</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>toolBar</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>409</x>
-     <y>34</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionEnableEditing</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>switch_editing()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>380</x>
-     <y>323</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionCopyLayer</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>copy_layer()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>380</x>
-     <y>323</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionSaveImage</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>save_image()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>409</x>
-     <y>298</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionBrowsing</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>enable_drag_map()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>409</x>
-     <y>298</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionFeatureDragging</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>enable_drag_feature()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>409</x>
-     <y>298</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionAdding</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>enable_add_feature()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>409</x>
-     <y>298</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionEditing</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>enable_edit_feature()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>409</x>
-     <y>298</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionIdentifying</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>identify_feature()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>409</x>
-     <y>298</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionExitEditing</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>exit_editing()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>409</x>
-     <y>298</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
- <slots>
-  <slot>open_project()</slot>
-  <slot>new_project()</slot>
-  <slot>save_project()</slot>
-  <slot>save_project_as()</slot>
-  <slot>exit_app()</slot>
-  <slot>show_about_page()</slot>
-  <slot>add_layer()</slot>
-  <slot>show_options_page()</slot>
-  <slot>switch_tool_bar()</slot>
-  <slot>switch_editing()</slot>
-  <slot>copy_layer()</slot>
-  <slot>save_image()</slot>
-  <slot>enable_drag_map()</slot>
-  <slot>enable_drag_feature()</slot>
-  <slot>enable_add_feature()</slot>
-  <slot>enable_edit_feature()</slot>
-  <slot>identify_feature()</slot>
-  <slot>exit_editing()</slot>
- </slots>
+    <resources/>
+    <connections>
+        <connection>
+            <sender>actionProjectNew</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>new_project()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>380</x>
+                    <y>323</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionProjectOpen</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>open_project()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>380</x>
+                    <y>323</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionProjectSave</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>save_project()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>380</x>
+                    <y>323</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionProjectSaveAs</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>save_project_as()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>380</x>
+                    <y>323</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionExit</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>exit_app()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>380</x>
+                    <y>323</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionAbout</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>show_about_page()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>380</x>
+                    <y>323</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionAddLayer</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>add_layer()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>380</x>
+                    <y>323</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionOptions</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>show_options_page()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>380</x>
+                    <y>323</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionShowToolBar</sender>
+            <signal>toggled(bool)</signal>
+            <receiver>toolBar</receiver>
+            <slot>setVisible(bool)</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>409</x>
+                    <y>34</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionEnableEditing</sender>
+            <signal>toggled(bool)</signal>
+            <receiver>MainWindow</receiver>
+            <slot>switch_editing()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>380</x>
+                    <y>323</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionCopyLayer</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>copy_layer()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>380</x>
+                    <y>323</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionSaveImage</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>save_image()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>409</x>
+                    <y>298</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionBrowsing</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>enable_drag_map()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>409</x>
+                    <y>298</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionFeatureDragging</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>enable_drag_feature()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>409</x>
+                    <y>298</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionAdding</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>enable_add_feature()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>409</x>
+                    <y>298</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionEditing</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>enable_edit_feature()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>409</x>
+                    <y>298</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionIdentifying</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>identify_feature()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>409</x>
+                    <y>298</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>actionExitEditing</sender>
+            <signal>triggered()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>exit_editing()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>409</x>
+                    <y>298</y>
+                </hint>
+            </hints>
+        </connection>
+    </connections>
+    <slots>
+        <slot>open_project()</slot>
+        <slot>new_project()</slot>
+        <slot>save_project()</slot>
+        <slot>save_project_as()</slot>
+        <slot>exit_app()</slot>
+        <slot>show_about_page()</slot>
+        <slot>add_layer()</slot>
+        <slot>show_options_page()</slot>
+        <slot>switch_tool_bar()</slot>
+        <slot>switch_editing()</slot>
+        <slot>copy_layer()</slot>
+        <slot>save_image()</slot>
+        <slot>enable_drag_map()</slot>
+        <slot>enable_drag_feature()</slot>
+        <slot>enable_add_feature()</slot>
+        <slot>enable_edit_feature()</slot>
+        <slot>identify_feature()</slot>
+        <slot>exit_editing()</slot>
+    </slots>
 </ui>

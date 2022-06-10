@@ -1,77 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RemoveField</class>
- <widget class="QDialog" name="RemoveField">
-  <property name="windowModality">
-   <enum>Qt::ApplicationModal</enum>
-  </property>
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>174</width>
-    <height>300</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Remove Field</string>
-  </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QListWidget" name="fieldList">
-     <property name="selectionMode">
-      <enum>QAbstractItemView::MultiSelection</enum>
-     </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
-     </property>
+    <class>RemoveField</class>
+    <widget class="QDialog" name="RemoveField">
+        <property name="windowModality">
+            <enum>Qt::ApplicationModal</enum>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>174</width>
+                <height>300</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Remove Field</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+            <item row="0" column="0">
+                <widget class="QListWidget" name="fieldList">
+                    <property name="selectionMode">
+                        <enum>QAbstractItemView::MultiSelection</enum>
+                    </property>
+                    <property name="selectionBehavior">
+                        <enum>QAbstractItemView::SelectRows</enum>
+                    </property>
+                </widget>
+            </item>
+            <item row="1" column="0">
+                <widget class="QDialogButtonBox" name="buttonBox">
+                    <property name="standardButtons">
+                        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+                    </property>
+                </widget>
+            </item>
+        </layout>
     </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-  </layout>
- </widget>
- <resources/>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>RemoveField</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>86</x>
-     <y>279</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>86</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>RemoveField</receiver>
-   <slot>fieldChosen()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>86</x>
-     <y>279</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>86</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
- <slots>
-  <slot>fieldChosen()</slot>
- </slots>
+    <resources/>
+    <connections>
+        <connection>
+            <sender>buttonBox</sender>
+            <signal>rejected()</signal>
+            <receiver>RemoveField</receiver>
+            <slot>reject()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>86</x>
+                    <y>279</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>86</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>buttonBox</sender>
+            <signal>accepted()</signal>
+            <receiver>RemoveField</receiver>
+            <slot>fieldChosen()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>86</x>
+                    <y>279</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>86</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+    </connections>
+    <slots>
+        <slot>fieldChosen()</slot>
+    </slots>
 </ui>

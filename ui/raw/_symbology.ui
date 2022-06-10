@@ -1,1271 +1,1271 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Symbology</class>
- <widget class="QWidget" name="Symbology">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>473</width>
-    <height>300</height>
-   </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>400</width>
-    <height>300</height>
-   </size>
-  </property>
-  <property name="windowTitle">
-   <string>Symbology</string>
-  </property>
-  <property name="locale">
-   <locale language="English" country="UnitedStates"/>
-  </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="currentIndex">
-      <number>1</number>
-     </property>
-     <widget class="QWidget" name="uniqueValue0">
-      <attribute name="title">
-       <string>Unique Value</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QLabel" name="label_12">
-           <property name="maximumSize">
+    <class>Symbology</class>
+    <widget class="QWidget" name="Symbology">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>473</width>
+                <height>300</height>
+            </rect>
+        </property>
+        <property name="minimumSize">
             <size>
-             <width>16777215</width>
-             <height>20</height>
+                <width>400</width>
+                <height>300</height>
             </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Border Settings</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLabel" name="label">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Choose Field</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="fieldsComboBox_0">
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>20</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="levelNumberLabel_0">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>levels:</string>
-           </property>
-          </widget>
-         </item>
+        </property>
+        <property name="windowTitle">
+            <string>Symbology</string>
+        </property>
+        <property name="locale">
+            <locale language="English" country="UnitedStates"/>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+                <widget class="QTabWidget" name="tabWidget">
+                    <property name="currentIndex">
+                        <number>1</number>
+                    </property>
+                    <widget class="QWidget" name="uniqueValue0">
+                        <attribute name="title">
+                            <string>Unique Value</string>
+                        </attribute>
+                        <layout class="QVBoxLayout" name="verticalLayout_2">
+                            <item>
+                                <layout class="QHBoxLayout" name="horizontalLayout">
+                                    <item>
+                                        <widget class="QLabel" name="label_12">
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>16777215</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                            <property name="font">
+                                                <font>
+                                                    <pointsize>12</pointsize>
+                                                </font>
+                                            </property>
+                                            <property name="text">
+                                                <string>Border Settings</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <spacer name="horizontalSpacer">
+                                            <property name="orientation">
+                                                <enum>Qt::Horizontal</enum>
+                                            </property>
+                                            <property name="sizeHint" stdset="0">
+                                                <size>
+                                                    <width>40</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                    </item>
+                                    <item>
+                                        <widget class="QLabel" name="label">
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>16777215</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string>Choose Field</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QComboBox" name="fieldsComboBox_0">
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>80</width>
+                                                    <height>0</height>
+                                                </size>
+                                            </property>
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>16777215</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QLabel" name="levelNumberLabel_0">
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>16777215</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string>levels:</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                </layout>
+                            </item>
+                            <item>
+                                <layout class="QHBoxLayout" name="horizontalLayout_11">
+                                    <item>
+                                        <widget class="QLabel" name="label_18">
+                                            <property name="text">
+                                                <string>Border Width</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QLineEdit" name="borderWidth_0">
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>100</width>
+                                                    <height>16777215</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string>1</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QLabel" name="label_19">
+                                            <property name="text">
+                                                <string>Border Type</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QComboBox" name="borderTypeCombo_0">
+                                            <item>
+                                                <property name="text">
+                                                    <string>No Line</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Solid Line</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Dash Line</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Dot Line</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Dash Dot Line</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Dash Dot Dot Line</string>
+                                                </property>
+                                            </item>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <spacer name="horizontalSpacer_8">
+                                            <property name="orientation">
+                                                <enum>Qt::Horizontal</enum>
+                                            </property>
+                                            <property name="sizeHint" stdset="0">
+                                                <size>
+                                                    <width>40</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                    </item>
+                                </layout>
+                            </item>
+                            <item>
+                                <layout class="QHBoxLayout" name="horizontalLayout_7">
+                                    <item>
+                                        <widget class="QLabel" name="label_20">
+                                            <property name="text">
+                                                <string>Border Color</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QPushButton" name="borderColor_0">
+                                            <property name="text">
+                                                <string>Choose Color</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QLabel" name="label_21">
+                                            <property name="text">
+                                                <string>Join Type</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QComboBox" name="borderJoinCombo_0">
+                                            <item>
+                                                <property name="text">
+                                                    <string>Bevel Join</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Miter Join</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Round Join</string>
+                                                </property>
+                                            </item>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <spacer name="horizontalSpacer_9">
+                                            <property name="orientation">
+                                                <enum>Qt::Horizontal</enum>
+                                            </property>
+                                            <property name="sizeHint" stdset="0">
+                                                <size>
+                                                    <width>40</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                    </item>
+                                </layout>
+                            </item>
+                            <item>
+                                <widget class="QLabel" name="label_14">
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>16777215</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                    <property name="font">
+                                        <font>
+                                            <pointsize>12</pointsize>
+                                        </font>
+                                    </property>
+                                    <property name="text">
+                                        <string>Fill Settings (Ignored for Polylines)</string>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item>
+                                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                                    <item>
+                                        <widget class="QLabel" name="label_3">
+                                            <property name="text">
+                                                <string>Fill Color</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QPushButton" name="beginColor_1">
+                                            <property name="text">
+                                                <string>Begin Color</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QPushButton" name="endColor_2">
+                                            <property name="text">
+                                                <string>End Color</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <spacer name="horizontalSpacer_3">
+                                            <property name="orientation">
+                                                <enum>Qt::Horizontal</enum>
+                                            </property>
+                                            <property name="sizeHint" stdset="0">
+                                                <size>
+                                                    <width>40</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                    </item>
+                                </layout>
+                            </item>
+                        </layout>
+                    </widget>
+                    <widget class="QWidget" name="byLevel1">
+                        <attribute name="title">
+                            <string>By Level</string>
+                        </attribute>
+                        <layout class="QVBoxLayout" name="verticalLayout_3">
+                            <item>
+                                <layout class="QHBoxLayout" name="horizontalLayout_3">
+                                    <item>
+                                        <widget class="QLabel" name="label_25">
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>16777215</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                            <property name="font">
+                                                <font>
+                                                    <pointsize>12</pointsize>
+                                                </font>
+                                            </property>
+                                            <property name="text">
+                                                <string>Border Settings</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <spacer name="horizontalSpacer_2">
+                                            <property name="orientation">
+                                                <enum>Qt::Horizontal</enum>
+                                            </property>
+                                            <property name="sizeHint" stdset="0">
+                                                <size>
+                                                    <width>40</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                    </item>
+                                    <item>
+                                        <widget class="QLabel" name="label_2">
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>16777215</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string>Choose Field</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QComboBox" name="fieldsComboBox_1">
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>80</width>
+                                                    <height>0</height>
+                                                </size>
+                                            </property>
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>16777215</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QLabel" name="levelNumberLabel_1">
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>16777215</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string>levels:</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                </layout>
+                            </item>
+                            <item>
+                                <layout class="QHBoxLayout" name="horizontalLayout_12">
+                                    <item>
+                                        <widget class="QLabel" name="label_16">
+                                            <property name="text">
+                                                <string>Border Width</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QLineEdit" name="borderWidth_1">
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>100</width>
+                                                    <height>0</height>
+                                                </size>
+                                            </property>
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>100</width>
+                                                    <height>16777215</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string>1</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QLabel" name="label_17">
+                                            <property name="text">
+                                                <string>Border Type</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QComboBox" name="borderTypeCombo_1">
+                                            <item>
+                                                <property name="text">
+                                                    <string>No Line</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Solid Line</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Dash Line</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Dot Line</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Dash Dot Line</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Dash Dot Dot Line</string>
+                                                </property>
+                                            </item>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <spacer name="horizontalSpacer_5">
+                                            <property name="orientation">
+                                                <enum>Qt::Horizontal</enum>
+                                            </property>
+                                            <property name="sizeHint" stdset="0">
+                                                <size>
+                                                    <width>40</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                    </item>
+                                </layout>
+                            </item>
+                            <item>
+                                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                                    <item>
+                                        <widget class="QLabel" name="label_22">
+                                            <property name="text">
+                                                <string>Border Color</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QPushButton" name="borderColor_1">
+                                            <property name="text">
+                                                <string>Choose Color</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QLabel" name="label_23">
+                                            <property name="text">
+                                                <string>Join Type</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QComboBox" name="borderJoinCombo_1">
+                                            <item>
+                                                <property name="text">
+                                                    <string>Bevel Join</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Miter Join</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Round Join</string>
+                                                </property>
+                                            </item>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <spacer name="horizontalSpacer_10">
+                                            <property name="orientation">
+                                                <enum>Qt::Horizontal</enum>
+                                            </property>
+                                            <property name="sizeHint" stdset="0">
+                                                <size>
+                                                    <width>40</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                    </item>
+                                </layout>
+                            </item>
+                            <item>
+                                <widget class="QLabel" name="label_13">
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>16777215</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                    <property name="font">
+                                        <font>
+                                            <pointsize>12</pointsize>
+                                        </font>
+                                    </property>
+                                    <property name="text">
+                                        <string>Fill Settings (Ignored for Polylines)</string>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item>
+                                <layout class="QHBoxLayout" name="horizontalLayout_13">
+                                    <item>
+                                        <widget class="QLabel" name="label_5">
+                                            <property name="text">
+                                                <string>Level Size</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QComboBox" name="blLevelCombo">
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>50</width>
+                                                    <height>0</height>
+                                                </size>
+                                            </property>
+                                            <item>
+                                                <property name="text">
+                                                    <string>2</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>3</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>4</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>5</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>6</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>7</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>8</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>9</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>10</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>11</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>12</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>13</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>14</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>15</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>16</string>
+                                                </property>
+                                            </item>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QLabel" name="label_24">
+                                            <property name="text">
+                                                <string>Fill Color</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QPushButton" name="beginColor_2">
+                                            <property name="styleSheet">
+                                                <string notr="true"/>
+                                            </property>
+                                            <property name="text">
+                                                <string>Begin Color</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QPushButton" name="endColor_1">
+                                            <property name="text">
+                                                <string>End Color</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <spacer name="horizontalSpacer_11">
+                                            <property name="orientation">
+                                                <enum>Qt::Horizontal</enum>
+                                            </property>
+                                            <property name="sizeHint" stdset="0">
+                                                <size>
+                                                    <width>40</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                    </item>
+                                </layout>
+                            </item>
+                        </layout>
+                    </widget>
+                    <widget class="QWidget" name="singleValue2">
+                        <attribute name="title">
+                            <string>Single</string>
+                        </attribute>
+                        <layout class="QVBoxLayout" name="verticalLayout_5">
+                            <item>
+                                <widget class="QLabel" name="label_4">
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>16777215</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                    <property name="font">
+                                        <font>
+                                            <pointsize>12</pointsize>
+                                        </font>
+                                    </property>
+                                    <property name="text">
+                                        <string>Border Settings</string>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item>
+                                <layout class="QHBoxLayout" name="horizontalLayout_9">
+                                    <item>
+                                        <widget class="QLabel" name="label_6">
+                                            <property name="text">
+                                                <string>Border Width</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QLineEdit" name="borderWidth_2">
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>100</width>
+                                                    <height>16777215</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string>1</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QLabel" name="label_9">
+                                            <property name="text">
+                                                <string>Border Type</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QComboBox" name="borderTypeCombo_2">
+                                            <item>
+                                                <property name="text">
+                                                    <string>No Line</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Solid Line</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Dash Line</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Dot Line</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Dash Dot Line</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Dash Dot Dot Line</string>
+                                                </property>
+                                            </item>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <spacer name="horizontalSpacer_4">
+                                            <property name="orientation">
+                                                <enum>Qt::Horizontal</enum>
+                                            </property>
+                                            <property name="sizeHint" stdset="0">
+                                                <size>
+                                                    <width>40</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                    </item>
+                                </layout>
+                            </item>
+                            <item>
+                                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                                    <item>
+                                        <widget class="QLabel" name="label_7">
+                                            <property name="text">
+                                                <string>Border Color</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QPushButton" name="borderColor_2">
+                                            <property name="text">
+                                                <string>Choose Color</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QLabel" name="label_15">
+                                            <property name="text">
+                                                <string>Join Type</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QComboBox" name="borderJoinCombo_2">
+                                            <item>
+                                                <property name="text">
+                                                    <string>Bevel Join</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Miter Join</string>
+                                                </property>
+                                            </item>
+                                            <item>
+                                                <property name="text">
+                                                    <string>Round Join</string>
+                                                </property>
+                                            </item>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <spacer name="horizontalSpacer_6">
+                                            <property name="orientation">
+                                                <enum>Qt::Horizontal</enum>
+                                            </property>
+                                            <property name="sizeHint" stdset="0">
+                                                <size>
+                                                    <width>40</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                    </item>
+                                </layout>
+                            </item>
+                            <item>
+                                <widget class="QLabel" name="label_10">
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>16777215</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                    <property name="font">
+                                        <font>
+                                            <pointsize>12</pointsize>
+                                        </font>
+                                    </property>
+                                    <property name="text">
+                                        <string>Fill Settings (Ignored for Polylines)</string>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item>
+                                <layout class="QHBoxLayout" name="horizontalLayout_10">
+                                    <item>
+                                        <widget class="QLabel" name="label_8">
+                                            <property name="text">
+                                                <string>Fill Color</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <widget class="QPushButton" name="singleColor">
+                                            <property name="text">
+                                                <string>Choose Color</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <spacer name="horizontalSpacer_7">
+                                            <property name="orientation">
+                                                <enum>Qt::Horizontal</enum>
+                                            </property>
+                                            <property name="sizeHint" stdset="0">
+                                                <size>
+                                                    <width>40</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                    </item>
+                                </layout>
+                            </item>
+                        </layout>
+                    </widget>
+                </widget>
+            </item>
+            <item>
+                <widget class="QDialogButtonBox" name="buttonBox">
+                    <property name="standardButtons">
+                        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+                    </property>
+                </widget>
+            </item>
         </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_11">
-         <item>
-          <widget class="QLabel" name="label_18">
-           <property name="text">
-            <string>Border Width</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="borderWidth_0">
-           <property name="maximumSize">
-            <size>
-             <width>100</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_19">
-           <property name="text">
-            <string>Border Type</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="borderTypeCombo_0">
-           <item>
-            <property name="text">
-             <string>No Line</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Solid Line</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Dash Line</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Dot Line</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Dash Dot Line</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Dash Dot Dot Line</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_8">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_7">
-         <item>
-          <widget class="QLabel" name="label_20">
-           <property name="text">
-            <string>Border Color</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="borderColor_0">
-           <property name="text">
-            <string>Choose Color</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_21">
-           <property name="text">
-            <string>Join Type</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="borderJoinCombo_0">
-           <item>
-            <property name="text">
-             <string>Bevel Join</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Miter Join</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Round Join</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_9">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_14">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Fill Settings (Ignored for Polylines)</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Fill Color</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="beginColor_1">
-           <property name="text">
-            <string>Begin Color</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="endColor_2">
-           <property name="text">
-            <string>End Color</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="byLevel1">
-      <attribute name="title">
-       <string>By Level</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QLabel" name="label_25">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Border Settings</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_2">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Choose Field</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="fieldsComboBox_1">
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>20</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="levelNumberLabel_1">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>levels:</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_12">
-         <item>
-          <widget class="QLabel" name="label_16">
-           <property name="text">
-            <string>Border Width</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="borderWidth_1">
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>100</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_17">
-           <property name="text">
-            <string>Border Type</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="borderTypeCombo_1">
-           <item>
-            <property name="text">
-             <string>No Line</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Solid Line</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Dash Line</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Dot Line</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Dash Dot Line</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Dash Dot Dot Line</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_5">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
-         <item>
-          <widget class="QLabel" name="label_22">
-           <property name="text">
-            <string>Border Color</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="borderColor_1">
-           <property name="text">
-            <string>Choose Color</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_23">
-           <property name="text">
-            <string>Join Type</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="borderJoinCombo_1">
-           <item>
-            <property name="text">
-             <string>Bevel Join</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Miter Join</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Round Join</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_10">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_13">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Fill Settings (Ignored for Polylines)</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_13">
-         <item>
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>Level Size</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="blLevelCombo">
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>0</height>
-            </size>
-           </property>
-           <item>
-            <property name="text">
-             <string>2</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>3</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>4</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>5</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>6</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>7</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>8</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>9</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>10</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>11</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>12</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>13</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>14</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>15</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>16</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_24">
-           <property name="text">
-            <string>Fill Color</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="beginColor_2">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string>Begin Color</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="endColor_1">
-           <property name="text">
-            <string>End Color</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_11">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="singleValue2">
-      <attribute name="title">
-       <string>Single</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <item>
-        <widget class="QLabel" name="label_4">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Border Settings</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_9">
-         <item>
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>Border Width</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="borderWidth_2">
-           <property name="maximumSize">
-            <size>
-             <width>100</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_9">
-           <property name="text">
-            <string>Border Type</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="borderTypeCombo_2">
-           <item>
-            <property name="text">
-             <string>No Line</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Solid Line</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Dash Line</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Dot Line</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Dash Dot Line</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Dash Dot Dot Line</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QLabel" name="label_7">
-           <property name="text">
-            <string>Border Color</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="borderColor_2">
-           <property name="text">
-            <string>Choose Color</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_15">
-           <property name="text">
-            <string>Join Type</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="borderJoinCombo_2">
-           <item>
-            <property name="text">
-             <string>Bevel Join</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Miter Join</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Round Join</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_6">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_10">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Fill Settings (Ignored for Polylines)</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_10">
-         <item>
-          <widget class="QLabel" name="label_8">
-           <property name="text">
-            <string>Fill Color</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="singleColor">
-           <property name="text">
-            <string>Choose Color</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_7">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
     </widget>
-   </item>
-   <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-  </layout>
- </widget>
- <resources/>
- <connections>
-  <connection>
-   <sender>beginColor_1</sender>
-   <signal>clicked()</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_begin_color()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>115</x>
-     <y>223</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>beginColor_2</sender>
-   <signal>clicked()</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_begin_color()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>290</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>endColor_1</sender>
-   <signal>clicked()</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_end_color()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>315</x>
-     <y>223</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>endColor_2</sender>
-   <signal>clicked()</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_end_color()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>197</x>
-     <y>223</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>singleColor</sender>
-   <signal>clicked()</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_single_color()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>120</x>
-     <y>223</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>borderWidth_2</sender>
-   <signal>textEdited(QString)</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_border_width()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>159</x>
-     <y>90</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>borderWidth_1</sender>
-   <signal>textEdited(QString)</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_border_width()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>159</x>
-     <y>90</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>borderWidth_0</sender>
-   <signal>textEdited(QString)</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_border_width()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>159</x>
-     <y>90</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>borderTypeCombo_0</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_border_type()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>360</x>
-     <y>91</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>borderTypeCombo_1</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_border_type()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>360</x>
-     <y>91</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>borderTypeCombo_2</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_border_type()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>360</x>
-     <y>91</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>borderColor_0</sender>
-   <signal>clicked()</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_border_color()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>143</x>
-     <y>144</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>borderColor_2</sender>
-   <signal>clicked()</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_border_color()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>143</x>
-     <y>144</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>borderColor_1</sender>
-   <signal>clicked()</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_border_color()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>143</x>
-     <y>144</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>borderJoinCombo_2</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_border_join()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>286</x>
-     <y>144</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>borderJoinCombo_0</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_border_join()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>296</x>
-     <y>144</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>borderJoinCombo_1</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_border_join()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>296</x>
-     <y>144</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>blLevelCombo</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>Symbology</receiver>
-   <slot>set_bl_level_size()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>107</x>
-     <y>224</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>Symbology</receiver>
-   <slot>dialog_accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>236</x>
-     <y>278</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>Symbology</receiver>
-   <slot>dialog_reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>236</x>
-     <y>278</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>fieldsComboBox_0</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>Symbology</receiver>
-   <slot>field_id_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>375</x>
-     <y>62</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>fieldsComboBox_1</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>Symbology</receiver>
-   <slot>field_id_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>375</x>
-     <y>61</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
- <slots>
-  <slot>set_border_width()</slot>
-  <slot>set_border_type()</slot>
-  <slot>set_border_color()</slot>
-  <slot>set_border_join()</slot>
-  <slot>set_begin_color()</slot>
-  <slot>set_end_color()</slot>
-  <slot>set_bl_level_size()</slot>
-  <slot>set_single_color()</slot>
-  <slot>dialog_accept()</slot>
-  <slot>dialog_reject()</slot>
-  <slot>index_changed()</slot>
-  <slot>field_id_changed()</slot>
- </slots>
+    <resources/>
+    <connections>
+        <connection>
+            <sender>beginColor_1</sender>
+            <signal>clicked()</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_begin_color()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>115</x>
+                    <y>223</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>beginColor_2</sender>
+            <signal>clicked()</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_begin_color()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>290</x>
+                    <y>244</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>endColor_1</sender>
+            <signal>clicked()</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_end_color()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>315</x>
+                    <y>223</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>endColor_2</sender>
+            <signal>clicked()</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_end_color()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>197</x>
+                    <y>223</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>singleColor</sender>
+            <signal>clicked()</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_single_color()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>120</x>
+                    <y>223</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>borderWidth_2</sender>
+            <signal>textEdited(QString)</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_border_width()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>159</x>
+                    <y>90</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>borderWidth_1</sender>
+            <signal>textEdited(QString)</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_border_width()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>159</x>
+                    <y>90</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>borderWidth_0</sender>
+            <signal>textEdited(QString)</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_border_width()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>159</x>
+                    <y>90</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>borderTypeCombo_0</sender>
+            <signal>currentIndexChanged(int)</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_border_type()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>360</x>
+                    <y>91</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>borderTypeCombo_1</sender>
+            <signal>currentIndexChanged(int)</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_border_type()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>360</x>
+                    <y>91</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>borderTypeCombo_2</sender>
+            <signal>currentIndexChanged(int)</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_border_type()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>360</x>
+                    <y>91</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>borderColor_0</sender>
+            <signal>clicked()</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_border_color()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>143</x>
+                    <y>144</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>borderColor_2</sender>
+            <signal>clicked()</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_border_color()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>143</x>
+                    <y>144</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>borderColor_1</sender>
+            <signal>clicked()</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_border_color()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>143</x>
+                    <y>144</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>borderJoinCombo_2</sender>
+            <signal>currentIndexChanged(int)</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_border_join()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>286</x>
+                    <y>144</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>borderJoinCombo_0</sender>
+            <signal>currentIndexChanged(int)</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_border_join()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>296</x>
+                    <y>144</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>borderJoinCombo_1</sender>
+            <signal>currentIndexChanged(int)</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_border_join()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>296</x>
+                    <y>144</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>blLevelCombo</sender>
+            <signal>currentIndexChanged(int)</signal>
+            <receiver>Symbology</receiver>
+            <slot>set_bl_level_size()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>107</x>
+                    <y>224</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>buttonBox</sender>
+            <signal>accepted()</signal>
+            <receiver>Symbology</receiver>
+            <slot>dialog_accept()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>236</x>
+                    <y>278</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>buttonBox</sender>
+            <signal>rejected()</signal>
+            <receiver>Symbology</receiver>
+            <slot>dialog_reject()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>236</x>
+                    <y>278</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>fieldsComboBox_0</sender>
+            <signal>currentIndexChanged(int)</signal>
+            <receiver>Symbology</receiver>
+            <slot>field_id_changed()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>375</x>
+                    <y>62</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>fieldsComboBox_1</sender>
+            <signal>currentIndexChanged(int)</signal>
+            <receiver>Symbology</receiver>
+            <slot>field_id_changed()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>375</x>
+                    <y>61</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>236</x>
+                    <y>149</y>
+                </hint>
+            </hints>
+        </connection>
+    </connections>
+    <slots>
+        <slot>set_border_width()</slot>
+        <slot>set_border_type()</slot>
+        <slot>set_border_color()</slot>
+        <slot>set_border_join()</slot>
+        <slot>set_begin_color()</slot>
+        <slot>set_end_color()</slot>
+        <slot>set_bl_level_size()</slot>
+        <slot>set_single_color()</slot>
+        <slot>dialog_accept()</slot>
+        <slot>dialog_reject()</slot>
+        <slot>index_changed()</slot>
+        <slot>field_id_changed()</slot>
+    </slots>
 </ui>

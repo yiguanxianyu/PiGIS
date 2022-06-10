@@ -8,16 +8,13 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
-    QCursor, QFont, QFontDatabase, QGradient,
-    QIcon, QImage, QKeySequence, QLinearGradient,
-    QPainter, QPalette, QPixmap, QRadialGradient,
-    QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QMainWindow, QMenu,
-    QMenuBar, QSizePolicy, QToolBar, QWidget)
+from PySide6.QtCore import (QCoreApplication, QLocale,
+                            QMetaObject, QRect,
+                            QSize, Qt)
+from PySide6.QtGui import (QAction)
+from PySide6.QtWidgets import (QHBoxLayout, QMenu,
+                               QMenuBar, QSizePolicy, QToolBar, QWidget)
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -122,7 +119,7 @@ class Ui_MainWindow(object):
         MainWindow.setMenuBar(self.menuBar)
         self.toolBar = QToolBar(MainWindow)
         self.toolBar.setObjectName(u"toolBar")
-        self.toolBar.setAllowedAreas(Qt.BottomToolBarArea|Qt.TopToolBarArea)
+        self.toolBar.setAllowedAreas(Qt.BottomToolBarArea | Qt.TopToolBarArea)
         MainWindow.addToolBar(Qt.TopToolBarArea, self.toolBar)
 
         self.menuBar.addAction(self.menuProject.menuAction())
@@ -188,19 +185,20 @@ class Ui_MainWindow(object):
         self.actionExitEditing.triggered.connect(MainWindow.exit_editing)
 
         QMetaObject.connectSlotsByName(MainWindow)
+
     # setupUi
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u03c0GIS", None))
         self.actionProjectNew.setText(QCoreApplication.translate("MainWindow", u"New", None))
         self.actionProjectOpen.setText(QCoreApplication.translate("MainWindow", u"Open", None))
-#if QT_CONFIG(shortcut)
+        # if QT_CONFIG(shortcut)
         self.actionProjectOpen.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+O", None))
-#endif // QT_CONFIG(shortcut)
+        # endif // QT_CONFIG(shortcut)
         self.actionProjectSave.setText(QCoreApplication.translate("MainWindow", u"Save", None))
-#if QT_CONFIG(shortcut)
+        # if QT_CONFIG(shortcut)
         self.actionProjectSave.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+S", None))
-#endif // QT_CONFIG(shortcut)
+        # endif // QT_CONFIG(shortcut)
         self.actionExit.setText(QCoreApplication.translate("MainWindow", u"Exit \u03c0GIS", None))
         self.actionAbout.setText(QCoreApplication.translate("MainWindow", u"About", None))
         self.actionCut.setText(QCoreApplication.translate("MainWindow", u"Cut Features", None))
@@ -212,41 +210,43 @@ class Ui_MainWindow(object):
         self.actionShowToolBar.setText(QCoreApplication.translate("MainWindow", u"Show Tool Bar", None))
         self.actionSaveImage.setText(QCoreApplication.translate("MainWindow", u"Save Map As Image", None))
         self.actionProjectSaveAs.setText(QCoreApplication.translate("MainWindow", u"Save As", None))
-#if QT_CONFIG(shortcut)
+        # if QT_CONFIG(shortcut)
         self.actionProjectSaveAs.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+Shift+S", None))
-#endif // QT_CONFIG(shortcut)
+        # endif // QT_CONFIG(shortcut)
         self.actionNewShapefileLayer.setText(QCoreApplication.translate("MainWindow", u"New Point Layer", None))
         self.actionOptions.setText(QCoreApplication.translate("MainWindow", u"Options", None))
         self.actionAddLayer.setText(QCoreApplication.translate("MainWindow", u"Add Layer", None))
         self.actionNew_MultiPoint_Layer.setText(QCoreApplication.translate("MainWindow", u"New MultiPoint Layer", None))
         self.actionNew_Polyline_Layer.setText(QCoreApplication.translate("MainWindow", u"New Polyline Layer", None))
-        self.actionNew_MultiPolyline_Layer.setText(QCoreApplication.translate("MainWindow", u"New MultiPolyline Layer", None))
+        self.actionNew_MultiPolyline_Layer.setText(
+            QCoreApplication.translate("MainWindow", u"New MultiPolyline Layer", None))
         self.actionNew_Polygon_Layer.setText(QCoreApplication.translate("MainWindow", u"New Polygon Layer", None))
-        self.actionNew_MultiPolygon_Layer.setText(QCoreApplication.translate("MainWindow", u"New MultiPolygon Layer", None))
+        self.actionNew_MultiPolygon_Layer.setText(
+            QCoreApplication.translate("MainWindow", u"New MultiPolygon Layer", None))
         self.actionFeatureDragging.setText(QCoreApplication.translate("MainWindow", u"Feature Dragging", None))
-#if QT_CONFIG(tooltip)
+        # if QT_CONFIG(tooltip)
         self.actionFeatureDragging.setToolTip(QCoreApplication.translate("MainWindow", u"Feature Dragging", None))
-#endif // QT_CONFIG(tooltip)
+        # endif // QT_CONFIG(tooltip)
         self.actionAdding.setText(QCoreApplication.translate("MainWindow", u"Adding", None))
-#if QT_CONFIG(tooltip)
+        # if QT_CONFIG(tooltip)
         self.actionAdding.setToolTip(QCoreApplication.translate("MainWindow", u"Adding", None))
-#endif // QT_CONFIG(tooltip)
+        # endif // QT_CONFIG(tooltip)
         self.actionEditing.setText(QCoreApplication.translate("MainWindow", u"Editing", None))
-#if QT_CONFIG(tooltip)
+        # if QT_CONFIG(tooltip)
         self.actionEditing.setToolTip(QCoreApplication.translate("MainWindow", u"Editing", None))
-#endif // QT_CONFIG(tooltip)
+        # endif // QT_CONFIG(tooltip)
         self.actionBrowsing.setText(QCoreApplication.translate("MainWindow", u"Browsing", None))
-#if QT_CONFIG(tooltip)
+        # if QT_CONFIG(tooltip)
         self.actionBrowsing.setToolTip(QCoreApplication.translate("MainWindow", u"Browsing", None))
-#endif // QT_CONFIG(tooltip)
+        # endif // QT_CONFIG(tooltip)
         self.actionIdentifying.setText(QCoreApplication.translate("MainWindow", u"Identifying", None))
-#if QT_CONFIG(tooltip)
+        # if QT_CONFIG(tooltip)
         self.actionIdentifying.setToolTip(QCoreApplication.translate("MainWindow", u"Identifying", None))
-#endif // QT_CONFIG(tooltip)
+        # endif // QT_CONFIG(tooltip)
         self.actionExitEditing.setText(QCoreApplication.translate("MainWindow", u"Exit Editing", None))
-#if QT_CONFIG(tooltip)
+        # if QT_CONFIG(tooltip)
         self.actionExitEditing.setToolTip(QCoreApplication.translate("MainWindow", u"Exit Editing", None))
-#endif // QT_CONFIG(tooltip)
+        # endif // QT_CONFIG(tooltip)
         self.menuLayer.setTitle(QCoreApplication.translate("MainWindow", u"Layer", None))
         self.menuCreateLayer.setTitle(QCoreApplication.translate("MainWindow", u"Create Layer", None))
         self.menuSettings.setTitle(QCoreApplication.translate("MainWindow", u"Settings", None))
@@ -256,4 +256,3 @@ class Ui_MainWindow(object):
         self.menuProject.setTitle(QCoreApplication.translate("MainWindow", u"Project", None))
         self.toolBar.setWindowTitle(QCoreApplication.translate("MainWindow", u"toolBar", None))
     # retranslateUi
-

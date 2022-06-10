@@ -22,8 +22,8 @@ class PiMultiPolyline(PiGeometryCollection):
 
     def get_mbr(self):
         return super().get_mbr()
-    
-    def add_object(self,object):
+
+    def add_object(self, object):
         self._collection.append(object)
         self.count += 1
 
@@ -37,6 +37,6 @@ class PiMultiPolyline(PiGeometryCollection):
     def delete_object(self, index):
         del (self._collection[index])
         self._object_num -= 1
-    
+
     def translate(self, dx, dy):
         return super().translate(dx, dy)
