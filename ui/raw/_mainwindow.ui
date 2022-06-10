@@ -157,8 +157,9 @@
    </attribute>
    <addaction name="actionBrowsing"/>
    <addaction name="actionFeatureDragging"/>
-   <addaction name="actionAdd"/>
-   <addaction name="actionEdit"/>
+   <addaction name="actionAdding"/>
+   <addaction name="actionEditing"/>
+   <addaction name="actionExitEditing"/>
    <addaction name="actionIdentifying"/>
   </widget>
   <action name="actionProjectNew">
@@ -297,14 +298,20 @@
     <string>Feature Dragging</string>
    </property>
   </action>
-  <action name="actionAdd">
+  <action name="actionAdding">
    <property name="text">
-    <string>Add</string>
+    <string>Adding</string>
+   </property>
+   <property name="toolTip">
+    <string>Adding</string>
    </property>
   </action>
-  <action name="actionEdit">
+  <action name="actionEditing">
    <property name="text">
-    <string>Edit</string>
+    <string>Editing</string>
+   </property>
+   <property name="toolTip">
+    <string>Editing</string>
    </property>
   </action>
   <action name="actionBrowsing">
@@ -321,6 +328,14 @@
    </property>
    <property name="toolTip">
     <string>Identifying</string>
+   </property>
+  </action>
+  <action name="actionExitEditing">
+   <property name="text">
+    <string>Exit Editing</string>
+   </property>
+   <property name="toolTip">
+    <string>Exit Editing</string>
    </property>
   </action>
  </widget>
@@ -551,7 +566,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionAdd</sender>
+   <sender>actionAdding</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>enable_add_feature()</slot>
@@ -567,7 +582,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionEdit</sender>
+   <sender>actionEditing</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>enable_edit_feature()</slot>

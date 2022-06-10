@@ -246,7 +246,7 @@ class AttributesTable(QWidget):
                 for row in rows:
                     self.tableModel.removeRow(row)
 
-            self.graph.remove_features(self.layer_id, ids)
+            self.graph.set_features_visibility(self.layer_id, ids, False)
 
     def add_field(self):
         s = AddFieldDialog(self)
