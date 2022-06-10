@@ -111,15 +111,18 @@ class PiGraphicsItemGroup(QGraphicsItemGroup):
         return [[point+item.pos() for point in item.get_point_list()] for item in self.childItems()]
 
     def mouseDoubleClickEvent(self, event: QGraphicsSceneMouseEvent) -> None:
-        if self.accept_edit == True:
-            if event.button() == Qt.MouseButton.LeftButton and self.edit_cache == None:
-                print("start edit feature %d" % self.id)
-                self.edit_cache = PiEditCacheItem(self.draw,self)
-            elif event.button() == Qt.MouseButton.RightButton and self.edit_cache != None:
-                self.edit_cache.end_edit()
-                self.edit_cache = None
-                print("end edit feature %d" % self.id)
-        else:
+        if self.draw.view.mode == PiGraphModeConstant.editable:
+            if self.accept_edit == True:
+                if event.button() == Qt.MouseButton.LeftButton and self.edit_cache == None:
+                    print("start edit feature %d" % self.id)
+                    self.edit_cache = PiEditCacheItem(self.draw,self)
+                elif event.button() == Qt.MouseButton.RightButton and self.edit_cache != None:
+                    self.edit_cache.end_edit()
+                    self.edit_cache = None
+                    print("end edit feature %d" % self.id)
+            else:
+                pass
+        elif self.draw.view.mode == PiGraphModeConstant.moveable:
             pass
         return super().mouseDoubleClickEvent(event)
     
