@@ -235,6 +235,7 @@ class AttributesTable(QWidget):
     def remove_row(self):
         rows = sorted(list({i.row() for i in self.tableView.selectedIndexes()}), reverse=True)
         ids = [self.tableModel.data_.iloc[i, 0] for i in rows]
+        self.removed.extend(ids)
 
         if rows:
             length = len(rows)
@@ -285,6 +286,7 @@ class AttributesTable(QWidget):
                     self.tableModel.save()
                     event.accept()
                 case QMessageBox.StandardButton.No:
+                    self.graph.set_features_visibility(self.layer_id, self.removed, True)
                     event.accept()
                 case QMessageBox.StandardButton.Cancel:
                     event.ignore()
