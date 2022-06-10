@@ -114,6 +114,18 @@ class Graph(QWidget):
             item_collection[feature_id].setPen(pen)
             item_collection[feature_id].setBrush(brush)
 
+    def point_feature_turn_circ(self,layer_id, ids: list[int]):
+        item_collection = self.draw_control.item_collections[layer_id]
+        for feature_id in ids:
+            item = item_collection[feature_id]
+            pen = item.pen()
+            brush = item.brush()
+        pass
+
+    def point_feature_turn_rect(self,layer_id, ids: list[int]):
+        item_collection = self.draw_control.item_collections[layer_id]
+        pass
+
     def set_scale(self, scale):
         """设置比例尺，传入的是1:x的那个x缩放点就
         怎么方便怎么来吧，可以直接用当前中心点什么的"""
@@ -221,4 +233,3 @@ class Graph(QWidget):
     def graph_turn_layer_addable(self,layer_id):
         '''把图层切换成可以增加要素的模式'''
         self.view_control.mode_turn_add_layer(layer_id)
-
