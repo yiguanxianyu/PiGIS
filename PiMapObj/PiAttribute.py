@@ -6,7 +6,7 @@ cons = PiValueTypeConstant()
 class PiAttribute():
     def __init__(self, value_type):
         self.value_type = value_type
-        self.value = None
+        self.value = 0
 
     def load(self, reader, load_type):
         if load_type == 'lay':
@@ -32,6 +32,7 @@ class PiAttribute():
         return str(self.value)
 
     __repr__ = __str__
+
 
 class PiAttributes():
     def __init__(self, fields):

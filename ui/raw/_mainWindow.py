@@ -191,6 +191,7 @@ class Ui_MainWindow(object):
         self.actionAdding.triggered.connect(MainWindow.enable_add_feature)
         self.actionEditing.triggered.connect(MainWindow.enable_edit_feature)
         self.actionIdentifying.triggered.connect(MainWindow.identify_feature)
+        self.actionExitEditing.triggered.connect(MainWindow.exit_editing)
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi

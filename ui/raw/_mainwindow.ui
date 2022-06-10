@@ -613,6 +613,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionExitEditing</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>exit_editing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>409</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>open_project()</slot>
@@ -632,5 +648,6 @@
   <slot>enable_add_feature()</slot>
   <slot>enable_edit_feature()</slot>
   <slot>identify_feature()</slot>
+  <slot>exit_editing()</slot>
  </slots>
 </ui>

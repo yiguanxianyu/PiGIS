@@ -43,9 +43,13 @@ class MainWindow(QMainWindow):
     def update_coord(self, x, y):
         self.update_coord(x, y)
 
+    def exit_editing(self):
+        self.graphWidget.graph_turn_unable()
+        self.statusBar.update_edit_status('Exited editing')
+
     def enable_drag_map(self):
         self.graphWidget.graph_turn_move()
-        self.statusBar.update_edit_status('Dragging map')
+        self.statusBar.update_edit_status('Browsing')
 
     def enable_drag_feature(self):
         curr_layer = self.layerTree.get_current_item()
@@ -73,6 +77,7 @@ class MainWindow(QMainWindow):
 
     def identify_feature(self):
         self.graphWidget.graph_turn_realize()
+        self.statusBar.update_edit_status('Identifying feature')
 
     # For test only
     def mouseMoveEvent(self, event) -> None:
