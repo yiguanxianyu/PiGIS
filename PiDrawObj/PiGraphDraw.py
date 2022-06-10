@@ -131,9 +131,11 @@ class PiGraphDraw(QPaintDevice):
                 if item == text_item:
                     continue
                 if text_item.collidesWithItem(item):
-                    text_collection[feature_id] = text_item
-                    return
-            self.scene.addItem(text_item)
+                    del text_collection[feature_id]
+                    text_item = None
+                    break
+            if text_item != None:
+                self.scene.addItem(text_item)
     
     def delete_layer_text(self,layer_id):
         '''删除元素注记，默认显示第一个字段'''
