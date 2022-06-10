@@ -181,9 +181,7 @@ class Graph(QWidget):
         layer.annotation_status = True
 
     def remove_label(self, layer_id):
-
         layer = self.get_layer_by_id(layer_id)
-
         layer.label_status = False
 
     def remove_annotation(self, layer_id):

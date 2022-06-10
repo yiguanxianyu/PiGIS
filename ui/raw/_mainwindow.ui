@@ -155,11 +155,11 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionAddLayer"/>
-   <addaction name="actionDragMap"/>
-   <addaction name="actionDragFeature"/>
+   <addaction name="actionBrowsing"/>
+   <addaction name="actionFeatureDragging"/>
    <addaction name="actionAdd"/>
    <addaction name="actionEdit"/>
+   <addaction name="actionIdentifying"/>
   </widget>
   <action name="actionProjectNew">
    <property name="text">
@@ -289,9 +289,12 @@
     <string>New MultiPolygon Layer</string>
    </property>
   </action>
-  <action name="actionDragFeature">
+  <action name="actionFeatureDragging">
    <property name="text">
-    <string>DragFeature</string>
+    <string>Feature Dragging</string>
+   </property>
+   <property name="toolTip">
+    <string>Feature Dragging</string>
    </property>
   </action>
   <action name="actionAdd">
@@ -304,9 +307,20 @@
     <string>Edit</string>
    </property>
   </action>
-  <action name="actionDragMap">
+  <action name="actionBrowsing">
    <property name="text">
-    <string>DragMap</string>
+    <string>Browsing</string>
+   </property>
+   <property name="toolTip">
+    <string>Browsing</string>
+   </property>
+  </action>
+  <action name="actionIdentifying">
+   <property name="text">
+    <string>Identifying</string>
+   </property>
+   <property name="toolTip">
+    <string>Identifying</string>
    </property>
   </action>
  </widget>
@@ -505,7 +519,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionDragMap</sender>
+   <sender>actionBrowsing</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>enable_drag_map()</slot>
@@ -521,7 +535,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionDragFeature</sender>
+   <sender>actionFeatureDragging</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>enable_drag_feature()</slot>
@@ -568,6 +582,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionIdentifying</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>identify_feature()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>409</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>open_project()</slot>
@@ -586,5 +616,6 @@
   <slot>enable_drag_feature()</slot>
   <slot>enable_add_feature()</slot>
   <slot>enable_edit_feature()</slot>
+  <slot>identify_feature()</slot>
  </slots>
 </ui>

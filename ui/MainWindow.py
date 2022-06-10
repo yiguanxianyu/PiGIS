@@ -71,6 +71,9 @@ class MainWindow(QMainWindow):
         else:
             self.statusBar.update_edit_status('Layer not selected')
 
+    def identify_feature(self):
+        self.graphWidget.graph_turn_realize()
+
     # For test only
     def mouseMoveEvent(self, event) -> None:
         print(event)
