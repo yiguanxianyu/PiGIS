@@ -50,7 +50,7 @@ class PiGraphView(QGraphicsView):
         ratio = show_scale / self.show_scale
         self.scale(ratio, ratio)
         self.show_scale = show_scale
-        self.window.update_scale(self.draw_control.scale / self.show_scale)
+        self.window.update_scale(20000 * self.draw_control.scale / self.show_scale)
 
     def centerOn(self, pos: QPointF | QPoint):
         super().centerOn(pos)
@@ -133,6 +133,8 @@ class PiGraphView(QGraphicsView):
             self.draw_control.save_fig('lalala.bmp')
         elif event.text() == "r":
             self.mode_turn_realize()
+        elif event.text() == "q":
+            self.mode_turn_unable()
 
         # return super().keyReleaseEvent(event)
 
@@ -146,6 +148,13 @@ class PiGraphView(QGraphicsView):
     def mode_turn_realize(self):
         if self.mode != PiGraphModeConstant.realizable:
             self.mode = PiGraphModeConstant.realizable
+
+    def mode_turn_unable(self):
+        if self.mode != PiGraphModeConstant.moveable:
+            self.add_control.end_add()
+            self.edit_control.end_edit()
+            self.drag_control.end_drag()
+            self.mode = PiGraphModeConstant.moveable
 
     def mode_turn_drag_layer(self,layer_id):
         if self.mode != PiGraphModeConstant.dragable:

@@ -117,6 +117,7 @@ class Graph(QWidget):
     def set_scale(self, scale):
         """设置比例尺，传入的是1:x的那个x缩放点就
         怎么方便怎么来吧，可以直接用当前中心点什么的"""
+        scale = scale / 2000
         self.view_control.set_show_scale(self.draw_control.scale / scale)
 
     def set_features_visibility(self, layer_id, ids: list[int], visibility: bool):
@@ -205,6 +206,9 @@ class Graph(QWidget):
 
     def graph_turn_realize(self):
         self.view_control.mode_turn_realize()
+
+    def graph_turn_unable(self):
+        self.view_control.mode_turn_unable()
     
     def graph_turn_layer_dragable(self,layer_id):
         '''把对应图层切换成可以拖动的模式'''
@@ -217,3 +221,4 @@ class Graph(QWidget):
     def graph_turn_layer_addable(self,layer_id):
         '''把图层切换成可以增加要素的模式'''
         self.view_control.mode_turn_add_layer(layer_id)
+

@@ -8,6 +8,8 @@ from PySide6.QtWidgets import QRubberBand
 
 from PiMapObj.PiLayer import PiLayer
 
+import math
+
 
 # import pyqtgraph as pg
 
@@ -69,7 +71,7 @@ class PiEditCacheItem():
             self.cacheItem.setBrush(QBrush(EDITBRUSHCOLOR))
         else:
             self.cacheItem.setBrush(QBrush(Qt.transparent))
-        self.cacheItem.setZValue(9999)
+        self.cacheItem.setZValue(math.inf)
         self.draw_control.scene.addItem(self.cacheItem)
         self.changed_point_list:Sequence[PiEditCachePointItem] = []
         self.load()
@@ -83,7 +85,7 @@ class PiEditCacheItem():
         self.points = [[PiEditCachePointItem(point+pos,self) for point in point_list] for point_list in self.point_lists]
         for point_list in self.points:
             for point in point_list:
-                point.setZValue(9999)
+                point.setZValue(math.inf)
                 self.draw_control.scene.addItem(point)
         #print(self.point_lists)
 
