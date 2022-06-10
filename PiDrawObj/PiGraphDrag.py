@@ -4,8 +4,6 @@ from PySide6.QtWidgets import QGraphicsItem
 from PySide6.QtWidgets import QRubberBand
 
 
-# import pyqtgraph as pg
-
 class PiGraphDrag():
     def __init__(self, view) -> None:
         self.view = view

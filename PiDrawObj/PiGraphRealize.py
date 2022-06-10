@@ -2,8 +2,6 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QMouseEvent
 
 
-# import pyqtgraph as pg
-
 class PiGraphRealize():
     def __init__(self, view) -> None:
         self.view = view

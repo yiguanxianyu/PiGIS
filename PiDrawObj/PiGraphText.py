@@ -2,8 +2,6 @@ from PySide6.QtCore import QPointF
 from PySide6.QtGui import QMouseEvent
 
 
-# import pyqtgraph as pg
-
 class PiGraphText():
     def __init__(self, view) -> None:
         self.view = view

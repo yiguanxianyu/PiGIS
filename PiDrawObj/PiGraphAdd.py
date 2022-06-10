@@ -1,5 +1,4 @@
 from PySide6.QtCore import QPoint, QPointF, Qt
-from PySide6.QtCore import QPoint, QPointF, Qt
 from PySide6.QtGui import QMouseEvent, QPainterPath
 from PySide6.QtWidgets import QGraphicsEllipseItem, QGraphicsPathItem
 

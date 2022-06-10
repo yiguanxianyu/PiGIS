@@ -76,7 +76,7 @@ class LayerItem(QStandardItem):
 
     def get_visible_layers(self, item):
         if (item.id() == self.id()
-                and id(item) != id(self)) or not self.self_visible:
+            and id(item) != id(self)) or not self.self_visible:
             return []
 
         if self.type() == QItemType.Layer:

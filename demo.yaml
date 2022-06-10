@@ -1,28 +1,77 @@
 Application:
   app_name: PiGIS
-  minimal_version: 0.0.1
-layers:
-- metadata:
-    layer_name: nishuoshenme
-    path: c:/Personal/test1.shp
-    prj: espg:4326
-    type: MultiPoint
+  minimal_version: 0.1.0
+layer:
+- layer_name: "PiMapObj/\u56FE\u5C42\u6587\u4EF6/\u7701\u4F1A\u57CE\u5E023"
+  metadata:
+    id: 2
+    path: "PiMapObj/\u56FE\u5C42\u6587\u4EF6/\u7701\u4F1A\u57CE\u5E02.lay"
+    prj: Lambert Conformal Conic 2SP
+    type: 0
   style:
-    color: '#455662'
-    radius: 2
-- metadata:
-    layer_name: wotingbujian
-    path: c:/Personal/test2.shp
-    prj: espg:4321
-    type: Polyline
+    annotation_status: false
+    brush:
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+    change: true
+    label_status: false
+    pen_color:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 1.0
+    pen_style: 1
+    pen_width: 1
+    visibility: true
+- layer_name: "PiMapObj/\u56FE\u5C42\u6587\u4EF6/\u7701\u7EA7\u884C\u653F\u533A2"
+  metadata:
+    id: 1
+    path: "PiMapObj/\u56FE\u5C42\u6587\u4EF6/\u7701\u7EA7\u884C\u653F\u533A.lay"
+    prj: Lambert Conformal Conic 2SP
+    type: 2
   style:
-    color: '#45F662'
-    width: 1
-- metadata:
-    layer_name: ohhhhhhh
-    path: c:/Personal/test3.shp
-    prj: espg:3857
-    type: Polygon
+    annotation_status: false
+    brush:
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+    change: true
+    label_status: false
+    pen_color:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 1.0
+    pen_style: 1
+    pen_width: 1
+    visibility: true
+- layer_name: "PiMapObj/\u56FE\u5C42\u6587\u4EF6/\u56FD\u754C\u7EBF1"
+  metadata:
+    id: 0
+    path: "PiMapObj/\u56FE\u5C42\u6587\u4EF6/\u56FD\u754C\u7EBF.lay"
+    prj: Lambert Conformal Conic 2SP
+    type: 1
   style:
-    fill_color: '#257634'
-    line_color: '#455662'
+    annotation_status: false
+    brush:
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+    change: true
+    label_status: false
+    pen_color:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 1.0
+    pen_style: 1
+    pen_width: 1
+    visibility: true
+tree_config:
+- 2
+- 1
+- 0

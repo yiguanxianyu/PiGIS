@@ -9,8 +9,6 @@ from PySide6.QtWidgets import QRubberBand
 from PiConstant import DEFAULT_POINT_RADIUS, EDITBRUSHCOLOR, EDITPENCOLOR, PiEditModeConstant, PiGeometryTypeConstant
 
 
-# import pyqtgraph as pg
-
 class PiEditCachePointItem(QGraphicsEllipseItem):
     def __init__(self, point: QPointF, edit_cache):
         self.init_x = point.x()
@@ -29,7 +27,7 @@ class PiEditCachePointItem(QGraphicsEllipseItem):
         self.edit_cache.count += 1
 
     def mousePressEvent(self, event: QGraphicsSceneMouseEvent) -> None:
-        if self.start_pos == None:
+        if self.start_pos is None:
             self.start_pos = QPointF(self.get_x(), self.get_y())
         else:
             pass
@@ -58,7 +56,7 @@ class PiEditCachePointItem(QGraphicsEllipseItem):
         return self.init_y + self.pos().y()
 
 
-class PiEditCacheItem():
+class PiEditCacheItem:
     def __init__(self, draw_control, feature_item):
         self.draw_control = draw_control
         self.view = draw_control.view

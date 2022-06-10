@@ -5,8 +5,6 @@ from PySide6.QtWidgets import QGraphicsItemGroup, QGraphicsScene, QGraphicsView
 from PiDrawObj.PiGraphicsItem import PiGraphicsItemGroup, PiGraphicsTextItem
 
 
-# import pyqtgraph as pg
-
 class PiGraphDraw(QPaintDevice):
     def __init__(self, view=None):
         super().__init__()
