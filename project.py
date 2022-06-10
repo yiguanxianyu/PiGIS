@@ -196,14 +196,13 @@ class PiGISProjectController:
         Create a layer from a vector file and append it to the project
         """
         all_types = [
-            'ESRI shapefile (*.shp)', 'GPS eXchange Format (*.GPX)',
             'Lay File (*.lay)', 'All Files (*.*)'
         ]
 
         file_path, file_type = QFileDialog.getOpenFileName(
             QWidget(), 'Select File', filter=';;'.join(all_types))
 
-        if file_type == all_types[2]:
+        if file_type == all_types[0]:
             new_layer = PiLayer()
             new_layer.load(file_path)
             self.mainWindow.graphWidget.load_layer(new_layer)

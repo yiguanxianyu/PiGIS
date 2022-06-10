@@ -86,16 +86,6 @@
     </property>
     <addaction name="actionOptions"/>
    </widget>
-   <widget class="QMenu" name="menuVector">
-    <property name="title">
-     <string>Vector</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuRaster">
-    <property name="title">
-     <string>Raster</string>
-    </property>
-   </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
@@ -137,8 +127,6 @@
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
    <addaction name="menuLayer"/>
-   <addaction name="menuVector"/>
-   <addaction name="menuRaster"/>
    <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
